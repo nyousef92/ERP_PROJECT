@@ -1,0 +1,27 @@
+.header-toolbar {
+  background-color: #fff;
+  color: #1e293b;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  .app-title {
+    margin-left: 8px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  button {
+    color: #64748b;
+
+    &:hover {
+      color: #1e293b;
+    }
+  }
+}

@@ -1,0 +1,102 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    [opened]="true"
+    [style.width]="isExpanded ? '240px' : '64px'"
+    class="sidenav"
+  >
+    <div class="sidenav-header">
+      <mat-icon class="logo-icon">business</mat-icon>
+      @if (isExpanded) {
+        <span class="app-name">ERP System</span>
+      }
+    </div>
+
+    <mat-nav-list>
+      @for (item of menuItems; track item.label) {
+
+        <!-- Level 1: Has children -->
+        @if (item.children) {
+          <div class="menu-item-wrapper">
+            <a mat-list-item (click)="toggleItem(item)" [title]="item.label">
+              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+              
+            </a>
+
+            <!-- Level 2 children -->
+            @if (item.expanded && isExpanded) {
+              <div class="sub-menu level-1">
+                @for (child of item.children; track child.label) {
+
+                  <!-- Level 2: Has children -->
+                  @if (child.children) {
+                    <a mat-list-item (click)="toggleItem(child)" [title]="child.label">
+                      @if (child.icon) {
+                        <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
+                      }
+                      <span matListItemTitle>{{ child.label }}</span>
+                    </a>
+
+                    <!-- Level 3 children -->
+                    @if (child.expanded) {
+                      <div class="sub-menu level-2">
+                        @for (grandchild of child.children; track grandchild.label) {
+                          <a
+                            mat-list-item
+                            [routerLink]="grandchild.route"
+                            routerLinkActive="active-link"
+                            [title]="grandchild.label"
+                          >
+                            <span matListItemTitle>{{ grandchild.label }}</span>
+                          </a>
+                        }
+                      </div>
+                    }
+
+                  } @else {
+                    <!-- Level 2: Leaf item -->
+                    <a
+                      mat-list-item
+                      [routerLink]="child.route"
+                      routerLinkActive="active-link"
+                      [title]="child.label"
+                    >
+                      @if (child.icon) {
+                        <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
+                      }
+                      <span matListItemTitle>{{ child.label }}</span>
+                    </a>
+                  }
+
+                }
+              </div>
+            }
+          </div>
+
+        } @else {
+          <!-- Level 1: Leaf item (no children) -->
+          <a
+            mat-list-item
+            [routerLink]="item.route"
+            routerLinkActive="active-link"
+            [title]="item.label"
+          >
+            <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+            @if (isExpanded) {
+              <span matListItemTitle>{{ item.label }}</span>
+            }
+          </a>
+        }
+
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content [style.margin-left]="isExpanded ? '240px' : '64px'">
+    <app-header (menuToggle)="toggleSidenav()" [isExpanded]="isExpanded" />
+    <div class="content-area">
+      <ng-content></ng-content>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
