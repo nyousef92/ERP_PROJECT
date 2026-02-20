@@ -227,6 +227,23 @@ export class FacultativeService {
     });
   }
 
-  getProgressSheetDetailsView(refNumber: string) {}
-  
+  getProgressSheetDetailsView(refNumber: string) {
+    return of({
+      account: 'Acc-001',
+      cedant: 'Global Insurance Co.',
+      lob: 'Property',
+      inceptionDate: '01/01/2023',
+      siLol: '$10,000,000',
+      rate: '5.25%',
+      commission: '15.00%',
+      receiptDate: '01/15/2023',
+      notes: 'Standard property coverage. Terms and conditions as per original slip. Subject to final survey report.',
+      reinsurers: [
+        { name: 'Swiss Re', share: 25.00, rate: 5.25, commission: 10.00, tax: 5.00, comments: 'Standard terms applied.' },
+        { name: 'Munich Re', share: 30.00, rate: 5.25, commission: 10.00, tax: 5.00, comments: 'Agreed, awaiting signed slip.' },
+        { name: 'Saudi', share: 15.00, rate: 5.30, commission: 11.50, tax: 0, comments: 'Subject to engineering survey.' },
+      ]
+    });
+  }
+
 }

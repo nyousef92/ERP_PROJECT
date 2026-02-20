@@ -29,16 +29,16 @@
             </div>
         </div>
         <div class="overflow-hidden shadow-sm">
-            <table class="w-full border-collapse bg-surface text-left text-sm text-gray-500">
-                <thead class="bg-gray-50 font-medium  text-text ">
+            <table class="w-full border-collapse bg-surface text-left text-sm text-secondary-dark">
+                <thead class="bg-background font-medium  text-text ">
                     <tr>
-                        <th scope="col" class="px-6 py-4">Ref No.</th>
-                        <th scope="col" class="px-6 py-4">Account</th>
-                        <th scope="col" class="px-6 py-4">Cedant</th>
-                        <th scope="col" class="px-6 py-4">LOB</th>
-                        <th scope="col" class="px-6 py-4">Inception</th>
-                        <th scope="col" class="px-6 py-4">SI/LOL</th>
-                        <th scope="col" class="px-6 py-4">Status</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Ref No.</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Account</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Cedant</th>
+                        <th scope="col" class="px-6 py-4 text-xs">LOB</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Inception</th>
+                        <th scope="col" class="px-6 py-4 text-xs">SI/LOL</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Status</th>
                         <th scope="col" class="px-6 py-4 text-right">Actions</th>
                     </tr>
                 </thead>
@@ -46,7 +46,7 @@
                     @for (item of history; track item.refNo) {
                     <tr class="hover:bg-gray-50 transition-colors">
                         <td class="px-6 py-4 font-medium  text-text ">{{ item.refNo }}</td>
-                        <td class="px-6 py-4">{{ item.account }}</td>
+                        <td class="px-6 py-4" >{{ item.account }}</td>
                         <td class="px-6 py-4">{{ item.cedant }}</td>
                         <td class="px-6 py-4">{{ item.lob }}</td>
                         <td class="px-6 py-4">{{ item.inception }}</td>
@@ -59,13 +59,14 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex justify-end gap-3">
-                                <button title="progress sheet" class="text-gray-400 " (click)="goToProgressSheet(item.refNo)">
-                                    <span class="material-icons text-[18px] text-indigo-600">description</span>
+                                <button title="progress sheet" class="text-gray-400 "
+                                    (click)="goToProgressSheet(item.refNo)">
+                                    <span class="material-icons text-[18px] text-primary">description</span>
                                 </button>
                                 <button title="edit" class="text-gray-400 " (click)="updateSubmission(item.refNo)">
-                                    <span class="material-icons text-[18px]">edit</span>
+                                    <span class="material-icons text-[18px] text-text-secondary">edit</span>
                                 </button>
-                                <button title="update" class="text-gray-400 "  (click)="renewSubmission(item.refNo)">
+                                <button title="update" class="text-gray-400 " (click)="renewSubmission(item.refNo)">
                                     <span class="material-icons text-[18px] text-green-600">sync</span>
                                 </button>
                             </div>
@@ -76,9 +77,7 @@
             </table>
 
         </div>
-        <app-paginator 
-        listName="Submission"
-        [totalItems]="totalItems"
-        (pageChange)="getSubmissionHistory($event)"></app-paginator>
+        <app-paginator listName="Submission" [totalItems]="totalItems"
+            (pageChange)="getSubmissionHistory($event)"></app-paginator>
     </div>
 </div>

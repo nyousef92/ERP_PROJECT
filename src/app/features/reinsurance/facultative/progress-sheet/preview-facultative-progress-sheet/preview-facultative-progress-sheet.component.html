@@ -10,7 +10,8 @@
       </p>
     </div>
     <div>
-      <button (click)="editSubmission()" class="px-4 py-2 text-sm bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+      <button (click)="editSubmission()"
+        class="px-4 py-2 text-sm bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
         Edit Submission
       </button>
     </div>
@@ -24,7 +25,7 @@
       <div class="h-full bg-success rounded-full transition-all duration-300"
         [ngStyle]="{ width: progressSheet.progress + '%' }"></div>
     </div>
-    <div class="flex justify-between mt-2 text-xs text-gray-500"><span>Submitted</span><span>Quoted</span><span
+    <div class="flex justify-between mt-2 text-xs text-secondary-dark"><span>Submitted</span><span>Quoted</span><span
         class="font-semibold text-gray-900">Bound</span><span>Closed</span></div>
   </div>
 </div>
@@ -123,9 +124,8 @@
         Click below to view or edit the complete details of this facultative placement.
       </p>
       <div>
-        <button 
-        (click)="editProgressSheet()"
-        class="px-4 py-2 text-sm bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+        <button (click)="editProgressSheet()"
+          class="px-4 py-2 text-sm bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
 
           View/Edit Progress Sheet</button>
       </div>
