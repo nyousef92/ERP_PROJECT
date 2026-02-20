@@ -10,68 +10,77 @@ import { IconType } from '../intefaces/icon-config';
   providedIn: 'root'
 })
 export class FacultativeService {
-
   constructor(
     private apiService: ApiService,
     private helper: HelperService
   ) { }
+
+  deleteProgressSheet(refNo: string) {
+    return of(true);
+  }
+
   getProgressSheetHistory(payload: { search: string; currentPage: number; pageSize: number; }) {
-    return of([
+    return of(
       {
-        "refNo": "QS-2024-001",
-        "share": "Global Corp",
-        "cedant": "Secure Insurers",
-        "lob": "Property",
-        "inception": "01-Jan-2024",
-        "siLol": "$10,000,000",
-        "status": "Bound"
-      },
-      {
-        "refNo": "PRX-2024-001",
-        "share": "Mega Holdings",
-        "cedant": "Alpha Assurance",
-        "lob": "Casualty",
-        "inception": "15-Feb-2024",
-        "siLol": "$25,000,000",
-        "status": "Quoted"
-      },
-      {
-        "refNo": "SF-2024-001",
-        "share": "Pioneer Logistics",
-        "cedant": "Guardian General",
-        "lob": "Marine",
-        "inception": "01-Mar-2024",
-        "siLol": "$5,000,000",
-        "status": "Submitted"
-      },
-      {
-        "refNo": "PPX-2024-001",
-        "share": "Innovate Tech",
-        "cedant": "Secure Insurers",
-        "lob": "Technology",
-        "inception": "10-Mar-2024",
-        "siLol": "$50,000,000",
-        "status": "Bound"
-      },
-      {
-        "refNo": "SAF-2024-001",
-        "share": "Coastal Properties",
-        "cedant": "National Coverage",
-        "lob": "Property",
-        "inception": "20-Jan-2024",
-        "siLol": "$15,000,000",
-        "status": "Quoted"
-      },
-      {
-        "refNo": "QS-2024-002",
-        "share": "Tech Dynamics",
-        "cedant": "Premier Insurance",
-        "lob": "Technology",
-        "inception": "05-Apr-2024",
-        "siLol": "$8,000,000",
-        "status": "Submitted"
+        totalItems: 10,
+        data: [
+          {
+            "refNo": "QS-2024-001",
+            "share": "Global Corp",
+            "cedant": "Secure Insurers",
+            "lob": "Property",
+            "inception": "01-Jan-2024",
+            "siLol": "$10,000,000",
+            "status": "Bound"
+          },
+          {
+            "refNo": "PRX-2024-001",
+            "share": "Mega Holdings",
+            "cedant": "Alpha Assurance",
+            "lob": "Casualty",
+            "inception": "15-Feb-2024",
+            "siLol": "$25,000,000",
+            "status": "Quoted"
+          },
+          {
+            "refNo": "SF-2024-001",
+            "share": "Pioneer Logistics",
+            "cedant": "Guardian General",
+            "lob": "Marine",
+            "inception": "01-Mar-2024",
+            "siLol": "$5,000,000",
+            "status": "Submitted"
+          },
+          {
+            "refNo": "PPX-2024-001",
+            "share": "Innovate Tech",
+            "cedant": "Secure Insurers",
+            "lob": "Technology",
+            "inception": "10-Mar-2024",
+            "siLol": "$50,000,000",
+            "status": "Bound"
+          },
+          {
+            "refNo": "SAF-2024-001",
+            "share": "Coastal Properties",
+            "cedant": "National Coverage",
+            "lob": "Property",
+            "inception": "20-Jan-2024",
+            "siLol": "$15,000,000",
+            "status": "Quoted"
+          },
+          {
+            "refNo": "QS-2024-002",
+            "share": "Tech Dynamics",
+            "cedant": "Premier Insurance",
+            "lob": "Technology",
+            "inception": "05-Apr-2024",
+            "siLol": "$8,000,000",
+            "status": "Submitted"
+          }
+        ]
       }
-    ]);
+    );
   }
 
 
@@ -111,6 +120,7 @@ export class FacultativeService {
   updateProgressSheet(id: any, progressSheet: any) {
     return of(true);
   }
+
   addNewProgressSheet(progressSheet: any) {
     return of(true);
   }
@@ -343,6 +353,7 @@ export class FacultativeService {
       { id: 30, value: 30, label: "Chubb Re" },
     ]);
   }
+
   getProgressSheetPreview(refNumber: string) {
     return of({
       refNumber: refNumber,

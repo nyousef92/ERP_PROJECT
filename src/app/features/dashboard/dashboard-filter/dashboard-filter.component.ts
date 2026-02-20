@@ -6,7 +6,7 @@ import {
   model
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { SharedService } from '@core/services/shared.service';
 import { InputFieldComponent } from "@shared/input-field/input-field.component";
@@ -21,7 +21,7 @@ export interface FilterState {
 
 @Component({
   selector: 'app-dashboard-filter',
-  imports: [CommonModule, FormsModule, InputFieldComponent],
+  imports: [CommonModule, FormsModule, InputFieldComponent, ReactiveFormsModule],
   templateUrl: './dashboard-filter.component.html'
 })
 export class DshboardFilterComponent implements OnInit {

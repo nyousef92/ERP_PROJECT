@@ -70,8 +70,7 @@ export class EditReinsuranceComponent implements OnInit {
   }
 
   onDelet() {
-    Object.assign(this.reinsurer, null);
-    this.onDelete?.(this.reinsurer);
     this.close();
+    this.onDelete?.(this.reinsurer);
   }
 }

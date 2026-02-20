@@ -5,6 +5,7 @@ import { BreadcrumbComponent, BreadcrumbItem } from '@shared/breadcrumb/breadcru
 import { ModalComponent } from '@shared/modal/modal.component';
 import { EditReinsuranceComponent } from './edit-reinsurance/edit-reinsurance.component';
 import { EditProgressSheetComponent } from '../edit-progress-sheet/edit-progress-sheet.component';
+import { DeleteItemComponent } from '@shared/delete-item/delete-item.component';
 
 @Component({
   selector: 'app-view-facultative-progress-sheet',
@@ -48,7 +49,7 @@ export class ViewFacultativeProgressSheetComponent implements OnInit {
         progressSheet: this.progressSheet,
         onSaved: (updated: any) => {
           this.progressSheet = { ...this.progressSheet, ...updated };
-          this.facultativeService.updateProgressSheet(this.progressSheet.id, this.progressSheet).subscribe()
+          this.facultativeService.updateProgressSheet(this.progressSheet.id, this.progressSheet).subscribe();
         }
       }, 'xl')
   }
@@ -62,13 +63,19 @@ export class ViewFacultativeProgressSheetComponent implements OnInit {
         );
       },
       onDelete: () => {
-        this.progressSheet.reinsurers.splice(index, 1);
+        this.deleteReinsurer(index);
       }
     });
   }
 
+
   deleteReinsurer(index: number) {
-    this.progressSheet.reinsurers.splice(index, 1);
+    this.modal.open(DeleteItemComponent, {
+      description:'Are you sure you want to delete this reinsurer?',
+      onDelete: () => {
+        this.progressSheet.reinsurers.splice(index, 1);
+      }
+    }, 'sm');
   }
 
   addReinsurer() {

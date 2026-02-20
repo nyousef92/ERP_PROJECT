@@ -7,17 +7,24 @@ import { CardsGridComponent } from "@shared/cards-grid/cards-grid.component";
 import { InputFieldComponent } from "@shared/input-field/input-field.component";
 import { forkJoin } from 'rxjs';
 import { NgClass } from '@angular/common';
+import { DeleteItemComponent } from '@shared/delete-item/delete-item.component';
+import { PaginatorComponent } from "@shared/paginator/paginator.component";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-progress-sheet',
-  imports: [ModalComponent, CardsGridComponent, InputFieldComponent,NgClass],
+  imports: [ModalComponent, CardsGridComponent, InputFieldComponent, NgClass, PaginatorComponent, ReactiveFormsModule, FormsModule],
   templateUrl: './progress-sheet.component.html'
 })
 export class ProgressSheetComponent implements OnInit {
 
+
   @ViewChild(ModalComponent) modal!: ModalComponent;
   progressMetrics: any;
   history: any[] = [];
+  currentPage: number = 1;
+  totalItems: number = 0;
+  searchValue: string = '';
 
   constructor(
     private router: Router,
@@ -30,29 +37,34 @@ export class ProgressSheetComponent implements OnInit {
       this.facultativeService.getProgressSheetMetrics(),
       this.facultativeService.getProgressSheetHistory({
         search: '',
-        currentPage: 1,
+        currentPage: this.currentPage,
         pageSize: 6
       })
 
     ])
       .subscribe((data) => {
         this.progressMetrics = data[0];
-        this.history = data[1];
+        this.history = data[1].data;
+        this.totalItems = data[1].totalItems;
       });
   }
 
 
-  updateSearchValue(value: string) {
+  updateSearchValue(value: string, page: number) {
+    this.searchValue = value;
+    this.currentPage = page;
     this.facultativeService.getProgressSheetHistory(
       {
-        search: value,
-        currentPage: 1,
+        search: this.searchValue,
+        currentPage: this.currentPage,
         pageSize: 6
       }
     ).subscribe((data) => {
-      this.progressMetrics = data;
+      this.progressMetrics = data.data;;
+      this.totalItems = data.totalItems;
     });
   }
+
   addNew() {
     this.modal.open(EditProgressSheetComponent, {
       progressSheet: null,
@@ -60,6 +72,32 @@ export class ProgressSheetComponent implements OnInit {
         this.facultativeService.addNewProgressSheet(updated).subscribe()
       }
     }, 'xl')
+  }
+
+  edit(refNo: string) {
+    this.facultativeService.getProgressSheetDetailsView(refNo).subscribe((data) => {
+      this.modal.open(EditProgressSheetComponent, {
+        progressSheet: data,
+        onSaved: (updated: any) => {
+          this.facultativeService.updateProgressSheet(refNo, updated).subscribe()
+        }
+      }, 'xl')
+    });
+
+  }
+
+  delete(refNo: string) {
+    this.facultativeService.getProgressSheetDetailsView(refNo).subscribe((data) => {
+      this.modal.open(DeleteItemComponent, {
+        description: `Are you sure you want to delete progress sheet with ref no ${refNo}?`,
+        onDelete: () => {
+          this.modal.close();
+          this.history = this.history.filter(h => h.refNo !== refNo);
+          this.facultativeService.deleteProgressSheet(refNo).subscribe()
+        }
+      }, 'sm')
+    });
+
   }
 
   getStatusClass(status: string): string {
@@ -71,5 +109,10 @@ export class ProgressSheetComponent implements OnInit {
     }
   }
 
-  
+
+  preViewProgressSheet(refNo: any) {
+    this.router.navigate(
+      ['home/reinsurance/facultative/progress-sheet/preview-facultative-progress-sheet', refNo]
+    );
+  }
 }

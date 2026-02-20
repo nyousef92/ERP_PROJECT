@@ -1,0 +1,10 @@
+<div class="bg-surface rounded-lg p-5 max-w-md w-full mx-4">
+    <h3 class="text-base text-text mb-2">Confirm Delete</h3>
+    <p class="text-sm text-text-secondary mb-4">{{description}}</p>
+    <div class="flex items-center justify-end gap-2">
+        <button (click)="close()"
+            class="px-3 py-1.5 text-sm border border-border rounded-lg text-text-secondary hover:bg-background transition-colors">Cancel</button>
+        <button (click)="onDelet()"
+            class="px-3 py-1.5 text-sm bg-danger text-white rounded-lg hover:bg-danger-dark transition-colors">Delete</button>
+    </div>
+</div>
