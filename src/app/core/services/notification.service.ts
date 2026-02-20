@@ -3,9 +3,11 @@ import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signal
 import { map, of, switchMap } from 'rxjs';
 import { ApiService } from './api.service';
 import { SessionService } from './session.service';
+import { HelperService } from './helper.service';
 import { environment } from '../../../environments/environment';
-import { INotification, NotificationType } from '../intefaces/notification';
+import { INotification } from '../intefaces/notification';
 import { ToastService } from './toaster.service';
+import { IconType } from '../intefaces/icon-config';
 
 @Injectable({
   providedIn: 'root'
@@ -19,78 +21,61 @@ export class SignalRService {
   notifications: WritableSignal<INotification[]> = signal<INotification[]>([
     {
       id: 1,
-      typeId: NotificationType.NearExpiry,
+      iconType: IconType.NearExpiry,
       isRead: false,
       createdOn: '2026-02-10T08:30:00Z',
       displayText: 'Reinsurance contract #RI-2024-102 is near expiry.',
-      icon: {
-        icon: 'warning',
-        iconBgClass: 'bg-yellow-100 text-yellow-600'
-      }
+      icon: { name: 'warning', bgClass: 'bg-yellow-100', colorClass: 'text-yellow-600' }
     },
     {
       id: 2,
-      typeId: NotificationType.PendingApproval,
+      iconType: IconType.PendingApproval,
       isRead: false,
       createdOn: '2026-02-12T10:15:00Z',
       displayText: 'Policy endorsement request is pending your approval.',
-      icon: {
-        icon: 'schedule',
-        iconBgClass: 'bg-orange-100 text-orange-600'
-      }
+      icon: { name: 'schedule', bgClass: 'bg-orange-100', colorClass: 'text-orange-600' }
     },
     {
       id: 3,
-      typeId: NotificationType.TravelRequest,
+      iconType: IconType.TravelRequest,
       isRead: true,
       createdOn: '2026-02-09T14:00:00Z',
       displayText: 'Travel request for Dubai business trip submitted.',
-      icon: {
-        icon: 'flight',
-        iconBgClass: 'bg-blue-100 text-blue-600'
-      }
+      icon: { name: 'flight', bgClass: 'bg-blue-100', colorClass: 'text-blue-600' }
     },
     {
       id: 4,
-      typeId: NotificationType.LoanRequest,
+      iconType: IconType.LoanRequest,
       isRead: true,
       createdOn: '2026-02-08T09:20:00Z',
       displayText: 'Loan request for employee ID 245 has been created.',
-      icon: {
-        icon: 'attach_money',
-        iconBgClass: 'bg-purple-100 text-purple-600'
-      }
+      icon: { name: 'attach_money', bgClass: 'bg-purple-100', colorClass: 'text-purple-600' }
     },
     {
       id: 5,
-      typeId: NotificationType.Processed,
+      iconType: IconType.Processed,
       isRead: true,
       createdOn: '2026-02-07T11:45:00Z',
       displayText: 'Claim #CL-99821 has been successfully processed.',
-      icon: {
-        icon: 'check_circle',
-        iconBgClass: 'bg-green-100 text-green-600'
-      }
+      icon: { name: 'check_circle', bgClass: 'bg-green-100', colorClass: 'text-green-600' }
     },
     {
       id: 6,
-      typeId: NotificationType.NewInvoice,
+      iconType: IconType.NewInvoice,
       isRead: false,
       createdOn: '2026-02-13T13:05:00Z',
       displayText: 'New invoice #INV-5543 has been generated.',
-      icon: {
-        icon: 'description',
-        iconBgClass: 'bg-indigo-100 text-indigo-600'
-      }
+      icon: { name: 'description', bgClass: 'bg-indigo-100', colorClass: 'text-indigo-600' }
     }
   ]);
 
   constructor(
     private ApiService: ApiService,
     private toast: ToastService,
-    private session: SessionService
+    private session: SessionService,
+    private helper: HelperService
   ) {
-     //this.initializeConnection();
+    //this.initializeConnection();
   }
 
   getOlderNotification() {
@@ -98,44 +83,13 @@ export class SignalRService {
       .pipe(
         map((items) => {
           if (items && items.length) {
-            const allNotifications = items.map((item) => {
-              const notificationConfig: Record<NotificationType, { icon: string; iconBgClass: string }> = {
-                [NotificationType.NearExpiry]: {
-                  icon: 'person_check',
-                  iconBgClass: 'bg-yellow-100 text-yellow-600'
-                },
-                [NotificationType.PendingApproval]: {
-                  icon: 'schedule',
-                  iconBgClass: 'bg-red-100 text-red-600'
-                },
-                [NotificationType.TravelRequest]: {
-                  icon: 'flight',
-                  iconBgClass: 'bg-blue-100 text-blue-600'
-                },
-                [NotificationType.LoanRequest]: {
-                  icon: 'attach_money',
-                  iconBgClass: 'bg-red-100 text-red-600'
-                },
-                [NotificationType.Processed]: {
-                  icon: 'check_circle',
-                  iconBgClass: 'bg-green-100 text-green-600'
-                },
-                [NotificationType.NewInvoice]: {
-                  icon: 'description',
-                  iconBgClass: 'bg-blue-100 text-blue-600'
-                },
-              };
-
-              return {
-                ...item,
-                icon: notificationConfig[item.typeId]
-              }
-            });
-            return allNotifications;
+            return items.map((item) => ({
+              ...item,
+              icon: this.helper.getIcon(item.iconType)
+            }));
           }
           return [];
-        }
-        )
+        })
       )
       .subscribe({
         next: (notifications) => {

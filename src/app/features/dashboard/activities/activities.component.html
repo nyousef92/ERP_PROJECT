@@ -7,8 +7,8 @@
     <div class="p-3 hover:bg-background transition-colors">
       <div class="flex items-start gap-3">
         <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-          [ngClass]="activity.icon.iconBgClass">
-          <span class="material-icons text-[14px]">{{ activity.icon.icon }}</span>
+          [class]="activity.icon.bgClass">
+          <span class="material-icons text-[14px]" [class]="activity.icon.colorClass">{{ activity.icon.name }}</span>
         </div>
         <div class="flex-1 min-w-0">
           <p class="text-sm text-text">{{ activity.mianText }}</p>

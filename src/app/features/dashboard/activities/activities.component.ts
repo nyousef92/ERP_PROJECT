@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Subject, takeUntil, switchMap } from 'rxjs';
 import { INotification } from '../../../core/intefaces/notification';
 import { DashboardService } from '../../../core/services/dashboard.service';
@@ -7,7 +6,6 @@ import { DashboardService } from '../../../core/services/dashboard.service';
 @Component({
   selector: 'app-activities',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './activities.component.html'
 })
 export class ActivitiesComponent implements OnInit, OnDestroy {

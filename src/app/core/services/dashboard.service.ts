@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
+import { HelperService } from './helper.service';
 import { Observable, of } from 'rxjs';
 import { INotification } from '../intefaces/notification';
+import { IconType } from '../intefaces/icon-config';
 
 
 @Injectable({
@@ -9,10 +11,9 @@ import { INotification } from '../intefaces/notification';
 })
 export class DashboardService {
   constructor(
-    private apiService: ApiService
-  ) {
-
-  }
+    private apiService: ApiService,
+    private helper: HelperService
+  ) { }
 
   getCharts(payload: any) {
     //return this.apiService.post('',payload)
@@ -41,93 +42,79 @@ export class DashboardService {
     });
   }
 
-  getActivities(payload: any):Observable<INotification[]> {
+  getActivities(payload: any): Observable<INotification[]> {
     //return this.apiService.post<Notification[]>('',payload)
     return of([
       {
         id: 1,
-        typeId: 6,
+        iconType: IconType.Submission,
         isRead: false,
         createdOn: '5 minutes ago',
         displayText: 'FAC-2024-067 - Global Manufacturing Inc.',
         mianText: 'New Submission Created',
-        icon: { icon: 'description', iconBgClass: 'bg-info/10 text-info' }
+        icon: this.helper.getIcon(IconType.Submission)
       },
       {
         id: 2,
-        typeId: 5,
+        iconType: IconType.Claims,
         isRead: false,
         createdOn: '15 minutes ago',
         displayText: 'CLM-2024-123 - Property damage claim processed',
         mianText: 'Claim Approved',
-        icon: { icon: 'error_outline', iconBgClass: 'bg-warning/10 text-warning' }
+        icon: this.helper.getIcon(IconType.Claims)
       },
       {
         id: 3,
-        typeId: 1,
+        iconType: IconType.Treaty,
         isRead: true,
         createdOn: '1 hour ago',
         displayText: 'TRT-2024-045 - Annual property treaty renewal',
         mianText: 'Treaty Renewed',
-        icon: { icon: 'trending_up', iconBgClass: 'bg-success/10 text-success' }
+        icon: this.helper.getIcon(IconType.Treaty)
       },
       {
         id: 4,
-        typeId: 3,
+        iconType: IconType.Employees,
         isRead: true,
         createdOn: '2 hours ago',
         displayText: 'Sarah Johnson joined as Underwriter',
         mianText: 'Employee Onboarded',
-        icon: { icon: 'group', iconBgClass: 'bg-accent/10 text-accent' }
+        icon: this.helper.getIcon(IconType.Employees)
       }
     ]);
   }
 
-  getMetric(payload:any) {
+  getMetric(payload: any) {
     //return this.apiService.post('',payload)
-    return of(
-      [
-        {
-          label: 'Total Submissions',
-          value: 245,
-          subtitle: '+12% from last month',
-          icon: 'description',
-          trendIcon: 'trending_up',
-          iconColorClass: 'text-info',
-          iconBgClass: 'bg-info/10',
-          trendColorClass: 'text-success',
-        },
-        {
-          label: 'Active Treaties',
-          value: 18,
-          subtitle: '3 pending renewal',
-          icon: 'trending_up',
-          trendIcon: 'trending_up',
-          iconColorClass: 'text-success',
-          iconBgClass: 'bg-success/10',
-          trendColorClass: 'text-success',
-        },
-        {
-          label: 'Pending Claims',
-          value: 32,
-          subtitle: '5 require attention',
-          icon: 'error_outline',
-          trendIcon: 'error_outline',
-          iconColorClass: 'text-warning',
-          iconBgClass: 'bg-warning/10',
-          trendColorClass: 'text-warning',
-        },
-        {
-          label: 'Total Employees',
-          value: 156,
-          subtitle: '8 new this quarter',
-          icon: 'group',
-          trendIcon: 'trending_up',
-          iconColorClass: 'text-accent',
-          iconBgClass: 'bg-accent/10',
-          trendColorClass: 'text-success',
-        },
-      ]
-    );
+    return of([
+      {
+        label: 'Total Submissions',
+        value: 245,
+        subtitle: '+12% from last month',
+        iconType: IconType.Submission,
+        icon: this.helper.getIcon(IconType.Submission),
+      },
+      {
+        label: 'Active Treaties',
+        value: 18,
+        subtitle: '3 pending renewal',
+        iconType: IconType.Treaty,
+        icon: this.helper.getIcon(IconType.Treaty),
+      },
+      {
+        label: 'Pending Claims',
+        value: 32,
+        subtitle: '5 require attention',
+        iconType: IconType.Claims,
+        icon: this.helper.getIcon(IconType.Claims),
+      },
+      {
+        label: 'Total Employees',
+        value: 156,
+        subtitle: '8 new this quarter',
+        iconType: IconType.Employees,
+        icon: this.helper.getIcon(IconType.Employees),
+      },
+    ]);
   }
 }

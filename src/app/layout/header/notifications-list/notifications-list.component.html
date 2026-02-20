@@ -31,8 +31,8 @@
               [ngClass]="{ 'bg-primary/5': !notification.isRead }"
             >
               <!-- Icon -->
-              <div class="shrink-0 w-9 h-9 rounded-lg flex items-center justify-center" [ngClass]="notification.icon.iconBgClass">
-                <span class="material-icons text-[18px]">{{ notification.icon.icon }}</span>
+              <div class="shrink-0 w-9 h-9 rounded-lg flex items-center justify-center" [class]="notification.icon.bgClass">
+                <span class="material-icons text-[18px]" [class]="notification.icon.colorClass">{{ notification.icon.name }}</span>
               </div>
 
               <!-- Content -->

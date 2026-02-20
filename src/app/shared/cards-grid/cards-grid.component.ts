@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-cards-grid',
@@ -12,7 +12,7 @@ export class CardsGridComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (this.dataList.length > 0) {
-      this.showIcons = this.dataList.every((item: any) => item.trendColorClass && item.iconColorClass && item.iconBgClass);
+      this.showIcons = this.dataList.every((item: any) => item.icon?.name && item.icon?.bgClass && item.icon?.colorClass);
     }
   }
 }
