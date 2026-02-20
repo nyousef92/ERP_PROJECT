@@ -12,14 +12,13 @@ export interface MenuItem {
 }
 
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    HeaderComponent,
-  ],
-  templateUrl: './sidebar.component.html'
+    selector: 'app-sidebar',
+    imports: [
+        RouterLink,
+        RouterLinkActive,
+        HeaderComponent,
+    ],
+    templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent implements OnInit {
 

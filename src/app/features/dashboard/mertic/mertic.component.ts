@@ -7,10 +7,9 @@ import { CardsGridComponent } from '../../../shared/cards-grid/cards-grid.compon
 import { HelperService } from '../../../core/services/helper.service';
 
 @Component({
-  selector: 'app-mertic',
-  standalone: true,
-  imports: [CommonModule, CardsGridComponent],
-  templateUrl: './mertic.component.html'
+    selector: 'app-mertic',
+    imports: [CommonModule, CardsGridComponent],
+    templateUrl: './mertic.component.html'
 })
 export class MerticComponent implements OnInit, OnDestroy {
   @Input() filters = new BehaviorSubject<any>({});

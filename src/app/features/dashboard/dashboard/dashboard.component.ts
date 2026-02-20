@@ -6,10 +6,9 @@ import { ActivitiesComponent } from '../activities/activities.component';
 import { DshboardFilterComponent } from '../dashboard-filter/dashboard-filter.component';
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [DshboardFilterComponent, MerticComponent, ChartsComponent, ActivitiesComponent],
-  templateUrl: './dashboard.component.html'
+    selector: 'app-dashboard',
+    imports: [DshboardFilterComponent, MerticComponent, ChartsComponent, ActivitiesComponent],
+    templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent {
   filters = new BehaviorSubject<any>({});

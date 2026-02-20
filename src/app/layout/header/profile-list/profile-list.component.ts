@@ -4,10 +4,9 @@ import { SessionService } from '../../../core/services/session.service';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
-  selector: 'app-profile-list',
-  standalone: true,
-  imports: [TranslateModule],
-  templateUrl: './profile-list.component.html'
+    selector: 'app-profile-list',
+    imports: [TranslateModule],
+    templateUrl: './profile-list.component.html'
 })
 export class ProfileListComponent {
   showProfile = model.required<boolean>();

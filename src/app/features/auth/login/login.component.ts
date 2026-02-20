@@ -9,11 +9,10 @@ import { Subject } from 'rxjs';
 import { exhaustMap} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [ReactiveFormsModule, InputFieldComponent, TranslateModule, TranslatePipe],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    imports: [ReactiveFormsModule, InputFieldComponent, TranslateModule, TranslatePipe],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
 

@@ -8,10 +8,9 @@ import { DashboardService } from '../../../core/services/dashboard.service';
 Chart.register(...registerables);
 
 @Component({
-  selector: 'app-charts',
-  standalone: true,
-  imports: [CommonModule, BaseChartDirective],
-  templateUrl: './charts.component.html'
+    selector: 'app-charts',
+    imports: [CommonModule, BaseChartDirective],
+    templateUrl: './charts.component.html'
 })
 export class ChartsComponent implements OnInit, OnDestroy {
   @Input() filters = new BehaviorSubject<any>({});

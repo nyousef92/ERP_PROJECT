@@ -8,11 +8,9 @@ import { InputFieldComponent } from "../../../../shared/input-field/input-field.
 import { FilterPipe } from '../../../../core/pipes/filter.pipe';
 
 @Component({
-  selector: 'app-submission',
-  standalone: true,
-  imports: [TranslatePipe, ColoredCardsGridComponent, NgClass, InputFieldComponent, FilterPipe],
-  templateUrl: './submission.component.html',
-  
+    selector: 'app-submission',
+    imports: [TranslatePipe, ColoredCardsGridComponent, NgClass, InputFieldComponent, FilterPipe],
+    templateUrl: './submission.component.html'
 })
 export class SubmissionComponent implements OnInit {
   searchText = '';

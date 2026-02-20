@@ -4,10 +4,9 @@ import { NgClass } from '@angular/common';
 import { SignalRService } from '../../../core/services/notification.service';
 
 @Component({
-  selector: 'app-notifications-list',
-  standalone: true,
-  imports: [NgClass],
-  templateUrl: './notifications-list.component.html'
+    selector: 'app-notifications-list',
+    imports: [NgClass],
+    templateUrl: './notifications-list.component.html'
 })
 export class NotificationsListComponent {
 

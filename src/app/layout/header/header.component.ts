@@ -3,10 +3,9 @@ import { NotificationsListComponent } from './notifications-list/notifications-l
 import { ProfileListComponent } from './profile-list/profile-list.component';
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [NotificationsListComponent,ProfileListComponent],
-  templateUrl: './header.component.html'
+    selector: 'app-header',
+    imports: [NotificationsListComponent, ProfileListComponent],
+    templateUrl: './header.component.html'
 })
 export class HeaderComponent {
   @Input() isExpanded = true;

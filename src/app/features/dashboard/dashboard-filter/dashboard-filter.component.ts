@@ -20,10 +20,9 @@ export interface FilterState {
 
 
 @Component({
-  selector: 'app-dashboard-filter',
-  standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule],
-  templateUrl: './dashboard-filter.component.html',
+    selector: 'app-dashboard-filter',
+    imports: [CommonModule, FormsModule, TranslateModule],
+    templateUrl: './dashboard-filter.component.html'
 })
 export class DshboardFilterComponent implements OnInit {
 
