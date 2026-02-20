@@ -9,15 +9,15 @@ import { BreadcrumbComponent } from "../../../../../shared/breadcrumb/breadcrumb
 export class FacultativeSubmissionComponent {
   breadcumbs = [
     {
-      label: 'home',
+      label: 'nav.home',
       url: 'home/dashboard'
     },
     {
-      label: 'Submissions',
+      label: 'reinsurance.submissions',
       url: 'home/reinsurance/facultative/submission'
     },
     {
-      label: 'Create Facultative Submission',
+      label: 'reinsurance.createFacultativeSubmission',
       url: 'home/reinsurance/facultative/submission/add-facultative-submission'
     },
   ]

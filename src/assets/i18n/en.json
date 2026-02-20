@@ -15,10 +15,14 @@
     "update": "update",
     "actions": "actions"
   },
+  "nav": {
+    "home": "Home"
+  },
   "reinsurance": {
     "facultative": "Facultative Reinsurance",
     "facultativeDesc": "Manage individual risk placements and submissions",
     "submissions": "Submissions",
+    "createFacultativeSubmission": "Create Facultative Submission",
     "refNo": "Ref No.",
     "account": "Account",
     "cedant": "Cedant",

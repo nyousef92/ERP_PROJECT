@@ -12,11 +12,13 @@ export const FACULTAIVE_ROUTES: Routes = [
             { path: '', redirectTo: 'submission', pathMatch: 'full' },
             {
                 path: 'submission',
-                component: SubmissionComponent
-            },
-            {
-                path: 'add-facultative-submission',
-                component: FacultativeSubmissionComponent
+                children: [
+                    { path: '', component: SubmissionComponent },
+                    {
+                        path: 'add-facultative-submission',
+                        component: FacultativeSubmissionComponent
+                    },
+                ]
             },
         ]
     },

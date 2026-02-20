@@ -15,10 +15,14 @@
     "update": "تحديث",
     "actions": "إجراءات"
   },
+  "nav": {
+    "home": "الرئيسية"
+  },
   "reinsurance": {
     "facultative": "إعادة التأمين الاختياري",
     "facultativeDesc": "إدارة توزيعات المخاطر الفردية والطلبات",
     "submissions": "الطلبات",
+    "createFacultativeSubmission": "إنشاء تقديم اختياري",
     "refNo": "رقم المرجع",
     "account": "الحساب",
     "cedant": "المُسند",
