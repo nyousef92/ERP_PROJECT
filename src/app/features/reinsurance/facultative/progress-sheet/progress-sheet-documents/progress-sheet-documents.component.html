@@ -1,0 +1,56 @@
+<div class="flex items-center justify-between mb-4">
+  <div>
+    <h2 class="text-text">Documents</h2>
+    <div class="flex gap-4 mt-3 text-sm">
+      <button (click)="setActiveTab('documents')"
+        [class]="activeTab === 'documents' ? 'text-primary border-b-2 border-primary pb-2' : 'text-text-muted pb-2'">
+        Documents
+      </button>
+      <button (click)="setActiveTab('notes')"
+        [class]="activeTab === 'notes' ? 'text-primary border-b-2 border-primary pb-2' : 'text-text-muted pb-2'">
+        Notes &amp; Activity
+      </button>
+      <button (click)="setActiveTab('claims')"
+        [class]="activeTab === 'claims' ? 'text-primary border-b-2 border-primary pb-2' : 'text-text-muted pb-2'">
+        Claims
+      </button>
+    </div>
+  </div>
+  <button class="text-sm flex items-center gap-2 hover:text-primary-dark" (click)="fileUpload.open()">
+    <span class="material-icons text-[18px] text-text-muted">description</span>
+    <span class="text-primary">Upload Document</span>
+  </button>
+  <app-file-upload #fileUpload class="hidden" (filesChange)="uploadDocument($event)"></app-file-upload>
+</div>
+
+@if (activeTab === 'documents') {
+<p class="text-sm text-text-secondary mb-4">{{ documents.length }} Documents</p>
+<div class="space-y-3">
+  <table class="w-full">
+    <thead>
+      <tr class="border-b border-border">
+        <th class="text-left text-xs text-text-secondary pb-2">DOCUMENT NAME</th>
+        <th class="text-left text-xs text-text-secondary pb-2">TYPE</th>
+        <th class="text-left text-xs text-text-secondary pb-2">UPLOAD DATE</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-border">
+      @for (doc of documents; track doc.name) {
+      <tr>
+        <td class="py-3 text-sm text-text">{{ doc.name }}</td>
+        <td class="py-3 text-sm text-text-secondary">{{ doc.type }}</td>
+        <td class="py-3 text-sm text-text-secondary">{{ doc.uploadDate }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+}
+
+@if (activeTab === 'notes') {
+<p class="text-sm text-text-muted py-4 text-center">No notes or activity yet.</p>
+}
+
+@if (activeTab === 'claims') {
+<p class="text-sm text-text-muted py-4 text-center">No claims recorded.</p>
+}

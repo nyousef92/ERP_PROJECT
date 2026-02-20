@@ -215,6 +215,14 @@ export class FacultativeService {
         { name: 'Risk_Survey_Report.pdf', type: 'Survey', uploadDate: '10 Jan 2024' },
         { name: 'Binding_Authority_Confirmation.pdf', type: 'Confirmation', uploadDate: '12 Jan 2024' },
       ],
+      Progress: "Bound",
+      Securities: [
+        "Swiss Re",
+        "Munich Re",
+        "Saudi Re",
+        "Hannover Re"
+      ],
+      summary: "All detailed information, including financials, documents, and notes, are available in the full progress sheet. Click below to view or edit the complete details of this facultative placement."
     });
   }
 }

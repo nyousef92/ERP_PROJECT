@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
@@ -44,9 +44,15 @@ export class FileUploadComponent implements ControlValueAccessor {
 
   @Output() filesChange = new EventEmitter<File[]>();
 
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
   files: File[] = [];
   isDragOver = false;
   errorMessage: string = '';
+
+  open(): void {
+    this.fileInput.nativeElement.click();
+  }
 
   private onChange = (_: File[]) => {};
   onTouched = () => {};
@@ -133,4 +139,5 @@ export class FileUploadComponent implements ControlValueAccessor {
   getFileIcon(file: File): string {
     return FILE_ICON_MAP[this.getExtension(file)] ?? 'insert_drive_file';
   }
+  
 }

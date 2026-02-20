@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ColoredCardsGridComponent } from "@shared/colored-cards-grid/colored-cards-grid.component";
-import { ReinsuranceService } from '@core/services/reinsurance.service';
 import { NgClass } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { InputFieldComponent } from "@shared/input-field/input-field.component";
