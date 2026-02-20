@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ColoredCardsGridComponent } from "../../../../shared/colored-cards-grid copy/colored-cards-grid.component";
+import { ColoredCardsGridComponent } from "../../../../shared/colored-cards-grid/colored-cards-grid.component";
 import { ReinsuranceService } from '../../../../core/services/reinsurance.service';
 import { NgClass } from '@angular/common';
 import { forkJoin } from 'rxjs';
