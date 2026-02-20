@@ -20,6 +20,11 @@ export const routes: Routes = [
                 path: 'dashboard',
                 loadChildren: () => import('./features/dashboard/dashboard.routs')
                     .then(mod => mod.DASHBOARD_ROUTES)
+            },
+            {
+                path: 'reinsurance',
+                loadChildren: () => import('./features/reinsurance/reinsurance.routs')
+                    .then(mod => mod.REINSURANCE_ROUTES)
             }
         ]
     }

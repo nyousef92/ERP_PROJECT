@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SharedService } from '../../core/services/shared.service';
 import { forkJoin } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { SharedService } from '../../../core/services/shared.service';
 
 export interface FilterState {
   dateFrom: string | null;
@@ -20,12 +20,12 @@ export interface FilterState {
 
 
 @Component({
-  selector: 'app-filter',
+  selector: 'app-dashboard-filter',
   standalone: true,
   imports: [CommonModule, FormsModule, TranslateModule],
-  templateUrl: './filter.component.html',
+  templateUrl: './dashboard-filter.component.html',
 })
-export class FilterComponent implements OnInit {
+export class DshboardFilterComponent implements OnInit {
 
   @Output() filterChange = new EventEmitter<FilterState>();
 

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { FilterComponent } from '../../../shared/filter/filter.component';
 import { BehaviorSubject } from 'rxjs';
 import { MerticComponent } from '../mertic/mertic.component';
 import { ChartsComponent } from '../charts/charts.component';
 import { ActivitiesComponent } from '../activities/activities.component';
+import { DshboardFilterComponent } from '../dashboard-filter/dashboard-filter.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [FilterComponent, MerticComponent, ChartsComponent, ActivitiesComponent],
+  imports: [DshboardFilterComponent, MerticComponent, ChartsComponent, ActivitiesComponent],
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent {
