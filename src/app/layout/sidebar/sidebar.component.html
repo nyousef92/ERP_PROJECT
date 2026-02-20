@@ -38,7 +38,6 @@
           <div>
             <a (click)="toggleItem(child)" [title]="child.label"
               class="flex items-center pl-10 pr-4 py-2 mx-2 rounded-lg text-white/70 hover:bg-white/[0.08] hover:text-white cursor-pointer transition-colors text-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-white/30 mr-3 shrink-0"></span>
               <span class="flex-1">{{ child.label }}</span>
               <span class="material-icons text-[16px] transition-transform duration-300"
                 [class.rotate-180]="child.expanded">expand_more</span>
@@ -53,7 +52,6 @@
               <div>
                 <a (click)="toggleItem(grandchild)" [title]="grandchild.label"
                   class="flex items-center pl-16 pr-4 py-2 mx-2 rounded-lg text-white/70 hover:bg-white/[0.08] hover:text-white cursor-pointer transition-colors text-[13px]">
-                  <span class="w-1 h-1 rounded-full bg-white/20 mr-3 shrink-0"></span>
                   <span class="flex-1">{{ grandchild.label }}</span>
                   <span class="material-icons text-[14px] transition-transform duration-300"
                     [class.rotate-180]="grandchild.expanded">expand_more</span>
@@ -76,7 +74,6 @@
               } @else {
               <a [routerLink]="grandchild.route" routerLinkActive="!bg-primary !text-white" [title]="grandchild.label"
                 class="flex items-center pl-16 pr-4 py-2 mx-2 rounded-lg text-white/70 hover:bg-white/[0.08] hover:text-white cursor-pointer transition-colors text-[13px]">
-                <span class="w-1 h-1 rounded-full bg-white/20 mr-3 shrink-0"></span>
                 <span>{{ grandchild.label }}</span>
               </a>
               }
@@ -89,7 +86,6 @@
           } @else {
           <a [routerLink]="child.route" routerLinkActive="!bg-primary !text-white" [title]="child.label"
             class="flex items-center pl-10 pr-4 py-2 mx-2 rounded-lg text-white/70 hover:bg-white/[0.08] hover:text-white cursor-pointer transition-colors text-sm">
-            <span class="w-1.5 h-1.5 rounded-full bg-white/30 mr-3 shrink-0"></span>
             <span>{{ child.label }}</span>
           </a>
           }
