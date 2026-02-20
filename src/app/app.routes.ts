@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/login/login.component';
 import { HomeComponent } from './features/dashboard/home/home.component';
-import { UnauthenticatedGuard } from './core/guards/unauthenticated.gaurd';
-import { AuthenticatedGuard } from './core/guards/authenticated.gaurd';
+import { AuthenticatedGuard } from './core/guards/authenticated.guard';
+import { UnauthenticatedGuard } from './core/guards/unauthenticated.guard';
 
 export const routes: Routes = [
     {
@@ -18,12 +18,12 @@ export const routes: Routes = [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             {
                 path: 'dashboard',
-                loadChildren: () => import('./features/dashboard/dashboard.routs')
+                loadChildren: () => import('./features/dashboard/dashboard.routes')
                     .then(mod => mod.DASHBOARD_ROUTES)
             },
             {
                 path: 'reinsurance',
-                loadChildren: () => import('./features/reinsurance/reinsurance.routs')
+                loadChildren: () => import('./features/reinsurance/reinsurance.routes')
                     .then(mod => mod.REINSURANCE_ROUTES)
             }
         ]
