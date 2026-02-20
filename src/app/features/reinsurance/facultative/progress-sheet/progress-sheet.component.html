@@ -28,7 +28,8 @@
             </h2>
         </div>
         <div>
-            <app-input-field placeholder="search" [(ngModel)]="searchValue" (valueChange)="updateSearchValue($event,currentPage)"></app-input-field>
+            <app-input-field placeholder="search" [(ngModel)]="searchValue"
+                (valueChange)="updateSearchValue($event,currentPage)"></app-input-field>
         </div>
     </div>
 
@@ -67,8 +68,7 @@
                             <button title="view" class="text-gray-400 " (click)="preViewProgressSheet(item.refNo)">
                                 <span class="material-icons text-[18px] text-primary">visibility</span>
                             </button>
-                            <button title="edit" class="text-gray-400 " (click)="edit(item.refNo)"
-                            >
+                            <button title="edit" class="text-gray-400 " (click)="edit(item.refNo)">
                                 <span class="material-icons text-[18px] text-text-secondary">edit</span>
                             </button>
                             <button title="delete" class="text-gray-400 " (click)="delete(item.refNo)">
@@ -80,11 +80,7 @@
                 }
             </tbody>
         </table>
-<app-paginator
-[currentPage]="currentPage"
-listName="Submission"
-[totalItems]="totalItems"
-(pageChange)="updateSearchValue(searchValue,$event)"
-></app-paginator>
+        <app-paginator [currentPage]="currentPage" listName="Submission" [totalItems]="totalItems"
+            (pageChange)="updateSearchValue(searchValue,$event)"></app-paginator>
     </div>
 </div>

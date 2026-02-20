@@ -36,9 +36,69 @@ const placementClasses: Record<string, { trendIcon: string, trendColorClass: str
   providedIn: 'root',
 })
 export class PlacementService {
+  getPlacementList(arg0: {}) {
+    return of({
+      totalItems: 20,
+      data: [
+        {
+          refNo: "FAC-2024-001",
+          cedant: "ACME Insurance Co.",
+          type: "XOL",
+          status: "Placed",
+          lastUpdated: "2023-10-15"
+        },
+        {
+          refNo: "FAC-2024-002",
+          cedant: "Secure Insurers",
+          type: "Quota Share",
+          status: "In Progress",
+          lastUpdated: "2023-10-18"
+        },
+        {
+          refNo: "FAC-2024-003",
+          cedant: "Guardian General",
+          type: "Surplus",
+          status: "Open",
+          lastUpdated: "2023-10-20"
+        },
+        {
+          refNo: "FAC-2024-004",
+          cedant: "National Coverage",
+          type: "XOL",
+          status: "Open",
+          lastUpdated: "2023-10-21"
+        },
+        {
+          refNo: "FAC-2024-005",
+          cedant: "Premier Insurance",
+          type: "Quota Share",
+          status: "Placed",
+          lastUpdated: "2023-10-12"
+        }
+      ]
+    });
+  }
 
   constructor() { }
-  
+
+  getPlacementStatuses() {
+    return of([
+      { id: 0, name: 'all' },
+      { id: 1, name: 'open' },
+      { id: 2, name: 'in progress' },
+      { id: 3, name: 'placed' },
+    ])
+  }
+
+  getPlacementTypes() {
+    return of([
+      { id: 0, name: 'all' },
+      { id: 1, name: 'Quota Share' },
+      { id: 2, name: 'Surplus Share' },
+      { id: 3, name: 'Excess of Loss' },
+    ])
+  }
+
   getPlacementMetrics() {
     // Mock data for progress metrics
     return of([

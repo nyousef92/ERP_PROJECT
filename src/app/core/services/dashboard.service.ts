@@ -129,9 +129,9 @@ export class DashboardService {
         },
       ]
     ).pipe(
-      map((items: any[]) => {
+      map((items) => {
         return items.map(
-          (item => ({
+          ((item) => ({
             ...item,
             ...trendConfig[item.iconType],
             icon: this.helper.getIcon(item.iconType)
