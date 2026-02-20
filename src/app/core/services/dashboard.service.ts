@@ -44,81 +44,77 @@ export class DashboardService {
 
   getActivities(payload: any): Observable<INotification[]> {
     //return this.apiService.post<Notification[]>('',payload)
-    return of([
-      {
-        id: 1,
-        iconType: IconType.Submission,
-        isRead: false,
-        createdOn: '5 minutes ago',
-        displayText: 'FAC-2024-067 - Global Manufacturing Inc.',
-        mianText: 'New Submission Created',
-        icon: this.helper.getIcon(IconType.Submission)
-      },
-      {
-        id: 2,
-        iconType: IconType.Claims,
-        isRead: false,
-        createdOn: '15 minutes ago',
-        displayText: 'CLM-2024-123 - Property damage claim processed',
-        mianText: 'Claim Approved',
-        icon: this.helper.getIcon(IconType.Claims)
-      },
-      {
-        id: 3,
-        iconType: IconType.Treaty,
-        isRead: true,
-        createdOn: '1 hour ago',
-        displayText: 'TRT-2024-045 - Annual property treaty renewal',
-        mianText: 'Treaty Renewed',
-        icon: this.helper.getIcon(IconType.Treaty)
-      },
-      {
-        id: 4,
-        iconType: IconType.Employees,
-        isRead: true,
-        createdOn: '2 hours ago',
-        displayText: 'Sarah Johnson joined as Underwriter',
-        mianText: 'Employee Onboarded',
-        icon: this.helper.getIcon(IconType.Employees)
-      }
-    ]);
+    return of(
+      [
+        {
+          id: 1,
+          iconType: IconType.Submission,
+          isRead: false,
+          createdOn: '5 minutes ago',
+          displayText: 'FAC-2024-067 - Global Manufacturing Inc.',
+          mianText: 'New Submission Created'
+        },
+        {
+          id: 2,
+          iconType: IconType.Claims,
+          isRead: false,
+          createdOn: '15 minutes ago',
+          displayText: 'CLM-2024-123 - Property damage claim processed',
+          mianText: 'Claim Approved'
+        },
+        {
+          id: 3,
+          iconType: IconType.Treaty,
+          isRead: true,
+          createdOn: '1 hour ago',
+          displayText: 'TRT-2024-045 - Annual property treaty renewal',
+          mianText: 'Treaty Renewed'
+        },
+        {
+          id: 4,
+          iconType: IconType.Employees,
+          isRead: true,
+          createdOn: '2 hours ago',
+          displayText: 'Sarah Johnson joined as Underwriter',
+          mianText: 'Employee Onboarded'
+        }
+      ].map(item => (
+        {
+          ...item,
+          icon: this.helper.getIcon(item.iconType)
+        }))
+    );
   }
 
   getMetric(payload: any) {
     //return this.apiService.post('',payload)
-    return of([
-      {
-        label: 'Total Submissions',
-        value: 245,
-        subtitle: '+12% from last month',
-        iconType: IconType.NewInvoice,
-        icon: this.helper.getIcon(IconType.NewInvoice),
-        ...this.helper.getTrendConfig(IconType.NewInvoice),
-      },
-      {
-        label: 'Active Treaties',
-        value: 18,
-        subtitle: '3 pending renewal',
-        iconType: IconType.Processed,
-        icon: this.helper.getIcon(IconType.Processed),
-        ...this.helper.getTrendConfig(IconType.Processed),
-      },
-      {
-        label: 'Pending Claims',
-        value: 32,
-        subtitle: '5 require attention',
-        iconType: IconType.PendingApproval,
-        icon: this.helper.getIcon(IconType.PendingApproval),
-        ...this.helper.getTrendConfig(IconType.PendingApproval),
-      },
-      {
-        label: 'Total Employees',
-        value: 156,
-        subtitle: '8 new this quarter',
-        iconType: IconType.LoanRequest,
-        icon: this.helper.getIcon(IconType.LoanRequest),
-        ...this.helper.getTrendConfig(IconType.LoanRequest),
-      },
-    ]);
+    return of(
+      [
+        {
+          label: 'Total Submissions',
+          value: 245,
+          subtitle: '+12% from last month',
+          iconType: IconType.NewInvoice,
+        },
+        {
+          label: 'Active Treaties',
+          value: 18,
+          subtitle: '3 pending renewal',
+          iconType: IconType.Processed,
+        },
+        {
+          label: 'Pending Claims',
+          value: 32,
+          subtitle: '5 require attention',
+          iconType: IconType.PendingApproval,
+        },
+        {
+          label: 'Total Employees',
+          value: 156,
+          subtitle: '8 new this quarter',
+          iconType: IconType.LoanRequest,
+        },
+      ]
+    );
   }
 }

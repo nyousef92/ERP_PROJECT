@@ -9,7 +9,23 @@
     "edit": "تعديل",
     "search": "بحث",
     "forgtPassword": "نسيت كلمة المرور؟",
-    "profile": "الملف الشخصي"
+    "profile": "الملف الشخصي",
+    "submitNew":"اضافة جديد",
+    "print": "طباعة",
+    "update": "تحديث",
+    "actions": "إجراءات"
+  },
+  "reinsurance": {
+    "facultative": "إعادة التأمين الاختياري",
+    "facultativeDesc": "إدارة توزيعات المخاطر الفردية والطلبات",
+    "submissions": "الطلبات",
+    "refNo": "رقم المرجع",
+    "account": "الحساب",
+    "cedant": "المُسند",
+    "lob": "خط الأعمال",
+    "inception": "تاريخ البدء",
+    "siLol": "مبلغ التأمين/حد الخسارة",
+    "status": "الحالة"
   },
   "fields": {
     "userName": "اسم المستخدم",

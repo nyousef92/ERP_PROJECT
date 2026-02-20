@@ -9,7 +9,23 @@
     "edit": "edit",
     "search": "search",
     "forgtPassword": "forgot password?",
-    "profile": "profile"
+    "profile": "profile",
+    "submitNew":"submit new",
+    "print": "print",
+    "update": "update",
+    "actions": "actions"
+  },
+  "reinsurance": {
+    "facultative": "Facultative Reinsurance",
+    "facultativeDesc": "Manage individual risk placements and submissions",
+    "submissions": "Submissions",
+    "refNo": "Ref No.",
+    "account": "Account",
+    "cedant": "Cedant",
+    "lob": "LOB",
+    "inception": "Inception",
+    "siLol": "SI/LOL",
+    "status": "Status"
   },
   "fields": {
     "userName": "user name",

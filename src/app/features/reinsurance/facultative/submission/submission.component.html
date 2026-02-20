@@ -1,1 +1,79 @@
-<p>submission works!</p>
+<div class="space-y-4 mb-3">
+    <div class="flex items-start justify-between">
+        <div>
+            <h1 class="text-xl text-gray-900 mb-1">
+                {{ 'reinsurance.facultative' | translate }}</h1>
+            <p class="text-sm text-gray-600">
+                {{ 'reinsurance.facultativeDesc' | translate }}</p>
+        </div>
+        <div>
+            <button type="button"
+                class="inline-flex items-center gap-1 py-2 px-4 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize">
+                <span class="material-icons text-[14px]">add</span>
+                <span>{{ 'actions.submitNew' | translate }}</span>
+            </button>
+        </div>
+    </div>
+    <div>
+        <app-colored-cards-grid [dataList]="metrics"></app-colored-cards-grid>
+    </div>
+    <div class="bg-white rounded-lg  border border-gray-200 ">
+        <div class="flex items-start justify-between m-3">
+            <div>
+                <h2 class="text-xl text-gray-900 mb-1">
+                    {{ 'reinsurance.submissions' | translate }}
+                </h2>
+            </div>
+            <div>
+                <app-input-field  [placeholder]="'actions.search'|translate" (valueChange)="updateSearchValue($event)"></app-input-field>
+            </div>
+        </div>
+        <div class="overflow-hidden shadow-sm">
+            <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+                <thead class="bg-gray-50 font-medium text-gray-900">
+                    <tr>
+                        <th scope="col" class="px-6 py-4">{{ 'reinsurance.refNo' | translate }}</th>
+                        <th scope="col" class="px-6 py-4">{{ 'reinsurance.account' | translate }}</th>
+                        <th scope="col" class="px-6 py-4">{{ 'reinsurance.cedant' | translate }}</th>
+                        <th scope="col" class="px-6 py-4">{{ 'reinsurance.lob' | translate }}</th>
+                        <th scope="col" class="px-6 py-4">{{ 'reinsurance.inception' | translate }}</th>
+                        <th scope="col" class="px-6 py-4">{{ 'reinsurance.siLol' | translate }}</th>
+                        <th scope="col" class="px-6 py-4">{{ 'reinsurance.status' | translate }}</th>
+                        <th scope="col" class="px-6 py-4 text-right">{{ 'actions.actions' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                    @for (item of (history | filter:searchText:'refNo'); track item.refNo) {
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 font-medium text-gray-900">{{ item.refNo }}</td>
+                        <td class="px-6 py-4">{{ item.account }}</td>
+                        <td class="px-6 py-4">{{ item.cedant }}</td>
+                        <td class="px-6 py-4">{{ item.lob }}</td>
+                        <td class="px-6 py-4">{{ item.inception }}</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900">{{ item.siLol }}</td>
+                        <td class="px-6 py-4">
+                            <span [ngClass]="getStatusClass(item.status)"
+                                class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold border">
+                                {{ item.status }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex justify-end gap-3">
+                                <button [title]="'actions.print' | translate" class="text-gray-400 " >
+                                    <span class="material-icons text-[18px] text-indigo-600">description</span>
+                                </button>
+                                <button [title]="'actions.edit' | translate" class="text-gray-400 ">
+                                    <span class="material-icons text-[18px]">edit</span>
+                                </button>
+                                <button [title]="'actions.update' | translate" class="text-gray-400 ">
+                                    <span class="material-icons text-[18px] text-green-600">sync</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

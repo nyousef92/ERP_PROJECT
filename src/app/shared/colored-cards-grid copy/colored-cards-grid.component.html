@@ -1,13 +1,13 @@
-<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-3 mt-4">
+<div class="grid grid-cols-2 lg:grid-cols-6 gap-1.5">
   @for (item of dataList; track item.label) {
-  <div class="p-2 rounded-lg border border-border" [class]="item.icon.bgClass">
-    <div class="flex items-center justify-between mb-2">
-      <p class="text-[9px]  mb-1" [class]="item.trendColorClass">{{ item.label }}</p>
-      <span class="material-icons text-[14px]" [class]="item.trendColorClass">{{ item.trendIcon }}</span>
+  <div class="rounded border p-1.5" [class]="item.cardClass">
+    <div class="flex items-center justify-between mb-0.5">
+      <span class="text-[9px]" [class]="item.labelClass">{{ item.label }}</span>
+      <span class="material-icons text-[13px]" [class]="item.trendColorClass">{{ item.trendIcon }}</span>
     </div>
-    <p class="text-l text-text">{{ item.value }}</p>
+    <p class="text-sm" [class]="item.valueClass">{{ item.value }}</p>
     @if (item.subtitle) {
-    <p class="text-[9px]  mb-1" [class]="item.trendColorClass">{{ item.subtitle }}</p>
+    <p class="text-[8px] mt-0.5" [class]="item.labelClass">{{ item.subtitle }}</p>
     }
   </div>
   }
