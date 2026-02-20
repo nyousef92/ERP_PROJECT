@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { SubmissionComponent } from './submission/submission.component';
 import { FacultativeComponent } from './facultative.component';
 import { FacultativeSubmissionComponent } from './submission/facultative-submission/facultative-submission.component';
+import { ProgressSheetComponent } from './progress-sheet/progress-sheet.component';
 
 export const FACULTAIVE_ROUTES: Routes = [
 
@@ -20,6 +21,12 @@ export const FACULTAIVE_ROUTES: Routes = [
                     },
                 ]
             },
+            {
+                path:'progress-sheet',
+                children:[
+                    {path:'',component:ProgressSheetComponent}
+                ]
+            }
         ]
     },
 

@@ -59,13 +59,13 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex justify-end gap-3">
-                                <button title="print" class="text-gray-400 ">
+                                <button title="progress sheet" class="text-gray-400 " (click)="goToProgressSheet(item.refNo)">
                                     <span class="material-icons text-[18px] text-indigo-600">description</span>
                                 </button>
                                 <button title="edit" class="text-gray-400 " (click)="updateSubmission(item.refNo)">
                                     <span class="material-icons text-[18px]">edit</span>
                                 </button>
-                                <button title="update" class="text-gray-400 ">
+                                <button title="update" class="text-gray-400 "  (click)="renewSubmission(item.refNo)">
                                     <span class="material-icons text-[18px] text-green-600">sync</span>
                                 </button>
                             </div>

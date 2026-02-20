@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { BreadcrumbComponent } from "@shared/breadcrumb/breadcrumb.component";
 import { SecurityDetailsComponent } from './security-details/security-details.component';
 import { FiscalRegulatoryComponent } from "./fiscal-regulatory/fiscal-regulatory.component";
@@ -7,18 +7,21 @@ import { Router } from '@angular/router';
 import { LocalStorageCacheService } from '@core/services/local-storage-cache.service';
 import { FacultativeService } from '@core/services/facultative.service';
 
+const SESSION_KEY = 'facultative-submission-state';
+
 @Component({
   selector: 'app-facultative-submission',
   imports: [BreadcrumbComponent, SecurityDetailsComponent, FiscalRegulatoryComponent, GeneralInformationComponent],
   templateUrl: './facultative-submission.component.html'
 })
-export class FacultativeSubmissionComponent {
+export class FacultativeSubmissionComponent implements AfterViewInit, OnDestroy {
   @ViewChild(GeneralInformationComponent) generalInfo!: GeneralInformationComponent;
   @ViewChild(SecurityDetailsComponent) securityDetails!: SecurityDetailsComponent;
   @ViewChild(FiscalRegulatoryComponent) fiscalRegulatory!: FiscalRegulatoryComponent;
 
   activeTab = 0;
   formType: string;
+  private initialData: any;
 
   breadcumbs = [
     { label: 'Home', url: '/home/dashboard' },
@@ -31,8 +34,34 @@ export class FacultativeSubmissionComponent {
     private ls: LocalStorageCacheService,
     private facultativeService: FacultativeService
   ) {
-    const navigation = this.router.getCurrentNavigation();
-    this.formType = navigation?.extras.state?.['formType'];
+    const navState = this.router.getCurrentNavigation()?.extras.state;
+
+    if (navState?.['formType']) {
+      this.formType = navState['formType'];
+      this.initialData = navState['data'];
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify({ formType: this.formType, data: this.initialData }));
+    } else {
+      const saved = sessionStorage.getItem(SESSION_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        this.formType = parsed.formType;
+        this.initialData = parsed.data;
+      } else {
+        this.formType = 'Create Submission';
+      }
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (this.initialData) {
+      this.generalInfo.form.patchValue(this.initialData.generalInfo);
+      this.securityDetails.form.patchValue(this.initialData.securityDetails);
+      this.fiscalRegulatory.form.patchValue(this.initialData.fiscalRegulatory);
+    }
+  }
+
+  ngOnDestroy(): void {
+    sessionStorage.removeItem(SESSION_KEY);
   }
 
   isActive(index: number): boolean {

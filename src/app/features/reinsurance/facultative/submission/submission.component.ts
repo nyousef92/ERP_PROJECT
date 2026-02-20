@@ -13,6 +13,7 @@ import { PaginatorComponent } from "@shared/paginator/paginator.component";
   templateUrl: './submission.component.html'
 })
 export class SubmissionComponent implements OnInit {
+
   searchText = '';
   metrics: any[] = [];
   history: any[] = [];
@@ -73,7 +74,26 @@ export class SubmissionComponent implements OnInit {
 
   updateSubmission(refNum: string) {
     this.reinsuranceService.getSubmissionItemDetails(refNum).subscribe(resp => {
+      this.router.navigate(
+        ['home/reinsurance/facultative/submission/add-facultative-submission'],
+        { state: { formType: 'Update Submission', data: resp } }
+      );
+    });
+  }
 
+  renewSubmission(refNum: string) {
+    this.reinsuranceService.getSubmissionItemDetails(refNum).subscribe(resp => {
+      this.router.navigate(
+        ['home/reinsurance/facultative/submission/add-facultative-submission'],
+        { state: { formType: 'Renew', data: resp } }
+      );
+    });
+  }
+
+  goToProgressSheet(refNum: string) {
+    this.reinsuranceService.getSubmissionItemDetails(refNum).subscribe(resp => {
+      this.router.navigate(
+        ['home/reinsurance/facultative/progress-sheet']);
     })
   }
 }
