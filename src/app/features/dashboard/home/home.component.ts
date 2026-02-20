@@ -6,8 +6,7 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-home',
   standalone: true,
   imports: [RouterOutlet, SidebarComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  templateUrl: './home.component.html'
 })
 export class HomeComponent {
 

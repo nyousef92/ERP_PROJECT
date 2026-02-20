@@ -13,7 +13,7 @@ export class SharedService {
         {
           icon: 'dashboard',
           label: 'Dashboard',
-          route: '/dashboard'
+          route: '/home/dashboard'
         },
         {
           icon: 'shield',

@@ -4,6 +4,7 @@ export interface INotification {
   isRead: boolean;
   createdOn: string;
   displayText: string ;
+  mianText?: string ;
   icon: {
     icon: string,
     iconBgClass: string

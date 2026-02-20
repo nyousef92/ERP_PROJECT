@@ -2,7 +2,6 @@ import { Component, computed, model } from '@angular/core';
 import { INotification } from '../../../core/intefaces/notification';
 import { NgClass } from '@angular/common';
 import { SignalRService } from '../../../core/services/notification.service';
-import { SessionService } from '../../../core/services/session.service';
 
 @Component({
   selector: 'app-notifications-list',

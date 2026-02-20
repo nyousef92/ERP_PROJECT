@@ -1,0 +1,22 @@
+<div class="bg-surface rounded-lg border border-border mt-4">
+  <div class="p-4 border-b border-border">
+    <h2 class="text-base text-text">Recent Activity</h2>
+  </div>
+  <div class="divide-y divide-border">
+    @for( activity of activities;track activity.id){
+    <div class="p-3 hover:bg-background transition-colors">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+          [ngClass]="activity.icon.iconBgClass">
+          <span class="material-icons text-[14px]">{{ activity.icon.icon }}</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm text-text">{{ activity.mianText }}</p>
+          <p class="text-xs text-text-secondary mt-0.5">{{ activity.displayText }}</p>
+          <p class="text-xs text-text-muted mt-1">{{ activity.createdOn }}</p>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>
