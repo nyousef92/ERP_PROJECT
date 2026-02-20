@@ -29,7 +29,7 @@ export class SessionService {
   }
 
   isLoggedIn(): boolean {
-    const token = this.token$() || this.ls.get<string | null>('accessToken');
+    const token = this.token$() || this.ls.get<string | null>('accessToken','auth');
     return !!(token);
   }
 }

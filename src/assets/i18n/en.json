@@ -1,0 +1,32 @@
+{
+  "actions": {
+    "login": "login",
+    "logout": "logout",
+    "submit": "submit",
+    "cancel": "cancel",
+    "save": "save",
+    "delete": "delete",
+    "edit": "edit",
+    "search": "search",
+    "forgtPassword": "forgot password?",
+    "profile": "profile"
+  },
+  "fields": {
+    "userName": "user name",
+    "password": "password",
+    "email": "email",
+    "phone": "phone",
+    "firstName": "first name",
+    "lastName": "last name"
+  },
+  "validation": {
+    "required": "{{field}} is required",
+    "minlength": "{{field}} must be at least {{min}} characters",
+    "maxlength": "{{field}} must not exceed {{max}} characters",
+    "min": "{{field}} must be at least {{min}}",
+    "max": "{{field}} must not exceed {{max}}",
+    "email": "{{field}} must be a valid email address",
+    "pattern": "{{field}} format is invalid",
+    "numberOnly": "{{field}} must contain only numbers"
+  }
+}

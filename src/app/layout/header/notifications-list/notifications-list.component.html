@@ -1,0 +1,60 @@
+  <div class="relative">
+    <button
+      (click)="toggleNotifications()"
+      class="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-background transition-colors relative"
+    >
+      <span class="material-icons">notifications</span>
+      @if (unreadCount() > 0) {
+        <span class="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+          {{ unreadCount() > 9 ? '9+' : unreadCount() }}
+        </span>
+      }
+    </button>
+
+    <!-- Notification dropdown -->
+    @if (showNotifications()) {
+      <div class="absolute right-0 top-12 w-80 max-h-96 bg-surface rounded-xl shadow-lg border border-border overflow-hidden z-50">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-4 py-3 border-b border-border">
+          <span class="text-sm font-semibold text-text">Notifications</span>
+          @if (unreadCount() > 0) {
+            <span class="text-xs text-primary font-medium">{{ unreadCount() }} new</span>
+          }
+        </div>
+
+        <!-- List -->
+        <div class="overflow-y-auto max-h-80">
+          @for (notification of signalR.notifications(); track notification.id) {
+            <div
+              (click)="markAsRead(notification)"
+              class="flex items-start gap-3 px-4 py-3 hover:bg-background cursor-pointer transition-colors border-b border-border/50 last:border-b-0"
+              [ngClass]="{ 'bg-primary/5': !notification.isRead }"
+            >
+              <!-- Icon -->
+              <div class="shrink-0 w-9 h-9 rounded-lg flex items-center justify-center" [ngClass]="notification.icon.iconBgClass">
+                <span class="material-icons text-[18px]">{{ notification.icon.icon }}</span>
+              </div>
+
+              <!-- Content -->
+              <div class="flex-1 min-w-0">
+                <p class="text-sm text-text truncate" [ngClass]="{ 'font-semibold': !notification.isRead }">
+                  {{ notification.displayText }}
+                </p>
+                <p class="text-xs text-text-secondary mt-0.5">{{ notification.createdOn }}</p>
+              </div>
+
+              <!-- Unread dot -->
+              @if (!notification.isRead) {
+                <span class="shrink-0 w-2 h-2 rounded-full bg-primary mt-2"></span>
+              }
+            </div>
+          } @empty {
+            <div class="flex flex-col items-center justify-center py-8 text-text-secondary">
+              <span class="material-icons text-4xl mb-2 opacity-30">notifications_none</span>
+              <span class="text-sm">No notifications</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>

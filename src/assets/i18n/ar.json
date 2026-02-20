@@ -1,0 +1,32 @@
+{
+  "actions": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "search": "بحث",
+    "forgtPassword": "نسيت كلمة المرور؟",
+    "profile": "الملف الشخصي"
+  },
+  "fields": {
+    "userName": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "firstName": "الاسم الأول",
+    "lastName": "الاسم الأخير"
+  },
+  "validation": {
+    "required": "{{field}} مطلوب",
+    "minlength": "{{field}} يجب أن يكون على الأقل {{min}} حرف",
+    "maxlength": "{{field}} يجب ألا يتجاوز {{max}} حرف",
+    "min": "{{field}} يجب أن يكون على الأقل {{min}}",
+    "max": "{{field}} يجب ألا يتجاوز {{max}}",
+    "email": "{{field}} يجب أن يكون بريد إلكتروني صالح",
+    "pattern": "{{field}} صيغة غير صحيحة",
+    "numberOnly": "{{field}} يجب أن يحتوي على أرقام فقط"
+  }
+}

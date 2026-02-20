@@ -60,7 +60,7 @@ export class ApiService {
     );
   }
 
-  post<T>(url: string, body: any, isLogin = false): Observable<T> {
+  post<T>(url: string, body: any): Observable<T> {
     return this.handleRequest(() =>
       this.http.post<ApiResponse<T>>(url, body, { headers: this.headers })
     );

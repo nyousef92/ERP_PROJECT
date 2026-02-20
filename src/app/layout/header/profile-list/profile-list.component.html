@@ -1,0 +1,34 @@
+<div class="relative">
+  <button (click)="toggleNotifications()"
+    class="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-background transition-colors relative">
+    <span class="material-icons">account_circle</span>
+
+  </button>
+
+  @if (showProfile()) {
+  <div
+    class="absolute right-0 top-12 w-48 max-h-96 bg-surface rounded-xl shadow-lg border border-border overflow-hidden z-50">
+    <div class="overflow-y-auto max-h-80">
+      <div
+        class="flex items-center gap-3 px-4 py-3 hover:bg-background cursor-pointer transition-colors">
+        <span class="material-icons text-text-secondary">person</span>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm text-text truncate">
+            {{ 'actions.profile' | translate }}
+          </p>
+        </div>
+      </div>
+      <hr class="border-border" />
+      <div
+        class="flex items-center gap-3 px-4 py-3 hover:bg-background cursor-pointer transition-colors">
+        <span class="material-icons text-text-secondary">logout</span>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm truncate text-red-600" (click)="logout()">
+            {{ 'actions.logout' | translate }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

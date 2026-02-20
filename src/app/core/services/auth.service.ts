@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, map } from 'rxjs/operators';
 
 import { SessionService } from './session.service';
 import { LocalStorageCacheService } from './local-storage-cache.service';
@@ -32,8 +32,7 @@ export class AuthService {
 
   private restoreTokensFromStorage(): void {
     try {
-      const storedToken = this.ls.get<string | null>('accessToken', 'auth')
-
+      const storedToken = this.ls.get<string | null>('accessToken', 'auth');
       const storedRefreshToken = this.ls.get<string | null>('refreshToken', 'auth');
 
       if (storedToken) {
@@ -73,8 +72,7 @@ export class AuthService {
 
   private decodeToken(token: string): any {
     try {
-      const base64Url = token.split('.')[1];
-      if (!base64Url) return null;
+      const base64Url = token.split('.')[1]; // Get the payload part
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       const jsonPayload = decodeURIComponent(
         atob(base64)
@@ -84,6 +82,7 @@ export class AuthService {
       );
       return JSON.parse(jsonPayload);
     } catch (e) {
+      console.error(e);
       return null;
     }
   }
@@ -103,11 +102,39 @@ export class AuthService {
   }
 
   login(loginPayload: any): Observable<TokenResponse | string> {
-    return this.apiService.post<TokenResponse>(
-      `${this.authUrl}/Login`,
-      loginPayload,
-      true
+    // const request = this.apiService.post<TokenResponse>(
+    //   `${this.authUrl}/Login`,
+    //   loginPayload
+    // );
+
+    const request = of(
+      {
+        "data": {
+          "tokenType": "Bearer",
+          "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxODIyNDkzMTE0Nzk1ODIzMTA1Iiwic3ViIjoiMTMiLCJ1c2VySWQiOiIwMDAwMDAxMyIsIm5hbWUiOiJOYWRhIFlvdXNlZyIsInVzZXItbmFtZSI6Ik1TMU9ZV1JoTGxsdmRYTmxaZz09IiwiZW1haWwiOiJOYWRhLllvdXNlZkB5b3VyZG9tYWluLmNvbSIsImRldml2ZSI6Ik56ZGxPV0ppTUdObFpEaGxaamM1TVdVeFkyUTFZakkxWW1FeU1tWTBabUU9IiwidXNlciI6IkYxd1Bfblljbml5RHpKanFVV1N5ZE5Jazd4UGIwUXpROFNpNVdBVThYSUJJNFdEdXlyYWE3eHZET0ZPSUtlb0g5MFhtc0xlSFdZTV92LXV1OFRlT05RfHwiLCJleHAiOjE3NzExNDI4OTMsImlzcyI6Imh0dHBzOi8veW91cmRvbWFpbi5hdXRoLmNvbSIsImF1ZCI6Imh0dHBzOi8veW91cmRvbWFpbi5hcGkuY29tIn0.ObLPfZ-M6--wKTl9z6p3RNaHL-6FDVPTLC7w9tofGSM",
+          "expiresIn": 1800,
+          "refreshToken": "LVrxT-zJl7Xe_h43MlWKMof5Y4XInktgYWbZ6BbKThP5AiRsDY-XV1sZ4lZruJxLwKQ_Lu_7rrfsefF78qjwWuOxYEk-5wYhAnraLCoZ2EV-Q1XGRn5eIi2UMt4HWn-l5AL0n5B5e0nLJveCrHNPP95LDAlmLh7-whNQ_ynLHjE|",
+          "refreshTokenExpiresIn": 604800,
+          "user": {
+            "displayName": "Nada Yousef",
+            "email": "Nada.Yousef@gmail.com",
+            "role": "editor"
+          }
+        },
+        "success": true,
+        "responseCode": 200,
+        "id": "",
+        "loginUser": null,
+        "detailMessage": null,
+        "messages": [],
+        "hasMessage": false,
+        "total": 0
+      }
     ).pipe(
+      map(resp => resp.data)
+    );
+
+    return request.pipe(
       tap((response: any) => this.handleTokenResponse(response)),
       catchError((e) => {
         console.error(e);
@@ -129,8 +156,7 @@ export class AuthService {
 
     this.refreshInProgress$ = this.apiService.post<TokenResponse>(
       `${this.authUrl}/RefreshToken`,
-      { refreshToken: this.refreshToken },
-      true
+      { refreshToken: this.refreshToken }
     ).pipe(
       tap((response: any) => {
         this.handleTokenResponse(response);
