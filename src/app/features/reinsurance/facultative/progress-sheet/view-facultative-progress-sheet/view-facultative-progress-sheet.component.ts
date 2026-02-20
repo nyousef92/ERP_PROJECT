@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FacultativeService } from '@core/services/facultative.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbComponent, BreadcrumbItem } from '@shared/breadcrumb/breadcrumb.component';
+import { ModalComponent } from '@shared/modal/modal.component';
+import { EditReinsuranceComponent } from './edit-reinsurance/edit-reinsurance.component';
 
 @Component({
   selector: 'app-view-facultative-progress-sheet',
-  imports: [BreadcrumbComponent],
+  imports: [BreadcrumbComponent, ModalComponent],
   templateUrl: './view-facultative-progress-sheet.component.html'
 })
 export class ViewFacultativeProgressSheetComponent implements OnInit {
+
+  @ViewChild(ModalComponent) modal!: ModalComponent;
 
   refNumber: string | null;
   progressSheet: any;
@@ -40,12 +44,16 @@ export class ViewFacultativeProgressSheetComponent implements OnInit {
 
   editProgressSheet() {}
 
-  editReinsurer(reinsurer: any) {}
+  editReinsurer(reinsurer: any) {
+    this.modal.open(EditReinsuranceComponent, { reinsurer });
+  }
 
   deleteReinsurer(index: number) {
     this.progressSheet.reinsurers.splice(index, 1);
   }
 
-  addReinsurer() {}
+  addReinsurer() {
+    // Example: this.modal.open(AddReinsurerComponent);
+  }
 
 }

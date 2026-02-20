@@ -60,3 +60,109 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Inter', Roboto, "Helvetica Neue", sans-serif; }
+
+// ─── ng-select theme ──────────────────────────────────────────────────────────
+.ng-select {
+  .ng-select-container {
+    background-color: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: rgb(var(--color-text));
+    min-height: 38px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    box-shadow: none !important;
+
+    .ng-value-container {
+      padding: 0.25rem 0.75rem;
+
+      .ng-placeholder {
+        color: rgb(var(--color-text-muted));
+      }
+
+      .ng-value {
+        color: rgb(var(--color-text));
+      }
+
+      input {
+        color: rgb(var(--color-text));
+      }
+    }
+
+    .ng-arrow-wrapper {
+      padding-right: 0.75rem;
+
+      .ng-arrow {
+        border-color: rgb(var(--color-text-muted)) transparent transparent;
+      }
+    }
+
+    .ng-clear-wrapper {
+      color: rgb(var(--color-text-muted));
+
+      &:hover { color: rgb(var(--color-danger)); }
+    }
+  }
+
+  &.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+    border-color: rgb(var(--color-primary));
+    box-shadow: 0 0 0 1px rgb(var(--color-primary)) !important;
+  }
+
+  &.ng-select-opened > .ng-select-container {
+    border-color: rgb(var(--color-primary));
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &.ng-select-disabled > .ng-select-container {
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-text-muted));
+    cursor: not-allowed;
+  }
+
+  .ng-dropdown-panel {
+    border: 1px solid rgb(var(--color-primary));
+    border-top: none;
+    background-color: rgb(var(--color-surface));
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+
+    .ng-dropdown-panel-items {
+      max-height: 220px;
+
+      .ng-option {
+        font-size: 0.875rem;
+        color: rgb(var(--color-text));
+        padding: 0.5rem 0.75rem;
+        background-color: rgb(var(--color-surface));
+
+        &.ng-option-marked {
+          background-color: rgb(var(--color-background));
+          color: rgb(var(--color-text));
+        }
+
+        &.ng-option-selected {
+          background-color: rgba(var(--color-primary), 0.08);
+          color: rgb(var(--color-primary));
+          font-weight: 500;
+        }
+
+        &.ng-option-selected.ng-option-marked {
+          background-color: rgba(var(--color-primary), 0.14);
+        }
+
+        &.ng-option-disabled {
+          color: rgb(var(--color-text-muted));
+        }
+      }
+    }
+  }
+}
+
+// Error state — applied via wrapper div [class.ng-select-error]
+.ng-select-error .ng-select > .ng-select-container {
+  border-color: rgb(var(--color-danger)) !important;
+}
+// ─────────────────────────────────────────────────────────────────────────────

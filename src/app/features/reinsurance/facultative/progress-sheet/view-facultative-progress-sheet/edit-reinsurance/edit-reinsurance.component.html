@@ -1,0 +1,51 @@
+<div class="p-6" [formGroup]="form">
+
+  <h2 class="text-text mb-1">Edit Reinsurance Detail</h2>
+  <p class="text-sm text-text-muted mb-6">Make changes to the reinsurance details below.</p>
+
+  <div class="grid grid-cols-2 gap-4 mb-4">
+
+    <div class="col-span-2">
+      <app-select-dropdown label="Reinsurer" formControlName="name"
+        [errorMessage]="getErrorMeassage('name', 'Reinsurer Name')" [touched]="form.get('name')?.touched"
+        [options]="reinsurerList"></app-select-dropdown>
+    </div>
+
+    <app-input-field formControlName="share" label="Share (%)" placeholder="e.g. 25" type="number"
+      [errorMessage]="getErrorMeassage('share', 'Share')" [touched]="form.get('share')?.touched" />
+
+    <app-input-field formControlName="rate" label="Rate (%)" placeholder="e.g. 5.25" type="number"
+      [errorMessage]="getErrorMeassage('rate', 'Rate')" [touched]="form.get('rate')?.touched" />
+
+    <app-input-field formControlName="commission" label="Commission (%)" placeholder="e.g. 10" type="number"
+      [errorMessage]="getErrorMeassage('commission', 'Commission')" [touched]="form.get('commission')?.touched" />
+
+    <app-input-field formControlName="tax" label="Tax (%)" placeholder="e.g. 5" type="number" />
+
+    <div class="col-span-2">
+      <app-input-field formControlName="comments" label="Comments" placeholder="Optional notes" />
+    </div>
+
+  </div>
+
+  <div class="flex justify-between gap-3 pt-2 border-t border-border">
+    <div>
+      <button type="button"
+      (click)="onDelet()"
+        class="px-4 py-2 border border-danger rounded-lg text-danger hover:bg-danger-light transition-colors">
+        Delete </button>
+    </div>
+    <div class="flex justify-between gap-3">
+      <button type="button" (click)="onCancel()"
+        class="px-4 py-2 border border-border rounded-lg text-text-secondary hover:bg-background transition-colors">
+        Cancel
+      </button>
+      <button type="button" (click)="onSave()"
+        class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+        Save
+      </button>
+    </div>
+
+  </div>
+
+</div>

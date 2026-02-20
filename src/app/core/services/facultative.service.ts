@@ -189,6 +189,40 @@ export class FacultativeService {
     });
   }
 
+  getSecuritiesList() {
+    return of([
+      { id: 1, value: 1, label: "Swiss Re" },
+      { id: 2, value: 2, label: "Munich Re" },
+      { id: 3, value: 3, label: "Saudi Re" },
+      { id: 4, value: 4, label: "Hannover Re" },
+      { id: 5, value: 5, label: "Lloyd's of London" },
+      { id: 6, value: 6, label: "SCOR" },
+      { id: 7, value: 7, label: "Gen Re" },
+      { id: 8, value: 8, label: "Partner Re" },
+      { id: 9, value: 9, label: "Berkshire Hathaway Re" },
+      { id: 10, value: 10, label: "RGA (Reinsurance Group of America)" },
+      { id: 11, value: 11, label: "Everest Re" },
+      { id: 12, value: 12, label: "TransRe" },
+      { id: 13, value: 13, label: "PartnerRe" },
+      { id: 14, value: 14, label: "XL Catlin" },
+      { id: 15, value: 15, label: "Axis Re" },
+      { id: 16, value: 16, label: "Validus Re" },
+      { id: 17, value: 17, label: "Tokio Marine" },
+      { id: 18, value: 18, label: "MS&AD" },
+      { id: 19, value: 19, label: "China Re" },
+      { id: 20, value: 20, label: "Korean Re" },
+      { id: 21, value: 21, label: "African Re" },
+      { id: 22, value: 22, label: "GIC Re (General Insurance Corporation)" },
+      { id: 23, value: 23, label: "LIC Re (Life Insurance Corporation Re)" },
+      { id: 24, value: 24, label: "Trust Re" },
+      { id: 25, value: 25, label: "Aspen Re" },
+      { id: 26, value: 26, label: "Renaissance Re" },
+      { id: 27, value: 27, label: "QBE Re" },
+      { id: 28, value: 28, label: "Sompo International" },
+      { id: 29, value: 29, label: "AXA XL" },
+      { id: 30, value: 30, label: "Chubb Re" },
+    ]);
+  }
   getProgressSheetPreview(refNumber: string) {
     return of({
       refNumber: refNumber,
@@ -199,7 +233,7 @@ export class FacultativeService {
         underlyingPolicy: 'Commercial Property - POL-456789',
         effectiveDate: '01 Jan 2024',
         expiryDate: '31 Dec 2024',
-        id:'QS-2024-001'
+        id: 'QS-2024-001'
       },
       financials: {
         policyLimit: 25000000,
