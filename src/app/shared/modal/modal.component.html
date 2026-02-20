@@ -4,7 +4,7 @@
   <div class="absolute inset-0 bg-black/50" (click)="close()"></div>
 
   <!-- Panel -->
-  <div class="relative z-10 bg-surface rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-4">
+  <div class="relative z-10 bg-surface rounded-xl shadow-xl w-full max-h-[90vh] overflow-y-auto mx-4" [ngClass]="panelClass">
 
     <!-- Close button -->
     <button

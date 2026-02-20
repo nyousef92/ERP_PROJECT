@@ -29,17 +29,7 @@ export class MerticComponent implements OnInit, OnDestroy {
   getMetrics() {
     this.filters.pipe(
       takeUntil(this.destroy$),
-      switchMap(filters => this.dashboardService.getMetric(filters)),
-      map((items: any[]) => {
-        return items.map(
-          (item => ({
-            ...item,
-            ...this.helper.getTrendConfig(item.iconType),
-            icon: this.helper.getIcon(item.iconType)
-          })
-          ))
-      }
-      )
+      switchMap(filters => this.dashboardService.getMetric(filters))
     ).subscribe(metrics => this.metrics = metrics);
   }
 

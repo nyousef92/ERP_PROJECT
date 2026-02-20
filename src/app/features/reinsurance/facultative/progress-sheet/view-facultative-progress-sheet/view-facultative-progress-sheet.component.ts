@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbComponent, BreadcrumbItem } from '@shared/breadcrumb/breadcrumb.component';
 import { ModalComponent } from '@shared/modal/modal.component';
 import { EditReinsuranceComponent } from './edit-reinsurance/edit-reinsurance.component';
+import { EditProgressSheetComponent } from '../edit-progress-sheet/edit-progress-sheet.component';
 
 @Component({
   selector: 'app-view-facultative-progress-sheet',
@@ -42,7 +43,15 @@ export class ViewFacultativeProgressSheetComponent implements OnInit {
     );
   }
 
-  editProgressSheet() {}
+  editProgressSheet() {
+      this.modal.open(EditProgressSheetComponent, {
+        progressSheet: this.progressSheet,
+        onSaved: (updated: any) => {
+          this.progressSheet = { ...this.progressSheet, ...updated };
+          this.facultativeService.updateProgressSheet(this.progressSheet.id, this.progressSheet).subscribe()
+        }
+      }, 'xl')
+  }
 
   editReinsurer(reinsurer: any, index: number) {
     this.modal.open(EditReinsuranceComponent, {

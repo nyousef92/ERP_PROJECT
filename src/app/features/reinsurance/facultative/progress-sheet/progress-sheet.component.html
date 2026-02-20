@@ -1,1 +1,84 @@
-<p>progress-sheet works!</p>
+<app-modal />
+<div class="space-y-4 mb-3">
+    <div class="flex items-start justify-between">
+        <div>
+            <h1 class="text-xl text-text mb-1">Progress Sheets</h1>
+            <p class="text-sm text-text-muted">
+                Track and manage facultative reinsurance progress
+            </p>
+        </div>
+        <div>
+            <button type="button" (click)="addNew()"
+                class="inline-flex items-center gap-1 py-2 px-4 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize">
+                <span class="material-icons text-[14px]">add</span>
+                <span> Create Progress Sheet</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<app-cards-grid [dataList]="progressMetrics"></app-cards-grid>
+
+
+<div class="bg-surface rounded-lg  border border-border mt-3 ">
+    <div class="flex items-start justify-between m-3">
+        <div>
+            <h2 class="text-l text-text mb-1">
+                All Progress Sheets
+            </h2>
+        </div>
+        <div>
+            <app-input-field placeholder="search" (valueChange)="updateSearchValue($event)"></app-input-field>
+        </div>
+    </div>
+
+    <div class="overflow-hidden shadow-sm">
+        <table class="w-full border-collapse bg-surface text-left text-sm text-secondary-dark">
+            <thead class="bg-background font-medium  text-text ">
+                <tr>
+                    <th scope="col" class="px-6 py-4 text-xs">Ref No.</th>
+                    <th scope="col" class="px-6 py-4 text-xs">Cedant</th>
+                    <th scope="col" class="px-6 py-4 text-xs">LOB</th>
+                    <th scope="col" class="px-6 py-4 text-xs">Inception</th>
+                    <th scope="col" class="px-6 py-4 text-xs">SI/LOL</th>
+                    <th scope="col" class="px-6 py-4 ">Share</th>
+                    <th scope="col" class="px-6 py-4 ">Status</th>
+                    <th scope="col" class="px-6 py-4 ">Actions</th>
+                </tr>
+
+            </thead>
+            <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                @for (item of history; track item.refNo) {
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4 ">{{ item.refNo }}</td>
+                    <td class="px-6 py-4">{{ item.cedant }}</td>
+                    <td class="px-6 py-4">{{ item.lob }}</td>
+                    <td class="px-6 py-4">{{ item.inception }}</td>
+                    <td class="px-6 py-4 ">{{ item.siLol }}</td>
+                    <td class="px-6 py-4">{{ item.share }}</td>
+                    <td class="px-6 py-4">
+                        <span [ngClass]="getStatusClass(item.status)"
+                            class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold border">
+                            {{ item.status }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex justify-end gap-3">
+                            <button title="progress sheet" class="text-gray-400 ">
+                                <span class="material-icons text-[18px] text-primary">visibility</span>
+                            </button>
+                            <button title="edit" class="text-gray-400 ">
+                                <span class="material-icons text-[18px] text-text-secondary">edit</span>
+                            </button>
+                            <button title="update" class="text-gray-400 ">
+                                <span class="material-icons text-[18px] text-danger">delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

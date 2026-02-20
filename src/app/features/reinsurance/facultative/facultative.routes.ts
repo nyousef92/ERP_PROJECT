@@ -31,7 +31,7 @@ export const FACULTAIVE_ROUTES: Routes = [
                 children: [
                     { path: '', component: ProgressSheetComponent },
                     { path: 'preview-facultative-progress-sheet/:refNumber', component: PreviewFacultativeProgressSheetComponent },
-                    { path: 'view-facultative-progress-sheet/:refNumber', component: ViewFacultativeProgressSheetComponent }
+                    { path: 'view-facultative-progress-sheet/:refNumber', component: ViewFacultativeProgressSheetComponent },
                 ]
             }
         ]

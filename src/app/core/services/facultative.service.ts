@@ -11,13 +11,133 @@ import { IconType } from '../intefaces/icon-config';
 })
 export class FacultativeService {
 
-
   constructor(
     private apiService: ApiService,
     private helper: HelperService
   ) { }
+  getProgressSheetHistory(payload: { search: string; currentPage: number; pageSize: number; }) {
+    return of([
+      {
+        "refNo": "QS-2024-001",
+        "share": "Global Corp",
+        "cedant": "Secure Insurers",
+        "lob": "Property",
+        "inception": "01-Jan-2024",
+        "siLol": "$10,000,000",
+        "status": "Bound"
+      },
+      {
+        "refNo": "PRX-2024-001",
+        "share": "Mega Holdings",
+        "cedant": "Alpha Assurance",
+        "lob": "Casualty",
+        "inception": "15-Feb-2024",
+        "siLol": "$25,000,000",
+        "status": "Quoted"
+      },
+      {
+        "refNo": "SF-2024-001",
+        "share": "Pioneer Logistics",
+        "cedant": "Guardian General",
+        "lob": "Marine",
+        "inception": "01-Mar-2024",
+        "siLol": "$5,000,000",
+        "status": "Submitted"
+      },
+      {
+        "refNo": "PPX-2024-001",
+        "share": "Innovate Tech",
+        "cedant": "Secure Insurers",
+        "lob": "Technology",
+        "inception": "10-Mar-2024",
+        "siLol": "$50,000,000",
+        "status": "Bound"
+      },
+      {
+        "refNo": "SAF-2024-001",
+        "share": "Coastal Properties",
+        "cedant": "National Coverage",
+        "lob": "Property",
+        "inception": "20-Jan-2024",
+        "siLol": "$15,000,000",
+        "status": "Quoted"
+      },
+      {
+        "refNo": "QS-2024-002",
+        "share": "Tech Dynamics",
+        "cedant": "Premier Insurance",
+        "lob": "Technology",
+        "inception": "05-Apr-2024",
+        "siLol": "$8,000,000",
+        "status": "Submitted"
+      }
+    ]);
+  }
 
 
+  getProgressSheetMetrics() {
+    return of([
+      {
+        label: 'Total Sheets',
+        value: '1',
+        subtitle: null,
+        iconType: null,
+        ValueColorClass: 'text-text'
+      },
+      {
+        label: 'Bound',
+        value: '2',
+        subtitle: null,
+        iconType: null,
+        ValueColorClass: 'text-success'
+      }
+      , {
+        label: 'Quoted',
+        value: '1',
+        subtitle: null,
+        iconType: null,
+        ValueColorClass: 'text-primary'
+      }
+      , {
+        label: 'Pending',
+        value: '5',
+        subtitle: null,
+        iconType: null,
+        ValueColorClass: 'text-warning'
+      }
+    ])
+  }
+
+  updateProgressSheet(id: any, progressSheet: any) {
+    return of(true);
+  }
+  addNewProgressSheet(progressSheet: any) {
+    return of(true);
+  }
+
+
+  getLOBList() {
+    return of([
+      { id: 1, value: 'Property', label: 'Property' },
+      { id: 2, value: 'Casualty', label: 'Casualty' },
+      { id: 3, value: 'Marine', label: 'Marine' },
+      { id: 4, value: 'Energy', label: 'Energy' },
+      { id: 5, value: 'Aviation', label: 'Aviation' },
+      { id: 6, value: 'Liability', label: 'Liability' },
+    ]);
+  }
+
+  getCedantList() {
+    return of([
+      { id: 1, value: 'Global Insurance Co.', label: 'Global Insurance Co.' },
+      { id: 2, value: 'Alliance Assurance', label: 'Alliance Assurance' },
+      { id: 3, value: 'National Coverage', label: 'National Coverage' },
+      { id: 4, value: 'Alpha Assurance', label: 'Alpha Assurance' },
+      { id: 5, value: 'Premier Insurance', label: 'Premier Insurance' },
+      { id: 6, value: 'Secure Insurers', label: 'Secure Insurers' },
+      { id: 7, value: 'Guardian General', label: 'Guardian General' },
+    ]);
+  }
   getSubmissionTypes(): Observable<any[]> {
     //return this.apiService.get('')
     return of(
@@ -273,9 +393,9 @@ export class FacultativeService {
       receiptDate: '01/15/2023',
       notes: 'Standard property coverage. Terms and conditions as per original slip. Subject to final survey report.',
       reinsurers: [
-        { name: {id:1, name: 'Swiss Re'}, share: 25.00, rate: 5.25, commission: 10.00, tax: 5.00, comments: 'Standard terms applied.' },
-        { name: {id:2, name: 'Munich Re'}, share: 30.00, rate: 5.25, commission: 10.00, tax: 5.00, comments: 'Agreed, awaiting signed slip.' },
-        { name: {id:3, name: 'Saudi Re'}, share: 15.00, rate: 5.30, commission: 11.50, tax: 0, comments: 'Subject to engineering survey.' },
+        { name: { id: 1, name: 'Swiss Re' }, share: 25.00, rate: 5.25, commission: 10.00, tax: 5.00, comments: 'Standard terms applied.' },
+        { name: { id: 2, name: 'Munich Re' }, share: 30.00, rate: 5.25, commission: 10.00, tax: 5.00, comments: 'Agreed, awaiting signed slip.' },
+        { name: { id: 3, name: 'Saudi Re' }, share: 15.00, rate: 5.30, commission: 11.50, tax: 0, comments: 'Subject to engineering survey.' },
       ]
     });
   }

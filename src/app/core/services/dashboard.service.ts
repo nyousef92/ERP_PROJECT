@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { HelperService } from './helper.service';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { INotification } from '../intefaces/notification';
 import { IconType } from '../intefaces/icon-config';
 
@@ -115,6 +115,17 @@ export class DashboardService {
           iconType: IconType.LoanRequest,
         },
       ]
+    ).pipe(
+      map((items: any[]) => {
+        return items.map(
+          (item => ({
+            ...item,
+            ...this.helper.getTrendConfig(item.iconType),
+            icon: this.helper.getIcon(item.iconType)
+          })
+          ))
+      }
+      )
     );
   }
 }

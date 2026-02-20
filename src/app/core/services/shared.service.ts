@@ -23,7 +23,7 @@ export class SharedService {
               label: 'Facultative',
               children: [
                 { label: 'Submission', route: '/home/reinsurance/facultative/submission' },
-                { label: 'Progress Sheet', route: '/reinsurance/facultative/progress-sheet' },
+                { label: 'Progress Sheet', route: '/home/reinsurance/facultative/progress-sheet' },
                 { label: 'Placement', route: '/reinsurance/facultative/placement' },
                 { label: 'Approval', route: '/reinsurance/facultative/approval' },
               ]
