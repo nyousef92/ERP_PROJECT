@@ -2,8 +2,8 @@
     <app-breadcrumb [items]="breadcumbs"></app-breadcrumb>
 
     <div>
-        <h1 class="text-xl text-gray-900 mb-1">Create New Facultative Submission</h1>
-        <p class="text-sm text-gray-600">
+        <h1 class="text-xl text-text mb-1">Create New Facultative Submission</h1>
+        <p class="text-sm text-text-muted">
             Fill in the details below to create a new facultative reinsurance submission.
             Fields marked with * are required.
         </p>
@@ -11,15 +11,15 @@
 
     <div class="flex gap-1">
         <button (click)="activeTab = 0"
-            [class]="'px-4 py-2 text-sm transition-colors border-b-2 ' + (isActive(0) ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-600 hover:text-gray-900')">
+            [class]="'px-4 py-2 text-sm transition-colors border-b-2 ' + (isActive(0) ? 'border-primary text-primary' : 'border-transparent text-text-muted hover:text-text')">
             General Information
         </button>
         <button (click)="activeTab = 1"
-            [class]="'px-4 py-2 text-sm transition-colors border-b-2 ' + (isActive(1) ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-600 hover:text-gray-900')">
+            [class]="'px-4 py-2 text-sm transition-colors border-b-2 ' + (isActive(1) ? 'border-primary text-primary' : 'border-transparent text-text-muted hover:text-text')">
             Security Details
         </button>
         <button (click)="activeTab = 2"
-            [class]="'px-4 py-2 text-sm transition-colors border-b-2 ' + (isActive(2) ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-600 hover:text-gray-900')">
+            [class]="'px-4 py-2 text-sm transition-colors border-b-2 ' + (isActive(2) ? 'border-primary text-primary' : 'border-transparent text-text-muted hover:text-text')">
             Fiscal and Regulatory
         </button>
     </div>

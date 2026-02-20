@@ -2,8 +2,8 @@ import { Routes } from '@angular/router';
 import { SubmissionComponent } from './submission/submission.component';
 import { FacultativeComponent } from './facultative.component';
 import { FacultativeSubmissionComponent } from './submission/facultative-submission/facultative-submission.component';
-import { FacultativeProgressSheetComponent } from './progress-sheet/facultative-progress-sheet/facultative-progress-sheet.component';
 import { ProgressSheetComponent } from './progress-sheet/progress-sheet.component';
+import { PreviewFacultativeProgressSheetComponent } from './progress-sheet/preview-facultative-progress-sheet/preview-facultative-progress-sheet.component';
 
 export const FACULTAIVE_ROUTES: Routes = [
 
@@ -30,7 +30,8 @@ export const FACULTAIVE_ROUTES: Routes = [
                 path: 'progress-sheet',
                 children: [
                     { path: '', component: ProgressSheetComponent },
-                    { path: 'preView/:refNumber', component: FacultativeProgressSheetComponent }
+                    { path: 'preview-facultative-progress-sheet/:refNumber', component: PreviewFacultativeProgressSheetComponent },
+                    { path: 'edit-facultative-progress-sheet/:refNumber', component:  }
                 ]
             }
         ]

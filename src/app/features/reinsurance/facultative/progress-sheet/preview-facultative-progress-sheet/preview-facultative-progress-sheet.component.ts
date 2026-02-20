@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FacultativeService } from '@core/services/facultative.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, NgStyle } from '@angular/common';
 import { ProgressSheetDocumentsComponent } from '../progress-sheet-documents/progress-sheet-documents.component';
 
 @Component({
-  selector: 'app-facultative-progress-sheet',
-  imports: [CurrencyPipe, ProgressSheetDocumentsComponent],
-  templateUrl: './facultative-progress-sheet.component.html'
+  selector: 'app-preview-facultative-progress-sheet',
+  imports: [CurrencyPipe, ProgressSheetDocumentsComponent, NgStyle],
+  templateUrl: './preview-facultative-progress-sheet.component.html'
 })
-export class FacultativeProgressSheetComponent implements OnInit {
+export class PreviewFacultativeProgressSheetComponent implements OnInit {
 
   refNumber: string | null;
   progressSheet: any;
@@ -26,6 +26,11 @@ export class FacultativeProgressSheetComponent implements OnInit {
     if (this.refNumber) {
       this.facultativeService.getProgressSheet(this.refNumber).subscribe((data) => {
         this.progressSheet = data;
+        this.progressSheet.progress =
+          this.progressSheet.progress.toLowerCase() === 'submitter' ? 25
+            : this.progressSheet.progress.toLowerCase() === 'Quoted' ? 50
+              : this.progressSheet.progress.toLowerCase() === 'bound' ? 75
+                : 100;
       });
     }
   }
@@ -33,4 +38,13 @@ export class FacultativeProgressSheetComponent implements OnInit {
   onDocumentsUploaded(files: File[]) {
     this.progressSheet.documents = [...this.progressSheet.documents, ...files];
   }
+
+  editSubmission() {
+    this.router.navigate(
+      ['home/reinsurance/facultative/submission/add-facultative-submission', this.refNumber],
+      { queryParams: { formType: 'Update Submission' } }
+    );
+  }
+
+  editProgressSheet(){}
 }

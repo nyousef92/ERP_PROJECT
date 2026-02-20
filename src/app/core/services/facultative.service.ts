@@ -199,6 +199,7 @@ export class FacultativeService {
         underlyingPolicy: 'Commercial Property - POL-456789',
         effectiveDate: '01 Jan 2024',
         expiryDate: '31 Dec 2024',
+        id:'QS-2024-001'
       },
       financials: {
         policyLimit: 25000000,
@@ -215,8 +216,8 @@ export class FacultativeService {
         { name: 'Risk_Survey_Report.pdf', type: 'Survey', uploadDate: '10 Jan 2024' },
         { name: 'Binding_Authority_Confirmation.pdf', type: 'Confirmation', uploadDate: '12 Jan 2024' },
       ],
-      Progress: "Bound",
-      Securities: [
+      progress: "Bound",
+      securities: [
         "Swiss Re",
         "Munich Re",
         "Saudi Re",
