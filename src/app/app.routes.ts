@@ -8,13 +8,20 @@ export const routes: Routes = [
     {
         path: '',
         component: LoginComponent,
-        canActivate:[UnauthenticatedGuard]
+        canActivate: [UnauthenticatedGuard]
     },
-
     {
         path: 'home',
         component: HomeComponent,
-        canActivate:[AuthenticatedGuard]
+        canActivate: [AuthenticatedGuard],
+        children: [
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+            {
+                path: 'dashbaord',
+                loadChildren: () => import('./features/dashboard/dashboard.routs')
+                    .then(mod => mod.DASHBOARD_ROUTES)
+            }
+        ]
     }
 
 ];
