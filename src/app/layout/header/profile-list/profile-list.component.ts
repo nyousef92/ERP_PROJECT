@@ -1,11 +1,10 @@
 import { Component, model } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 import { SessionService } from '../../../core/services/session.service';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
     selector: 'app-profile-list',
-    imports: [TranslateModule],
+    imports: [],
     templateUrl: './profile-list.component.html'
 })
 export class ProfileListComponent {

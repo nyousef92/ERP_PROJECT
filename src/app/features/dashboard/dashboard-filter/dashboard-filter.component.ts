@@ -8,7 +8,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { forkJoin } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 import { SharedService } from '../../../core/services/shared.service';
 
 export interface FilterState {
@@ -21,7 +20,7 @@ export interface FilterState {
 
 @Component({
     selector: 'app-dashboard-filter',
-    imports: [CommonModule, FormsModule, TranslateModule],
+    imports: [CommonModule, FormsModule],
     templateUrl: './dashboard-filter.component.html'
 })
 export class DshboardFilterComponent implements OnInit {
@@ -38,11 +37,11 @@ export class DshboardFilterComponent implements OnInit {
   modules: string[] = [];
 
   quickRanges = [
-    { key: 'filter.today', value: 'Today' },
-    { key: 'filter.last7Days', value: 'Last 7 Days' },
-    { key: 'filter.lastWeek', value: 'Last Week' },
-    { key: 'filter.lastMonth', value: 'Last Month' },
-    { key: 'filter.lastQuarter', value: 'Last Quarter' },
+    { label: 'Today', value: 'Today' },
+    { label: 'Last 7 Days', value: 'Last 7 Days' },
+    { label: 'Last Week', value: 'Last Week' },
+    { label: 'Last Month', value: 'Last Month' },
+    { label: 'Last Quarter', value: 'Last Quarter' },
   ];
 
   get activeCount(): number {
@@ -53,12 +52,12 @@ export class DshboardFilterComponent implements OnInit {
     ].filter(Boolean).length;
   }
 
-  get activeTags(): { key: string; labelKey: string; value: string }[] {
-    const tags: { key: string; labelKey: string; value: string }[] = [];
-    if (this.dateFrom) tags.push({ key: 'dateFrom', labelKey: 'filter.tagFrom', value: this.dateFrom });
-    if (this.dateTo) tags.push({ key: 'dateTo', labelKey: 'filter.tagTo', value: this.dateTo });
-    if (this.activityType !== 'All') tags.push({ key: 'activityType', labelKey: 'filter.tagType', value: this.activityType });
-    if (this.module !== 'All') tags.push({ key: 'module', labelKey: 'filter.tagModule', value: this.module });
+  get activeTags(): { key: string; label: string; value: string }[] {
+    const tags: { key: string; label: string; value: string }[] = [];
+    if (this.dateFrom) tags.push({ key: 'dateFrom', label: 'From:', value: this.dateFrom });
+    if (this.dateTo) tags.push({ key: 'dateTo', label: 'To:', value: this.dateTo });
+    if (this.activityType !== 'All') tags.push({ key: 'activityType', label: 'Type:', value: this.activityType });
+    if (this.module !== 'All') tags.push({ key: 'module', label: 'Module:', value: this.module });
     return tags;
   }
 

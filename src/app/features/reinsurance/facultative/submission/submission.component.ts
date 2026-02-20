@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
 import { ColoredCardsGridComponent } from "../../../../shared/colored-cards-grid/colored-cards-grid.component";
 import { ReinsuranceService } from '../../../../core/services/reinsurance.service';
 import { NgClass } from '@angular/common';
@@ -10,7 +9,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-submission',
-  imports: [TranslatePipe, ColoredCardsGridComponent, NgClass, InputFieldComponent, FilterPipe],
+  imports: [ColoredCardsGridComponent, NgClass, InputFieldComponent, FilterPipe],
   templateUrl: './submission.component.html'
 })
 export class SubmissionComponent implements OnInit {

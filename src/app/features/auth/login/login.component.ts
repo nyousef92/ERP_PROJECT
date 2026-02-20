@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { InputFieldComponent } from '../../../shared/input-field/input-field.component';
-import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { HelperService } from '../../../core/services/helper.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
@@ -10,7 +9,7 @@ import { exhaustMap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-login',
-    imports: [ReactiveFormsModule, InputFieldComponent, TranslateModule, TranslatePipe],
+    imports: [ReactiveFormsModule, InputFieldComponent],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss'
 })

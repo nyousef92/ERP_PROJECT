@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { IconConfig, IconType, TrendConfig } from '../intefaces/icon-config';
 
 const iconConfig: Record<IconType, IconConfig> = {
@@ -106,10 +105,6 @@ const submissionClasses: Record<string, { trendIcon: string, trendColorClass: st
 @Injectable({ providedIn: 'root' })
 export class HelperService {
 
-  constructor(
-    private translateService: TranslateService
-  ) { }
-
   getIcon(type: IconType): IconConfig {
     return iconConfig[type];
   }
@@ -121,10 +116,9 @@ export class HelperService {
   getSubmissionIcon(submissionType:string){
     return submissionClasses[submissionType];
   }
-  getErrorsMessage(form: FormGroup, controlName: string = '', key: string, showFormError = false): string {
+  getErrorsMessage(form: FormGroup, controlName: string = '', fieldLabel: string, showFormError = false): string {
     const control = form.get(controlName);
     const touched = control?.touched;
-    const fieldLabel = this.translateService.instant(key);
     let errors = control?.errors && touched ?
       control.errors
       : showFormError ?
@@ -133,42 +127,14 @@ export class HelperService {
           : null
         : null;
     if (errors) {
-      if (errors['required']) {
-        return this.translateService.instant('validation.required', { field: fieldLabel });
-      }
-      if (errors['minlength']) {
-        return this.translateService.instant('validation.minlength', {
-          field: fieldLabel,
-          min: errors['minlength'].requiredLength
-        });
-      }
-      if (errors['maxlength']) {
-        return this.translateService.instant('validation.maxlength', {
-          field: fieldLabel,
-          max: errors['maxlength'].requiredLength
-        });
-      }
-      if (errors['min']) {
-        return this.translateService.instant('validation.min', {
-          field: fieldLabel,
-          min: errors['min'].min
-        });
-      }
-      if (errors['max']) {
-        return this.translateService.instant('validation.max', {
-          field: fieldLabel,
-          max: errors['max'].max
-        });
-      }
-      if (errors['email']) {
-        return this.translateService.instant('validation.email', { field: fieldLabel });
-      }
-      if (errors['pattern']) {
-        return this.translateService.instant('validation.pattern', { field: fieldLabel });
-      }
-      if (errors['numberOnly']) {
-        return this.translateService.instant('validation.numberOnly', { field: fieldLabel });
-      }
+      if (errors['required']) return `${fieldLabel} is required`;
+      if (errors['minlength']) return `${fieldLabel} must be at least ${errors['minlength'].requiredLength} characters`;
+      if (errors['maxlength']) return `${fieldLabel} must not exceed ${errors['maxlength'].requiredLength} characters`;
+      if (errors['min']) return `${fieldLabel} must be at least ${errors['min'].min}`;
+      if (errors['max']) return `${fieldLabel} must not exceed ${errors['max'].max}`;
+      if (errors['email']) return `${fieldLabel} must be a valid email address`;
+      if (errors['pattern']) return `${fieldLabel} format is invalid`;
+      if (errors['numberOnly']) return `${fieldLabel} must contain only numbers`;
     }
     return '';
   }
