@@ -1,0 +1,45 @@
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-4">
+  <div class="bg-surface p-4 rounded-lg border border-border">
+    <h3 class="text-sm text-text mb-3">Monthly Submissions</h3>
+    <div class="h-64">
+      <canvas baseChart
+        [type]="submissionsChart.type"
+        [data]="submissionsChart.data"
+        [options]="submissionsChart.options">
+      </canvas>
+    </div>
+  </div>
+
+  <div class="bg-surface p-4 rounded-lg border border-border">
+    <h3 class="text-sm text-text mb-3">Claims by Status</h3>
+    <div class="h-64">
+      <canvas baseChart
+        [type]="claimsChart.type"
+        [data]="claimsChart.data"
+        [options]="claimsChart.options">
+      </canvas>
+    </div>
+  </div>
+
+  <div class="bg-surface p-4 rounded-lg border border-border">
+    <h3 class="text-sm text-text mb-3">Treaty Distribution</h3>
+    <div class="h-64">
+      <canvas baseChart
+        [type]="treatyChart.type"
+        [data]="treatyChart.data"
+        [options]="treatyChart.options">
+      </canvas>
+    </div>
+  </div>
+
+  <div class="bg-surface p-4 rounded-lg border border-border">
+    <h3 class="text-sm text-text mb-3">Employee Growth</h3>
+    <div class="h-64">
+      <canvas baseChart
+        [type]="employeeChart.type"
+        [data]="employeeChart.data"
+        [options]="employeeChart.options">
+      </canvas>
+    </div>
+  </div>
+</div>
