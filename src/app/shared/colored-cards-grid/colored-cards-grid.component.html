@@ -1,0 +1,19 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
+  @for (item of dataList; track item.label) {
+  <div class="bg-surface p-4 rounded-lg border border-border">
+    @if (showIcons) {
+    <div class="flex items-center justify-between mb-2">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center" [class]="item.iconBgClass">
+        <span class="material-icons text-[18px]" [class]="item.iconColorClass">{{ item.icon }}</span>
+      </div>
+      <span class="material-icons text-[14px]" [class]="item.trendColorClass">{{ item.trendIcon }}</span>
+    </div>
+    }
+    <p class="text-xs text-text-secondary mb-1">{{ item.label }}</p>
+    <p class="text-2xl text-text">{{ item.value }}</p>
+    @if (item.subtitle) {
+    <p class="text-xs text-text-muted mt-1">{{ item.subtitle }}</p>
+    }
+  </div>
+  }
+</div>

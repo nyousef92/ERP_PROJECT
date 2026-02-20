@@ -11,7 +11,7 @@ import { SignalRService } from '../../../core/services/notification.service';
 })
 export class NotificationsListComponent {
 
-  showNotifications = model.required<boolean>();
+  showNotifications = model.required<any>();
   unreadCount = computed(() => this.signalR.notifications().filter(n => !n.isRead).length);
 
   constructor(

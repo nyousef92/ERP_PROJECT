@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { NotificationType } from '../intefaces/notification';
 
 @Injectable({ providedIn: 'root' })
 export class HelperService {
@@ -59,6 +60,10 @@ export class HelperService {
       }
     }
     return '';
+  }
+
+  getIcon() {
+ 
   }
 
 }

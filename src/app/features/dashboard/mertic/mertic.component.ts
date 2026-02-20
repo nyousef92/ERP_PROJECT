@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Subject, takeUntil, switchMap } from 'rxjs';
 import { Metric } from '../../../core/intefaces/metric';
 import { DashboardService } from '../../../core/services/dashboard.service';
+import { CardsGridComponent } from '../../../shared/cards-grid/cards-grid.component';
 
 @Component({
   selector: 'app-mertic',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,CardsGridComponent],
   templateUrl: './mertic.component.html'
 })
 export class MerticComponent implements OnInit, OnDestroy {
