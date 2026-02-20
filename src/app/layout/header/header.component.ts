@@ -6,8 +6,7 @@ import { ProfileListComponent } from './profile-list/profile-list.component';
   selector: 'app-header',
   standalone: true,
   imports: [NotificationsListComponent,ProfileListComponent],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent {
   @Input() isExpanded = true;

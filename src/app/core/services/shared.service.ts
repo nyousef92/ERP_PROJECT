@@ -139,4 +139,13 @@ export class SharedService {
     );
   }
 
+  getActivityTypes() {
+    //return this.api.get('');
+    return of(['All', 'Submission', 'Claim', 'Treaty', 'HR', 'Finance', 'Audit']);
+  }
+  getModuleTypes() {
+    //return this.api.get('');
+    return of(['All', 'Reinsurance', 'Claims', 'Finance', 'HR', 'Audit', 'Reports']);
+  }
+
 }

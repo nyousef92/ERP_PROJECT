@@ -19,6 +19,24 @@
     "firstName": "first name",
     "lastName": "last name"
   },
+  "filter": {
+    "filters": "Filters",
+    "clearAll": "Clear All",
+    "quickDateRange": "Quick Date Range",
+    "dateFrom": "Date From",
+    "dateTo": "Date To",
+    "activityType": "Activity Type",
+    "module": "Module",
+    "today": "Today",
+    "last7Days": "Last 7 Days",
+    "lastWeek": "Last Week",
+    "lastMonth": "Last Month",
+    "lastQuarter": "Last Quarter",
+    "tagFrom": "From:",
+    "tagTo": "To:",
+    "tagType": "Type:",
+    "tagModule": "Module:"
+  },
   "validation": {
     "required": "{{field}} is required",
     "minlength": "{{field}} must be at least {{min}} characters",

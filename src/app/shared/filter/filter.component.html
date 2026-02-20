@@ -1,0 +1,137 @@
+<div class="bg-surface border border-border rounded-2xl shadow-sm p-5 w-full">
+
+  <div class="flex items-center gap-3">
+
+    <button (click)="toggleFilters()"
+      class="flex items-center gap-2 px-3 py-1.5 bg-background border border-border rounded-lg text-sm font-medium text-text select-none">
+      <svg class="w-4 h-4 text-text-muted" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7">
+        <path d="M3 5h14M6 10h8M9 15h2" stroke-linecap="round" />
+      </svg>
+      {{ 'filter.filters' | translate }}
+      @if(activeCount > 0){
+      <span class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5
+                   bg-primary text-white text-[11px] font-bold rounded-full">
+        {{ activeCount }}
+      </span>
+      }
+    </button>
+    @if(activeCount > 0){
+    <button (click)="clearAll()" class="flex items-center gap-1.5 text-danger text-sm font-medium
+                   px-2.5 py-1 rounded-lg hover:bg-danger-light/20 transition-colors ">
+      <svg class="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M2 2l8 8M10 2l-8 8" stroke-linecap="round" />
+      </svg>
+      {{ 'filter.clearAll' | translate }}
+    </button>
+    }
+  </div>
+
+
+  @if (showFilters()) {
+  <div class="mt-4">
+    <hr class="border-border mb-4" />
+    <p class="text-[11px] font-semibold uppercase tracking-widest text-text-muted mb-2">
+      {{ 'filter.quickDateRange' | translate }}
+    </p>
+
+    <div class="flex flex-wrap gap-2 mb-5">
+      <button *ngFor="let range of quickRanges" (click)="applyQuickRange(range.value)"
+        [ngClass]="activeQuick === range.value
+        ? 'bg-primary text-white border-primary'
+        : 'bg-surface text-text-secondary border-border hover:border-primary hover:text-primary hover:bg-primary-light/20'"
+        class="px-4 py-1.5 rounded-full border text-sm font-medium transition-all duration-150 cursor-pointer">
+        {{ range.key | translate }}
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+
+      <div>
+        <label class="block text-[11px] font-semibold uppercase tracking-wide text-text-secondary mb-1.5">
+          {{ 'filter.dateFrom' | translate }}
+        </label>
+        <div class="flex items-center gap-2 h-9 px-3 border border-border rounded-lg
+                  bg-surface focus-within:border-primary focus-within:ring-2
+                  focus-within:ring-primary/20 transition-all">
+          <svg class="w-4 h-4 text-text-muted shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor"
+            stroke-width="1.6">
+            <rect x="2" y="3" width="16" height="15" rx="2" />
+            <path d="M2 8h16M7 1v4M13 1v4" />
+          </svg>
+          <input type="date" [(ngModel)]="dateFrom" (ngModelChange)="onDateFromChange()" class="flex-1 min-w-0 text-sm text-text bg-transparent border-none
+                 outline-none cursor-pointer" />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-[11px] font-semibold uppercase tracking-wide text-text-secondary mb-1.5">
+          {{ 'filter.dateTo' | translate }}
+        </label>
+        <div class="flex items-center gap-2 h-9 px-3 border border-border rounded-lg
+                  bg-surface focus-within:border-primary focus-within:ring-2
+                  focus-within:ring-primary/20 transition-all">
+          <svg class="w-4 h-4 text-text-muted shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor"
+            stroke-width="1.6">
+            <rect x="2" y="3" width="16" height="15" rx="2" />
+            <path d="M2 8h16M7 1v4M13 1v4" />
+          </svg>
+          <input type="date" [(ngModel)]="dateTo" (ngModelChange)="onDateToChange()" class="flex-1 min-w-0 text-sm text-text bg-transparent border-none
+                 outline-none cursor-pointer" />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-[11px] font-semibold uppercase tracking-wide text-text-secondary mb-1.5">
+          {{ 'filter.activityType' | translate }}
+        </label>
+        <div class="relative">
+          <select [(ngModel)]="activityType" (ngModelChange)="onActivityTypeChange()" class="w-full h-9 pl-3 pr-8 border border-border rounded-lg bg-surface
+                 text-sm text-text appearance-none cursor-pointer outline-none
+                 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
+            <option *ngFor="let type of activityTypes" [value]="type">{{ type }}</option>
+          </select>
+          <svg class="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5
+                    text-text-muted pointer-events-none" viewBox="0 0 20 20" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <path d="M5 7l5 5 5-5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-[11px] font-semibold uppercase tracking-wide text-text-secondary mb-1.5">
+          {{ 'filter.module' | translate }}
+        </label>
+        <div class="relative">
+          <select [(ngModel)]="module" (ngModelChange)="onModuleChange()" class="w-full h-9 pl-3 pr-8 border border-border rounded-lg bg-surface
+                 text-sm text-text appearance-none cursor-pointer outline-none
+                 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
+            <option *ngFor="let mod of modules" [value]="mod">{{ mod }}</option>
+          </select>
+          <svg class="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5
+                    text-text-muted pointer-events-none" viewBox="0 0 20 20" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <path d="M5 7l5 5 5-5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+      </div>
+
+    </div>
+
+    @if(activeTags.length > 0)
+    {
+    <div class="flex flex-wrap gap-2">
+      <span *ngFor="let tag of activeTags" class="flex items-center gap-1.5 pl-3 pr-2 py-1 bg-primary-light/20 border border-primary/30
+             rounded-full text-xs font-medium text-primary-dark animate-[pop_0.15s_ease]">
+        {{ tag.labelKey | translate }} {{ tag.value }}
+        <button (click)="removeTag(tag.key)"
+          class="flex items-center text-primary/40 hover:text-primary-dark transition-colors ml-0.5">
+          <svg class="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 2l8 8M10 2l-8 8" stroke-linecap="round" />
+          </svg>
+        </button>
+      </span>
+    </div>
+    }
+  </div>
+  }

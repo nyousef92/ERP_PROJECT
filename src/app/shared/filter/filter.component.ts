@@ -1,0 +1,194 @@
+import {
+  Component,
+  Output,
+  EventEmitter,
+  OnInit,
+  model
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { SharedService } from '../../core/services/shared.service';
+import { forkJoin } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+
+export interface FilterState {
+  dateFrom: string | null;
+  dateTo: string | null;
+  activityType: string;
+  module: string;
+}
+
+
+@Component({
+  selector: 'app-filter',
+  standalone: true,
+  imports: [CommonModule, FormsModule, TranslateModule],
+  templateUrl: './filter.component.html',
+})
+export class FilterComponent implements OnInit {
+
+  @Output() filterChange = new EventEmitter<FilterState>();
+
+  dateFrom: string = '';
+  dateTo: string = '';
+  activityType: string = 'All';
+  module: string = 'All';
+  activeQuick: string | null = null;
+
+  activityTypes: string[] = [];
+  modules: string[] = [];
+
+  quickRanges = [
+    { key: 'filter.today', value: 'Today' },
+    { key: 'filter.last7Days', value: 'Last 7 Days' },
+    { key: 'filter.lastWeek', value: 'Last Week' },
+    { key: 'filter.lastMonth', value: 'Last Month' },
+    { key: 'filter.lastQuarter', value: 'Last Quarter' },
+  ];
+
+  get activeCount(): number {
+    return [
+      this.dateFrom || this.dateTo,
+      this.activityType !== 'All',
+      this.module !== 'All',
+    ].filter(Boolean).length;
+  }
+
+  get activeTags(): { key: string; labelKey: string; value: string }[] {
+    const tags: { key: string; labelKey: string; value: string }[] = [];
+    if (this.dateFrom) tags.push({ key: 'dateFrom', labelKey: 'filter.tagFrom', value: this.dateFrom });
+    if (this.dateTo) tags.push({ key: 'dateTo', labelKey: 'filter.tagTo', value: this.dateTo });
+    if (this.activityType !== 'All') tags.push({ key: 'activityType', labelKey: 'filter.tagType', value: this.activityType });
+    if (this.module !== 'All') tags.push({ key: 'module', labelKey: 'filter.tagModule', value: this.module });
+    return tags;
+  }
+
+  showFilters = model<boolean>(false);
+    
+
+  constructor(
+    private shared: SharedService
+  ) { }
+
+  ngOnInit(): void {
+    this.getOptionsData();
+  }
+
+  toggleFilters() {
+    this.showFilters.update(v => !v);
+  }
+
+  getOptionsData() {
+    forkJoin({
+      activityTypes: this.shared.getActivityTypes(),
+      moduleTypes: this.shared.getModuleTypes(),
+    }).subscribe(resp => {
+      this.activityTypes = resp.activityTypes;
+      this.modules = resp.moduleTypes;
+    });
+  }
+
+  applyQuickRange(label: string): void {
+    const { from, to } = this.resolveRange(label);
+    this.dateFrom = from;
+    this.dateTo = to;
+    this.activeQuick = label;
+    this.emit();
+  }
+
+  private resolveRange(label: string): { from: string; to: string } {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    switch (label) {
+      case 'Today':
+        return { from: this.toISO(today), to: this.toISO(today) };
+
+      case 'Last 7 Days': {
+        const from = new Date(today);
+        from.setDate(today.getDate() - 6);
+        return { from: this.toISO(from), to: this.toISO(today) };
+      }
+
+      case 'Last Week': {
+        const dayOfWeek = today.getDay();
+        const distToLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+        const thisMonday = new Date(today);
+        thisMonday.setDate(today.getDate() - distToLastMonday);
+        const lastMonday = new Date(thisMonday);
+        lastMonday.setDate(thisMonday.getDate() - 7);
+        const lastSunday = new Date(lastMonday);
+        lastSunday.setDate(lastMonday.getDate() + 6);
+        return { from: this.toISO(lastMonday), to: this.toISO(lastSunday) };
+      }
+
+      case 'Last Month': {
+        const from = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const to = new Date(today.getFullYear(), today.getMonth(), 0);
+        return { from: this.toISO(from), to: this.toISO(to) };
+      }
+
+      case 'Last Quarter': {
+        const q = Math.floor(today.getMonth() / 3);
+        const from = new Date(today.getFullYear(), (q - 1) * 3, 1);
+        const to = new Date(today.getFullYear(), q * 3, 0);
+        return { from: this.toISO(from), to: this.toISO(to) };
+      }
+
+      default:
+        return { from: '', to: '' };
+    }
+  }
+
+  onDateFromChange(): void {
+    this.activeQuick = null;
+    this.emit();
+  }
+
+  onDateToChange(): void {
+    this.activeQuick = null;
+    this.emit();
+  }
+
+  onActivityTypeChange(): void {
+    this.emit();
+  }
+
+  onModuleChange(): void {
+    this.emit();
+  }
+
+  removeTag(key: string): void {
+    switch (key) {
+      case 'dateFrom': this.dateFrom = ''; this.activeQuick = null; break;
+      case 'dateTo': this.dateTo = ''; this.activeQuick = null; break;
+      case 'activityType': this.activityType = 'All'; break;
+      case 'module': this.module = 'All'; break;
+    }
+    this.emit();
+  }
+
+  clearAll(): void {
+    this.dateFrom = '';
+    this.dateTo = '';
+    this.activityType = 'All';
+    this.module = 'All';
+    this.activeQuick = null;
+    this.emit();
+  }
+
+  private emit(): void {
+    this.filterChange.emit({
+      dateFrom: this.dateFrom || null,
+      dateTo: this.dateTo || null,
+      activityType: this.activityType,
+      module: this.module,
+    });
+  }
+
+  private toISO(date: Date): string {
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${date.getFullYear()}-${mm}-${dd}`;
+  }
+}

@@ -19,6 +19,24 @@
     "firstName": "الاسم الأول",
     "lastName": "الاسم الأخير"
   },
+  "filter": {
+    "filters": "تصفية",
+    "clearAll": "مسح الكل",
+    "quickDateRange": "نطاق تاريخ سريع",
+    "dateFrom": "من تاريخ",
+    "dateTo": "إلى تاريخ",
+    "activityType": "نوع النشاط",
+    "module": "الوحدة",
+    "today": "اليوم",
+    "last7Days": "آخر 7 أيام",
+    "lastWeek": "الأسبوع الماضي",
+    "lastMonth": "الشهر الماضي",
+    "lastQuarter": "الربع الماضي",
+    "tagFrom": "من:",
+    "tagTo": "إلى:",
+    "tagType": "النوع:",
+    "tagModule": "الوحدة:"
+  },
   "validation": {
     "required": "{{field}} مطلوب",
     "minlength": "{{field}} يجب أن يكون على الأقل {{min}} حرف",

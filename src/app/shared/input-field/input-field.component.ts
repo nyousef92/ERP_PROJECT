@@ -7,7 +7,6 @@ import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor, ReactiveFormsModu
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './input-field.component.html',
-  styleUrls: ['./input-field.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

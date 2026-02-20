@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
-import { ApiService } from '../../core/services/api.service';
 import { SharedService } from '../../core/services/shared.service';
 
 export interface MenuItem {
@@ -20,8 +19,7 @@ export interface MenuItem {
     RouterLinkActive,
     HeaderComponent,
   ],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent implements OnInit {
 

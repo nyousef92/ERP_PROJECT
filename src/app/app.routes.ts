@@ -17,7 +17,7 @@ export const routes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             {
-                path: 'dashbaord',
+                path: 'dashboard',
                 loadChildren: () => import('./features/dashboard/dashboard.routs')
                     .then(mod => mod.DASHBOARD_ROUTES)
             }
