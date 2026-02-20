@@ -6,6 +6,7 @@ import { ProgressSheetComponent } from './progress-sheet/progress-sheet.componen
 import { PreviewFacultativeProgressSheetComponent } from './progress-sheet/preview-facultative-progress-sheet/preview-facultative-progress-sheet.component';
 import { ViewFacultativeProgressSheetComponent } from './progress-sheet/view-facultative-progress-sheet/view-facultative-progress-sheet.component';
 import { PlacementComponent } from './placement/placement.component';
+import { ApprovalComponent } from './approval/approval.component';
 
 export const FACULTAIVE_ROUTES: Routes = [
     {
@@ -38,7 +39,14 @@ export const FACULTAIVE_ROUTES: Routes = [
             {
                 path: 'placement',
                 children: [
-                    { path: '', component: PlacementComponent }
+                    { path: '', component: PlacementComponent },
+                ]
+            },
+            {
+                path: 'approval',
+                children: [
+                    { path: '', component: ApprovalComponent },
+
                 ]
             }
         ]

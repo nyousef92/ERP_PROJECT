@@ -1,0 +1,99 @@
+<div class="space-y-4 mb-3">
+    <div class="flex items-start justify-between">
+        <div>
+            <h1 class="text-xl text-text mb-1">
+                Placement Approval
+            </h1>
+            <p class="text-sm text-text-muted">
+                Review and approve placement transactions
+            </p>
+        </div>
+    </div>
+    <div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 space-y-4">
+                <div class="bg-surface rounded-lg  border border-border p-3 ">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        @for (f of filters; track f.key) {
+                        <button (click)="setStatus(f)" [class]="buttonClass(f.key)"
+                            class="py-2.5 px-4 rounded-lg border text-sm font-medium transition-all duration-150 cursor-pointer">
+                            {{ f.label }} ({{getNumberOfTransactions(f.key)}})
+                        </button>
+                        }
+                    </div>
+
+                    <div class="flex items-start justify-between m-3">
+                        <div class="w-full">
+                            <app-input-field placeholder="search" placeholder="Search Insured"
+                                [(ngModel)]="searchValue"></app-input-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-surface rounded-lg  border border-border ">
+                    <div>
+                        <h2 class="text-l text-text m-3">
+                            Placements
+                        </h2>
+                    </div>
+
+                    <div class="overflow-hidden shadow-sm">
+                        <table class="w-full border-collapse bg-surface text-left text-sm text-secondary-dark">
+                            <thead class="bg-background font-medium  text-text ">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4 text-xs">Refereance</th>
+                                    <th scope="col" class="px-6 py-4 text-xs">INSURED</th>
+                                    <th scope="col" class="px-6 py-4 text-xs">CLASS</th>
+                                    <th scope="col" class="px-6 py-4 text-xs">PREMIUM</th>
+                                    <th scope="col" class="px-6 py-4 text-xs">STATUS</th>
+                                    <th scope="col" class="px-6 py-4 text-xs">ACTION</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                                @for (item of ((historyList|filter:searchValue:'insured')|filter:activeFilter:'status');
+                                track item.refNo) {
+
+                                <tr class="hover:bg-gray-50 transition-colors">
+
+                                    <td class="px-6 py-4 font-medium  text-text ">{{ item.refNom }}</td>
+                                    <td class="px-6 py-4 font-medium  text-text ">{{ item.insured }}</td>
+                                    <td class="px-6 py-4 font-medium  text-text ">{{ item.class }}</td>
+                                    <td class="px-6 py-4 font-medium  text-text ">{{ item.premium }}</td>
+                                    <td class="px-6 py-4">
+                                        <span [ngClass]="item.class"
+                                            class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold border">
+                                            {{ item.status }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4" (click)="reviewPlacement(item)">
+                                        <button class="bg-none border-none text-primary">
+                                            Review
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-1">
+
+                <div class="bg-surface rounded-lg  border border-border p-3 text-center">
+                    @if(reviewItem){
+                        <app-review-approval [reviewItem]="reviewItem"></app-review-approval>
+                    }
+                    @else{
+                    <span class="material-icons text-7xl text-primary">description</span>
+                    <p class="m-3">
+                        slect a placement to view.
+                    </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

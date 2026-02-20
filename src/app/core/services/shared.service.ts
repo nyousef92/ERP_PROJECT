@@ -25,7 +25,7 @@ export class SharedService {
                 { label: 'Submission', route: '/home/reinsurance/facultative/submission' },
                 { label: 'Progress Sheet', route: '/home/reinsurance/facultative/progress-sheet' },
                 { label: 'Placement', route: '/home/reinsurance/facultative/placement' },
-                { label: 'Approval', route: '/reinsurance/facultative/approval' },
+                { label: 'Approval', route: '/home/reinsurance/facultative/approval' },
               ]
             },
             {

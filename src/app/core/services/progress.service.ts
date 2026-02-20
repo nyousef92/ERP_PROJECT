@@ -1,19 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
-import { HelperService } from './helper.service';
-import { Observable, of } from 'rxjs';
-import { INotification } from '../intefaces/notification';
-import { IconType } from '../intefaces/icon-config';
+import { of } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProgressSheetService {
-  constructor(
-    private apiService: ApiService,
-    private helper: HelperService
-  ) { }
+  
 
   deleteProgressSheet(refNo: string) {
     return of(true);
