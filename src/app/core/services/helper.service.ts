@@ -6,42 +6,42 @@ import { IconConfig, IconType } from '../intefaces/icon-config';
 const iconConfig: Record<IconType, IconConfig> = {
   [IconType.NearExpiry]: {
     name: 'warning',
-    bgClass: 'bg-yellow-100',
+    bgClass: 'bg-yellow-50',
     colorClass: 'text-yellow-600',
     trendIcon: 'trending_down',
     trendColorClass: 'text-warning'
   },
   [IconType.PendingApproval]: {
     name: 'schedule',
-    bgClass: 'bg-red-100',
+    bgClass: 'bg-red-50',
     colorClass: 'text-red-600',
     trendIcon: 'error_outline',
     trendColorClass: 'text-warning'
   },
   [IconType.TravelRequest]: {
     name: 'flight',
-    bgClass: 'bg-blue-100',
+    bgClass: 'bg-blue-50',
     colorClass: 'text-blue-600',
     trendIcon: 'trending_up',
     trendColorClass: 'text-success'
   },
   [IconType.LoanRequest]: {
     name: 'attach_money',
-    bgClass: 'bg-purple-100',
+    bgClass: 'bg-purple-50',
     colorClass: 'text-purple-600',
     trendIcon: 'trending_up',
     trendColorClass: 'text-success'
   },
   [IconType.Processed]: {
     name: 'check_circle',
-    bgClass: 'bg-green-100',
+    bgClass: 'bg-green-50',
     colorClass: 'text-green-600',
     trendIcon: 'trending_up',
     trendColorClass: 'text-success'
   },
   [IconType.NewInvoice]: {
     name: 'description',
-    bgClass: 'bg-indigo-100',
+    bgClass: 'bg-indigo-50',
     colorClass: 'text-indigo-600',
     trendIcon: 'trending_up',
     trendColorClass: 'text-success'

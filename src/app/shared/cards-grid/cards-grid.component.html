@@ -1,7 +1,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
   @for (item of dataList; track item.label) {
   <div class="bg-surface p-4 rounded-lg border border-border">
-    @if (showIcons) {
+    @if (showIcons()) {
     <div class="flex items-center justify-between mb-2">
       <div class="w-8 h-8 rounded-lg flex items-center justify-center" [class]="item.icon.bgClass">
         <span class="material-icons text-[18px]" [class]="item.icon.colorClass">{{ item.icon.name }}</span>
