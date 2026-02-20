@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, forwardRef, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor, ReactiveFormsModule, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-input-field',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+    imports: [FormsModule, ReactiveFormsModule],
     templateUrl: './input-field.component.html',
     providers: [
         {

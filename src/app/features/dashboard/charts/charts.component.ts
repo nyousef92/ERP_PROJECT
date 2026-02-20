@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { BehaviorSubject, Subject, takeUntil, switchMap } from 'rxjs';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, registerables, ChartConfiguration } from 'chart.js';
@@ -9,7 +9,7 @@ Chart.register(...registerables);
 
 @Component({
     selector: 'app-charts',
-    imports: [CommonModule, BaseChartDirective],
+    imports: [BaseChartDirective],
     templateUrl: './charts.component.html'
 })
 export class ChartsComponent implements OnInit, OnDestroy {

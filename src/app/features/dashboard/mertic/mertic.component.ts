@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy, model, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { BehaviorSubject, Subject, takeUntil, switchMap, map } from 'rxjs';
 import { Metric } from '../../../core/intefaces/metric';
 import { DashboardService } from '../../../core/services/dashboard.service';
@@ -8,7 +8,7 @@ import { HelperService } from '../../../core/services/helper.service';
 
 @Component({
     selector: 'app-mertic',
-    imports: [CommonModule, CardsGridComponent],
+    imports: [CardsGridComponent],
     templateUrl: './mertic.component.html'
 })
 export class MerticComponent implements OnInit, OnDestroy {

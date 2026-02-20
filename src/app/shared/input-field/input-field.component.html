@@ -1,8 +1,10 @@
 <div class="w-full">
-  <label *ngIf="label" [for]="label"
-    class="block text-sm font-medium text-text mb-1 capitalize">
-    {{ label }}
-  </label>
+  @if (label) {
+    <label [for]="label"
+      class="block text-sm font-medium text-text mb-1 capitalize">
+      {{ label }}
+    </label>
+  }
   <input
     [type]="type"
     [id]="label"
@@ -13,8 +15,10 @@
     class="w-full px-3 py-2 text-sm text-text bg-surface border border-border rounded-lg outline-none transition-colors placeholder:text-text-muted placeholder:capitalize focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-background disabled:text-text-muted disabled:cursor-not-allowed"
     [class.!border-danger]="showError()"
     [class.!focus:ring-danger]="showError()"
-  />
-  <div *ngIf="showError()" class="mt-1 text-xs text-danger">
-    {{ errorMessage }}
+    />
+    @if (showError()) {
+      <div class="mt-1 text-xs text-danger">
+        {{ errorMessage }}
+      </div>
+    }
   </div>
-</div>
