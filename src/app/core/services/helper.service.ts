@@ -135,6 +135,7 @@ export class HelperService {
       if (errors['email']) return `${fieldLabel} must be a valid email address`;
       if (errors['pattern']) return `${fieldLabel} format is invalid`;
       if (errors['numberOnly']) return `${fieldLabel} must contain only numbers`;
+      if (errors['dependantOn']) return `Fill ${errors['dependantOn'].depndeeFieldLabel} befor filling ${fieldLabel}`;
     }
     return '';
   }

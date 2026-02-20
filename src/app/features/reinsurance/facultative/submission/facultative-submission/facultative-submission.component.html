@@ -25,13 +25,17 @@
     </div>
 </div>
 <div class="mt-3">
+    <div [class.hidden]="activeTab!==0">
+        <app-general-information [(collectData)]="collectData">
+        </app-general-information>
+    </div>
+    <div [class.hidden]="activeTab!==1">
+        <app-security-details [(collectData)]="collectData">
+        </app-security-details>
+    </div>
+    <div [class.hidden]="activeTab!==2">
+        <app-fiscal-regulatory [(collectData)]="collectData">
+        </app-fiscal-regulatory>
+    </div>
 
-    <app-fiscal-regulatory 
-    [(collectData)]="collectData" [class.d-none]="activeTab!==0">
-    </app-fiscal-regulatory>
-
-    <app-security-details [(collectData)]="collectData" [class.d-none]="activeTab!==1">
-    </app-security-details>
-    <app-fiscal-regulatory [(collectData)]="collectData" [class.d-none]="activeTab!==2">
-    </app-fiscal-regulatory>
 </div>

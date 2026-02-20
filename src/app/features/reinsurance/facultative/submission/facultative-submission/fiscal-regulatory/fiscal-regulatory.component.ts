@@ -19,6 +19,12 @@ export class FiscalRegulatoryComponent {
     private helper: HelperService,
     private router: Router
   ) {
+    effect(() => {
+      if (this.collectData()) {
+        this.onSubmit();
+      }
+    });
+
     this.form = this.fb.group({
       taxPayablebyUnderWritter: [''],
       taxPayableByInsured: [''],
@@ -28,17 +34,8 @@ export class FiscalRegulatoryComponent {
     });
   }
 
-  
-  ngOnInit(): void {
-    effect(() => {
-      if (this.collectData()) {
-        this.onSubmit();
-      }
-    });
-  }
-
   onSubmit(): void {
-    
+
   }
 
   getErrorMessage(controlName: string, lable: string) {
@@ -48,7 +45,7 @@ export class FiscalRegulatoryComponent {
   onCancel() {
     this.router.navigate(['//home/reinsurance/facultative/submission'])
   }
-  
+
   onSaveAsDraft() {
     console.log(this.form.value);
   }

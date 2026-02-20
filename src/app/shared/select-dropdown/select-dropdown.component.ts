@@ -1,11 +1,11 @@
-import { Component, Input, Output, EventEmitter, forwardRef, OnInit, Inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, OnInit } from '@angular/core';
 
 import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 export interface SelectOption {
-  id: number | string,
-  value: number | string,
+  id?: number | string,
+  value?: number | string,
   label: string
 }
 @Component({

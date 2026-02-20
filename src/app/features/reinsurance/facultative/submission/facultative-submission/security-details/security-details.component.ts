@@ -1,4 +1,4 @@
-import { Component, Input, model, Signal, effect, OnInit } from '@angular/core';
+import { Component, Input, model, Signal, effect } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { InputFieldComponent } from '../../../../../../shared/input-field/input-field.component';
 import { HelperService } from '../../../../../../core/services/helper.service';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   imports: [FormsModule, ReactiveFormsModule, InputFieldComponent, InputFieldTextareaComponent],
   templateUrl: './security-details.component.html'
 })
-export class SecurityDetailsComponent implements OnInit {
+export class SecurityDetailsComponent {
   form: FormGroup;
   collectData = model.required<boolean>();
 
@@ -19,6 +19,12 @@ export class SecurityDetailsComponent implements OnInit {
     private helper: HelperService,
     private router: Router
   ) {
+    effect(() => {
+      if (this.collectData()) {
+        this.onSubmit();
+      }
+    });
+
     this.form = this.fb.group({
       reinsuranceLiabilityClause: ['', [Validators.required]],
       orderHereon: [''],
@@ -27,19 +33,10 @@ export class SecurityDetailsComponent implements OnInit {
       writtenLines: [''],
       signingProvisions: ['']
     });
-
-  }
-
-  ngOnInit(): void {
-    effect(() => {
-      if (this.collectData()) {
-        this.onSubmit();
-      }
-    });
   }
 
   onSubmit(): void {
-    
+
   }
 
   getErrorMessage(controlName: string, lable: string) {
@@ -49,7 +46,7 @@ export class SecurityDetailsComponent implements OnInit {
   onCancel() {
     this.router.navigate(['//home/reinsurance/facultative/submission'])
   }
-  
+
   onSaveAsDraft() {
     console.log(this.form.value);
   }
