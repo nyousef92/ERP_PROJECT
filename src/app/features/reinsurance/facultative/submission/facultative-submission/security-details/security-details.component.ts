@@ -1,8 +1,8 @@
-import { Component, Input, model, Signal, effect } from '@angular/core';
+import { Component, model, effect } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { InputFieldComponent } from '../../../../../../shared/input-field/input-field.component';
-import { HelperService } from '../../../../../../core/services/helper.service';
-import { InputFieldTextareaComponent } from '../../../../../../shared/input-field-text-area/input-field-text-area.component';
+import { InputFieldComponent } from '@shared/input-field/input-field.component';
+import { HelperService } from '@core/services/helper.service';
+import { InputFieldTextareaComponent } from '@shared/input-field-text-area/input-field-text-area.component';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-security-details',

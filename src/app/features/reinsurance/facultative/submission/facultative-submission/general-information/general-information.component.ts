@@ -1,20 +1,19 @@
 import { Component, effect, model, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { InputFieldComponent } from '../../../../../../shared/input-field/input-field.component';
-import { HelperService } from '../../../../../../core/services/helper.service';
+import { InputFieldComponent } from '@shared/input-field/input-field.component';
+import { HelperService } from '@core/services/helper.service';
 import { Router } from '@angular/router';
-import { FacultativeService } from '../../../../../../core/services/facultative.service';
-import { SelectDropdownComponent } from "../../../../../../shared/select-dropdown/select-dropdown.component";
-import { dependantOn } from '../../../../../../core/validations/dependent.validation';
+import { FacultativeService } from '@core/services/facultative.service';
+import { SelectDropdownComponent } from "@shared/select-dropdown/select-dropdown.component";
+import { dependantOn } from '@core/validations/dependent.validation';
+import { InputFieldTextareaComponent } from "@shared/input-field-text-area/input-field-text-area.component";
 @Component({
   selector: 'app-general-information',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, InputFieldComponent, SelectDropdownComponent],
+  imports: [FormsModule, ReactiveFormsModule, InputFieldComponent, SelectDropdownComponent, InputFieldTextareaComponent],
   templateUrl: './general-information.component.html'
 })
 export class GeneralInformationComponent implements OnInit {
-
-
   form: FormGroup;
   collectData = model.required<boolean>();
   facTypes: any[] = [];
@@ -35,9 +34,13 @@ export class GeneralInformationComponent implements OnInit {
     this.form = this.fb.group({
       status: ['drafrt'],
       facType: ['', Validators.required],
-      subType: ['', dependantOn('facType','Fac Type')],
-      commission: [''],
-      fees: ['']
+      subType: ['', dependantOn('facType', 'Fac Type')],
+      originalInsured: [''],
+      reinsured: [''],
+      address: [''],
+      periodFrom: [''],
+      periodTo: [''],
+      description: [''],
     });
   }
   ngOnInit(): void {
@@ -55,7 +58,7 @@ export class GeneralInformationComponent implements OnInit {
   }
 
   onSubmit(): void {
-
+    console.log(this.form.value);
   }
 
   getErrorMessage(controlName: string, lable: string) {

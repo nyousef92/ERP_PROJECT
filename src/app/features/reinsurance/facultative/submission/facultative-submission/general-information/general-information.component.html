@@ -9,21 +9,12 @@
         <app-input-field label="Status" placeholder="Enter status" [disabled]="true" formControlName="status">
         </app-input-field>
 
-        <app-select-dropdown
-        label="fac type"
-        [options]="facTypes"
-        (selectionChange)="facTypeChanges($event)"
-        formControlName="facType"
-        >
+        <app-select-dropdown label="fac type" [options]="facTypes" (selectionChange)="facTypeChanges($event)"
+          formControlName="facType">
         </app-select-dropdown>
 
-        <app-select-dropdown
-        label="sub type"
-        [options]="subTypes"
-        (selectionChange)="subTypeChanges($event)"
-        formControlName="subType"
-        [errorMessage]="getErrorMessage('subType','sub type')"
-        >
+        <app-select-dropdown label="sub type" [options]="subTypes" (selectionChange)="subTypeChanges($event)"
+          formControlName="subType" [errorMessage]="getErrorMessage('subType','sub type')">
         </app-select-dropdown>
 
       </div>
@@ -33,11 +24,24 @@
     <div class="bg-white rounded-lg border border-gray-200 p-4 ">
       <h2 class="text-base text-gray-900 mb-3"> Broker Remuneration and Deductions</h2>
       <div class=" grid grid-cols-1 md:grid-cols-2 gap-3">
-        <app-input-field label="Commission" placeholder="Enter commission" formControlName="commission">
-        </app-input-field>
-        <app-input-field label="Fees" placeholder="Enter fees" formControlName="fees">
-        </app-input-field>
 
+        <app-input-field label="Original Insured " placeholder="Enter Original Insured "
+          formControlName="originalInsured">
+        </app-input-field>
+        <app-input-field label="Reinsured" placeholder="Enter Reinsured" formControlName="reinsured">
+        </app-input-field>
+        <app-input-field label="address" placeholder="Enter address" formControlName="address">
+        </app-input-field>
+      </div>
+      <div class=" grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+        <app-input-field type="date" label="Period From" placeholder="Enter Period From" formControlName="periodFrom">
+        </app-input-field>
+        <app-input-field type="date" label="Period To" placeholder="Enter Period To" formControlName="periodTo">
+        </app-input-field>
+      </div>
+      <div class="mt-3">
+        <app-input-field-text-area label="Description" placeholder="Enter Description"
+          formControlName="description"></app-input-field-text-area>
       </div>
     </div>
 

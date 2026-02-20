@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
-import { SharedService } from '../../core/services/shared.service';
+import { SharedService } from '@core/services/shared.service';
 
 export interface MenuItem {
   icon?: string;

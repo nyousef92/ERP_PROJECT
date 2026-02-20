@@ -108,8 +108,13 @@ export class SelectDropdownComponent implements ControlValueAccessor, OnInit {
   }
 
 
+  onBlur() {
+    this.onTouched();
+    this.formControl.markAsTouched();
+  }
+
   onFocus() {
-    this.formControl.markAsTouched();  // Mark as touched when the select field is focused
+    this.formControl.markAsTouched();
   }
 
   ngOnInit() {
@@ -124,6 +129,6 @@ export class SelectDropdownComponent implements ControlValueAccessor, OnInit {
 
 
   showError(): boolean {
-    return !!(this.touched && this.errorMessage);
+    return !!((this.touched || this.formControl.touched) && this.errorMessage);
   }
 }

@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ColoredCardsGridComponent } from "../../../../shared/colored-cards-grid/colored-cards-grid.component";
-import { ReinsuranceService } from '../../../../core/services/reinsurance.service';
+import { ColoredCardsGridComponent } from "@shared/colored-cards-grid/colored-cards-grid.component";
+import { ReinsuranceService } from '@core/services/reinsurance.service';
 import { NgClass } from '@angular/common';
 import { forkJoin } from 'rxjs';
-import { InputFieldComponent } from "../../../../shared/input-field/input-field.component";
-import { FilterPipe } from '../../../../core/pipes/filter.pipe';
+import { InputFieldComponent } from "@shared/input-field/input-field.component";
+import { FilterPipe } from '@core/pipes/filter.pipe';
 import { Router } from '@angular/router';
+import { PaginatorComponent } from "@shared/paginator/paginator.component";
 
 @Component({
   selector: 'app-submission',
-  imports: [ColoredCardsGridComponent, NgClass, InputFieldComponent, FilterPipe],
+  imports: [ColoredCardsGridComponent, NgClass, InputFieldComponent, FilterPipe, PaginatorComponent],
   templateUrl: './submission.component.html'
 })
 export class SubmissionComponent implements OnInit {
@@ -26,7 +27,10 @@ export class SubmissionComponent implements OnInit {
     forkJoin(
       [
         this.reinsuranceService.getSubmissionMetrics(),
-        this.reinsuranceService.getSubmissionHistory({}),
+        this.reinsuranceService.getSubmissionHistory({
+          pageSize: 6,
+          currentPage: 1
+        }),
       ]
     ).subscribe(data => {
       this.metrics = data[0];

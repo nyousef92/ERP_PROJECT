@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { BreadcrumbComponent } from "../../../../../shared/breadcrumb/breadcrumb.component";
+import { BreadcrumbComponent } from "@shared/breadcrumb/breadcrumb.component";
 import { SecurityDetailsComponent } from './security-details/security-details.component';
 import { FiscalRegulatoryComponent } from "./fiscal-regulatory/fiscal-regulatory.component";
 import { GeneralInformationComponent } from "./general-information/general-information.component";
 @Component({
   selector: 'app-facultative-submission',
-  imports: [BreadcrumbComponent, SecurityDetailsComponent, FiscalRegulatoryComponent, GeneralInformationComponent],
+  imports: [BreadcrumbComponent, SecurityDetailsComponent, FiscalRegulatoryComponent, GeneralInformationComponent,],
   templateUrl: './facultative-submission.component.html'
 })
 export class FacultativeSubmissionComponent {

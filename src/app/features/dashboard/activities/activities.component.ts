@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subject, takeUntil, switchMap } from 'rxjs';
-import { INotification } from '../../../core/intefaces/notification';
-import { DashboardService } from '../../../core/services/dashboard.service';
+import { INotification } from '@core/intefaces/notification';
+import { DashboardService } from '@core/services/dashboard.service';
 
 @Component({
   selector: 'app-activities',

@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { InputFieldComponent } from '../../../shared/input-field/input-field.component';
-import { HelperService } from '../../../core/services/helper.service';
-import { AuthService } from '../../../core/services/auth.service';
+import { InputFieldComponent } from '@shared/input-field/input-field.component';
+import { HelperService } from '@core/services/helper.service';
+import { AuthService } from '@core/services/auth.service';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { exhaustMap} from 'rxjs/operators';

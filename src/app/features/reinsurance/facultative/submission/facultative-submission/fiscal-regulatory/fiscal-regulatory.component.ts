@@ -1,7 +1,7 @@
 import { Component, effect, model } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
-import { InputFieldComponent } from '../../../../../../shared/input-field/input-field.component';
-import { HelperService } from '../../../../../../core/services/helper.service';
+import { InputFieldComponent } from '@shared/input-field/input-field.component';
+import { HelperService } from '@core/services/helper.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-fiscal-regulatory',

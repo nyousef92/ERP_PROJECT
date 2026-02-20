@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, OnDestroy, model, signal } from '@angular/core';
 
 import { BehaviorSubject, Subject, takeUntil, switchMap, map } from 'rxjs';
-import { Metric } from '../../../core/intefaces/metric';
-import { DashboardService } from '../../../core/services/dashboard.service';
-import { CardsGridComponent } from '../../../shared/cards-grid/cards-grid.component';
-import { HelperService } from '../../../core/services/helper.service';
+import { Metric } from '@core/intefaces/metric';
+import { DashboardService } from '@core/services/dashboard.service';
+import { CardsGridComponent } from '@shared/cards-grid/cards-grid.component';
+import { HelperService } from '@core/services/helper.service';
 
 @Component({
     selector: 'app-mertic',

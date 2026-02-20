@@ -8,13 +8,13 @@
     </label>
     }
     @if(this.options.length>9){ <ng-select [items]="options" [formControl]="formControl" [placeholder]="placeholder"
-        [clearable]="true" [required]="required || false" (change)="onSelectionChange($event)" (blur)="onTouched()"
+        [clearable]="true" [required]="required || false" (change)="onSelectionChange($event)" (blur)="onBlur()"
         (focus)="onFocus()" bindLabel="label" bindValue="value">
     </ng-select>
     }
 
     @if(this.options.length<9){ <select [id]="label" [formControl]="formControl" [attr.required]="required"
-        (change)="onSelectionChange($event)" (blur)="onTouched()" (focus)="onFocus()"
+        (change)="onSelectionChange($event)" (blur)="onBlur()" (focus)="onFocus()"
         class="w-full px-3 py-2 text-sm text-text bg-surface border border-border rounded-lg outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-background disabled:text-text-muted disabled:cursor-not-allowed"
         [class.!border-danger]="showError()">
         <option value="">{{placeholder}}</option>

@@ -8,7 +8,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { forkJoin } from 'rxjs';
-import { SharedService } from '../../../core/services/shared.service';
+import { SharedService } from '@core/services/shared.service';
+import { InputFieldComponent } from "@shared/input-field/input-field.component";
 
 export interface FilterState {
   dateFrom: string | null;
@@ -19,11 +20,14 @@ export interface FilterState {
 
 
 @Component({
-    selector: 'app-dashboard-filter',
-    imports: [CommonModule, FormsModule],
-    templateUrl: './dashboard-filter.component.html'
+  selector: 'app-dashboard-filter',
+  imports: [CommonModule, FormsModule, InputFieldComponent],
+  templateUrl: './dashboard-filter.component.html'
 })
 export class DshboardFilterComponent implements OnInit {
+  updateValue(value: any, field: any) {
+    (this as any)[field] = value;
+  }
 
   @Output() filterChange = new EventEmitter<FilterState>();
 
@@ -62,7 +66,7 @@ export class DshboardFilterComponent implements OnInit {
   }
 
   showFilters = model<boolean>(false);
-    
+
 
   constructor(
     private shared: SharedService

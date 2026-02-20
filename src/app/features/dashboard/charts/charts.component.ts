@@ -3,7 +3,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subject, takeUntil, switchMap } from 'rxjs';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, registerables, ChartConfiguration } from 'chart.js';
-import { DashboardService } from '../../../core/services/dashboard.service';
+import { DashboardService } from '@core/services/dashboard.service';
 
 Chart.register(...registerables);
 
