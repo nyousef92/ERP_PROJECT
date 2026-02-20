@@ -15,6 +15,8 @@ export class EditReinsuranceComponent implements OnInit {
 
   @Input() reinsurer: any;
   close!: () => void;
+  onSaved?: (data: any) => void;
+  onDelete?: (data: any) => void;
 
   form!: FormGroup;
   reinsurerList: any[] = [];
@@ -44,7 +46,14 @@ export class EditReinsuranceComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    Object.assign(this.reinsurer, this.form.value);
+
+    this.onSaved?.({
+      ...this.form.value,
+      name: {
+        id: this.form.value.name,
+        name: this.reinsurerList.find(r => +r.id === +this.form.value.name)?.label || ''
+      }
+    });
     this.close();
   }
 
@@ -62,6 +71,7 @@ export class EditReinsuranceComponent implements OnInit {
 
   onDelet() {
     Object.assign(this.reinsurer, null);
+    this.onDelete?.(this.reinsurer);
     this.close();
   }
 }

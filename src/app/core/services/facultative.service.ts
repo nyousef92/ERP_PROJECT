@@ -273,9 +273,9 @@ export class FacultativeService {
       receiptDate: '01/15/2023',
       notes: 'Standard property coverage. Terms and conditions as per original slip. Subject to final survey report.',
       reinsurers: [
-        { name: 'Swiss Re', share: 25.00, rate: 5.25, commission: 10.00, tax: 5.00, comments: 'Standard terms applied.' },
-        { name: 'Munich Re', share: 30.00, rate: 5.25, commission: 10.00, tax: 5.00, comments: 'Agreed, awaiting signed slip.' },
-        { name: 'Saudi', share: 15.00, rate: 5.30, commission: 11.50, tax: 0, comments: 'Subject to engineering survey.' },
+        { name: {id:1, name: 'Swiss Re'}, share: 25.00, rate: 5.25, commission: 10.00, tax: 5.00, comments: 'Standard terms applied.' },
+        { name: {id:2, name: 'Munich Re'}, share: 30.00, rate: 5.25, commission: 10.00, tax: 5.00, comments: 'Agreed, awaiting signed slip.' },
+        { name: {id:3, name: 'Saudi Re'}, share: 15.00, rate: 5.30, commission: 11.50, tax: 0, comments: 'Subject to engineering survey.' },
       ]
     });
   }

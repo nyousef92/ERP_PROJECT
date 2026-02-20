@@ -92,7 +92,7 @@
         <tbody class="divide-y divide-border">
           @for (reinsurer of progressSheet.reinsurers; track $index) {
           <tr class="hover:bg-background transition-colors">
-            <td class="px-4 py-3 text-sm text-text">{{ reinsurer.name }}</td>
+            <td class="px-4 py-3 text-sm text-text">{{ reinsurer.name.name }}</td>
             <td class="px-4 py-3 text-sm text-text-secondary">{{ reinsurer.share }}</td>
             <td class="px-4 py-3 text-sm text-text-secondary">{{ reinsurer.rate }}</td>
             <td class="px-4 py-3 text-sm text-text-secondary">{{ reinsurer.commission }}</td>
@@ -100,7 +100,7 @@
             <td class="px-4 py-3 text-sm text-text-secondary">{{ reinsurer.comments }}</td>
             <td class="px-4 py-3">
               <div class="flex items-center gap-2">
-                <button (click)="editReinsurer(reinsurer)" class="p-1.5 hover:bg-background rounded transition-colors">
+                <button (click)="editReinsurer(reinsurer, $index)" class="p-1.5 hover:bg-background rounded transition-colors">
                   <span class="material-icons text-[16px] text-text-secondary">edit</span>
 
                 </button>

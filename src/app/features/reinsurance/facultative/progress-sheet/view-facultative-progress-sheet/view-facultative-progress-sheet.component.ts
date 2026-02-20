@@ -44,8 +44,18 @@ export class ViewFacultativeProgressSheetComponent implements OnInit {
 
   editProgressSheet() {}
 
-  editReinsurer(reinsurer: any) {
-    this.modal.open(EditReinsuranceComponent, { reinsurer });
+  editReinsurer(reinsurer: any, index: number) {
+    this.modal.open(EditReinsuranceComponent, {
+      reinsurer,
+      onSaved: (updated: any) => {
+        this.progressSheet.reinsurers = this.progressSheet.reinsurers.map(
+          (r: any, i: number) => i === index ? { ...r, ...updated } : r
+        );
+      },
+      onDelete: () => {
+        this.progressSheet.reinsurers.splice(index, 1);
+      }
+    });
   }
 
   deleteReinsurer(index: number) {
@@ -53,7 +63,12 @@ export class ViewFacultativeProgressSheetComponent implements OnInit {
   }
 
   addReinsurer() {
-    // Example: this.modal.open(AddReinsurerComponent);
+    this.modal.open(EditReinsuranceComponent, {
+      reinsurer: null,
+      onSaved: (updated: any) => {
+        this.progressSheet.reinsurers.push(updated);
+      }
+    });
   }
 
 }
