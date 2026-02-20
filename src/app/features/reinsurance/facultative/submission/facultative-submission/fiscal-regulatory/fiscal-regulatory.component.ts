@@ -1,4 +1,4 @@
-import { Component, effect, model } from '@angular/core';
+import { Component, effect, Input, model } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { HelperService } from '@core/services/helper.service';
@@ -13,6 +13,7 @@ export class FiscalRegulatoryComponent {
 
   form: FormGroup;
   collectData = model.required<boolean>();
+  @Input() formType = 'Create Submission';
 
   constructor(
     private fb: FormBuilder,
@@ -43,7 +44,7 @@ export class FiscalRegulatoryComponent {
   }
 
   onCancel() {
-    this.router.navigate(['//home/reinsurance/facultative/submission'])
+    this.router.navigate(['/home/reinsurance/facultative/submission'])
   }
 
   onSaveAsDraft() {

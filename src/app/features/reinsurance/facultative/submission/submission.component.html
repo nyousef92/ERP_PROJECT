@@ -7,8 +7,7 @@
                 Manage individual risk placements and submissions</p>
         </div>
         <div>
-            <button type="button"
-            (click)="addNew()"
+            <button type="button" (click)="addNew()"
                 class="inline-flex items-center gap-1 py-2 px-4 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize">
                 <span class="material-icons text-[14px]">add</span>
                 <span>Submit New</span>
@@ -60,7 +59,7 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex justify-end gap-3">
-                                <button title="print" class="text-gray-400 " >
+                                <button title="print" class="text-gray-400 ">
                                     <span class="material-icons text-[18px] text-indigo-600">description</span>
                                 </button>
                                 <button title="edit" class="text-gray-400 ">
@@ -75,8 +74,8 @@
                     }
                 </tbody>
             </table>
-            
+
         </div>
-        <app-paginator></app-paginator>
+        <app-paginator (pageChange)="getSubmissionHistory($event)"></app-paginator>
     </div>
 </div>

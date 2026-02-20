@@ -26,15 +26,15 @@
 </div>
 <div class="mt-3">
     <div [class.hidden]="activeTab!==0">
-        <app-general-information [(collectData)]="collectData">
+        <app-general-information [(collectData)]="collectData" (saveClicked)="saveClicked()">
         </app-general-information>
     </div>
     <div [class.hidden]="activeTab!==1">
-        <app-security-details [(collectData)]="collectData">
+        <app-security-details [(collectData)]="collectData" (saveClicked)="saveClicked()">
         </app-security-details>
     </div>
     <div [class.hidden]="activeTab!==2">
-        <app-fiscal-regulatory [(collectData)]="collectData">
+        <app-fiscal-regulatory [(collectData)]="collectData" [formType]="formType" (saveClicked)="saveClicked()">
         </app-fiscal-regulatory>
     </div>
 

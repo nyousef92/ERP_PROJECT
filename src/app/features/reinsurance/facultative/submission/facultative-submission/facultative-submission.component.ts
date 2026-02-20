@@ -3,6 +3,7 @@ import { BreadcrumbComponent } from "@shared/breadcrumb/breadcrumb.component";
 import { SecurityDetailsComponent } from './security-details/security-details.component';
 import { FiscalRegulatoryComponent } from "./fiscal-regulatory/fiscal-regulatory.component";
 import { GeneralInformationComponent } from "./general-information/general-information.component";
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-facultative-submission',
   imports: [BreadcrumbComponent, SecurityDetailsComponent, FiscalRegulatoryComponent, GeneralInformationComponent,],
@@ -11,6 +12,12 @@ import { GeneralInformationComponent } from "./general-information/general-infor
 export class FacultativeSubmissionComponent {
   activeTab = 0;
   collectData = signal(false);
+  formType: string;
+
+  constructor(private router: Router) {
+    const navigation = this.router.getCurrentNavigation();
+    this.formType = navigation?.extras.state?.['formType'];
+  }
 
   isActive(index: number): boolean {
     return this.activeTab === index;
@@ -19,15 +26,21 @@ export class FacultativeSubmissionComponent {
   breadcumbs = [
     {
       label: 'Home',
-      url: 'home/dashboard'
+      url: '/home/dashboard'
     },
     {
       label: 'Submissions',
-      url: 'home/reinsurance/facultative/submission'
+      url: '/home/reinsurance/facultative/submission'
     },
     {
       label: 'Create Facultative Submission',
-      url: 'home/reinsurance/facultative/submission/add-facultative-submission'
+      url: '/home/reinsurance/facultative/submission/add-facultative-submission'
     },
   ]
+
+  saveClicked() {
+    this.collectData.update(v => true);
+  }
+
+  
 }

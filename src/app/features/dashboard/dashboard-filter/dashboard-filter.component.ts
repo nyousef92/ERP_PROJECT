@@ -25,9 +25,6 @@ export interface FilterState {
   templateUrl: './dashboard-filter.component.html'
 })
 export class DshboardFilterComponent implements OnInit {
-  updateValue(value: any, field: any) {
-    (this as any)[field] = value;
-  }
 
   @Output() filterChange = new EventEmitter<FilterState>();
 
@@ -48,21 +45,25 @@ export class DshboardFilterComponent implements OnInit {
     { label: 'Last Quarter', value: 'Last Quarter' },
   ];
 
-  get activeCount(): number {
-    return [
+  activeCount: number = 0;
+
+  private updateCount(): void {
+    this.activeCount = [
       this.dateFrom || this.dateTo,
       this.activityType !== 'All',
       this.module !== 'All',
     ].filter(Boolean).length;
   }
 
-  get activeTags(): { key: string; label: string; value: string }[] {
+  activeTags: { key: string; label: string; value: string }[] = [];
+
+  private updateTags(): void {
     const tags: { key: string; label: string; value: string }[] = [];
     if (this.dateFrom) tags.push({ key: 'dateFrom', label: 'From:', value: this.dateFrom });
     if (this.dateTo) tags.push({ key: 'dateTo', label: 'To:', value: this.dateTo });
     if (this.activityType !== 'All') tags.push({ key: 'activityType', label: 'Type:', value: this.activityType });
     if (this.module !== 'All') tags.push({ key: 'module', label: 'Module:', value: this.module });
-    return tags;
+    this.activeTags = tags;
   }
 
   showFilters = model<boolean>(false);
@@ -144,19 +145,13 @@ export class DshboardFilterComponent implements OnInit {
 
   onDateFromChange(): void {
     this.activeQuick = null;
-    this.emit();
   }
 
   onDateToChange(): void {
     this.activeQuick = null;
-    this.emit();
   }
 
-  onActivityTypeChange(): void {
-    this.emit();
-  }
-
-  onModuleChange(): void {
+  applyFilters(): void {
     this.emit();
   }
 
@@ -186,6 +181,8 @@ export class DshboardFilterComponent implements OnInit {
       activityType: this.activityType,
       module: this.module,
     });
+    this.updateTags();
+    this.updateCount();
   }
 
   private toISO(date: Date): string {

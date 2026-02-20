@@ -46,6 +46,61 @@
     </div>
 
 
+    <div class="bg-white rounded-lg border border-gray-200 p-4">
+      <h2 class="text-base text-gray-900 mb-3">Coverage &amp; Liability</h2>
+      <div class="space-y-3">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <app-input-field label="Total Insured" placeholder="USD 0.00" formControlName="totalInsured">
+          </app-input-field>
+          <app-input-field label="Limit of Liability" placeholder="USD 0.00" formControlName="limitOfLiability">
+          </app-input-field>
+        </div>
+
+        <app-input-field-text-area label="Cover" placeholder="Describe the cover..." formControlName="cover">
+        </app-input-field-text-area>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <app-input-field label="Interest" placeholder="Enter interest" formControlName="interest">
+          </app-input-field>
+          <app-input-field label="TOP Location" placeholder="Enter TOP location" formControlName="topLocation">
+          </app-input-field>
+        </div>
+
+        <app-input-field-text-area label="Original Conditions" placeholder="Enter original conditions..." formControlName="originalConditions">
+        </app-input-field-text-area>
+
+        <app-input-field-text-area label="Choice of Law & Jurisdiction" placeholder="Enter choice of law and jurisdiction details..." formControlName="choiceOfLaw">
+        </app-input-field-text-area>
+
+        <app-input-field-text-area label="RI Condition" placeholder="Enter condition details..." formControlName="riCondition">
+        </app-input-field-text-area>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <app-input-field label="Warranties" placeholder="Enter warranties" formControlName="warranties">
+          </app-input-field>
+          <app-input-field label="Subjectivities" placeholder="Enter subjectivities" formControlName="subjectivities">
+          </app-input-field>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <app-input-field label="Deductibles" placeholder="Enter deductibles" formControlName="deductibles">
+          </app-input-field>
+        </div>
+
+        <app-input-field-text-area label="Exclusion" placeholder="List any exclusions..." formControlName="exclusion">
+        </app-input-field-text-area>
+
+      </div>
+      <div class="bg-white rounded-lg border border-gray-200 p-4">
+      <h2 class="text-base text-gray-900 mb-3">Attachments</h2>
+    
+      <app-file-upload
+      (filesChange)="fileUploaded($event)"
+      ></app-file-upload>
+      </div>
+    </div>
+
     <div class="flex items-center justify-end gap-2 pb-4">
       <button type="button"
         class="px-4 py-2 text-sm border border-border rounded-lg text-text hover:bg-background transition-colors"

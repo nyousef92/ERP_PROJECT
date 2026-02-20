@@ -26,11 +26,10 @@ export class SubmissionComponent implements OnInit {
   ngOnInit(): void {
     forkJoin(
       [
-        this.reinsuranceService.getSubmissionMetrics(),
-        this.reinsuranceService.getSubmissionHistory({
+        this.reinsuranceService.getSubmissionMetrics(), this.reinsuranceService.getSubmissionHistory({
           pageSize: 6,
           currentPage: 1
-        }),
+        })
       ]
     ).subscribe(data => {
       this.metrics = data[0];
@@ -40,6 +39,16 @@ export class SubmissionComponent implements OnInit {
 
   updateSearchValue(value: string) {
     this.searchText = value;
+  }
+
+  getSubmissionHistory(currentPage = 1) {
+    this.reinsuranceService.getSubmissionHistory({
+      pageSize: 6,
+      currentPage
+    }).subscribe(resp => {
+      this.history = resp;
+    }).unsubscribe();
+
   }
 
   getStatusClass(status: string): string {
@@ -52,6 +61,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   addNew() {
-    this.router.navigate(['home/reinsurance/facultative/submission/add-facultative-submission'])
+    this.router.navigate(['home/reinsurance/facultative/submission/add-facultative-submission'],
+      { state: { formType: 'Create Submission' } })
   }
 }

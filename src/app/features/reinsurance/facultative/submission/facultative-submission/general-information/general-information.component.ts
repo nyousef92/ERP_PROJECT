@@ -7,10 +7,11 @@ import { FacultativeService } from '@core/services/facultative.service';
 import { SelectDropdownComponent } from "@shared/select-dropdown/select-dropdown.component";
 import { dependantOn } from '@core/validations/dependent.validation';
 import { InputFieldTextareaComponent } from "@shared/input-field-text-area/input-field-text-area.component";
+import { FileUploadComponent } from "@shared/file-upload/file-upload.component";
 @Component({
   selector: 'app-general-information',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, InputFieldComponent, SelectDropdownComponent, InputFieldTextareaComponent],
+  imports: [FormsModule, ReactiveFormsModule, InputFieldComponent, SelectDropdownComponent, InputFieldTextareaComponent, FileUploadComponent],
   templateUrl: './general-information.component.html'
 })
 export class GeneralInformationComponent implements OnInit {
@@ -41,6 +42,19 @@ export class GeneralInformationComponent implements OnInit {
       periodFrom: [''],
       periodTo: [''],
       description: [''],
+      totalInsured: [''],
+      limitOfLiability: [''],
+      cover: [''],
+      interest: [''],
+      topLocation: [''],
+      originalConditions: [''],
+      choiceOfLaw: [''],
+      riCondition: [''],
+      warranties: [''],
+      subjectivities: [''],
+      deductibles: [''],
+      exclusion: [''],
+      file: []
     });
   }
   ngOnInit(): void {
@@ -80,10 +94,13 @@ export class GeneralInformationComponent implements OnInit {
       value: item,
       label: item
     }));
-
   }
+  
   subTypeChanges(selectedType: string | number) {
     this.form.get('subtype')?.setValue(selectedType);
+  }
 
+  fileUploaded(uploadedFiles: File[]) {
+    this.form.get('file')?.setValue(uploadedFiles);
   }
 }
