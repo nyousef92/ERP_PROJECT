@@ -1,27 +1,26 @@
-import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { BreadcrumbComponent } from "@shared/breadcrumb/breadcrumb.component";
 import { SecurityDetailsComponent } from './security-details/security-details.component';
 import { FiscalRegulatoryComponent } from "./fiscal-regulatory/fiscal-regulatory.component";
 import { GeneralInformationComponent } from "./general-information/general-information.component";
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageCacheService } from '@core/services/local-storage-cache.service';
 import { FacultativeService } from '@core/services/facultative.service';
-
-const SESSION_KEY = 'facultative-submission-state';
+import { ReinsuranceService } from '@core/services/reinsurance.service';
 
 @Component({
   selector: 'app-facultative-submission',
   imports: [BreadcrumbComponent, SecurityDetailsComponent, FiscalRegulatoryComponent, GeneralInformationComponent],
   templateUrl: './facultative-submission.component.html'
 })
-export class FacultativeSubmissionComponent implements AfterViewInit, OnDestroy {
+export class FacultativeSubmissionComponent implements AfterViewInit {
   @ViewChild(GeneralInformationComponent) generalInfo!: GeneralInformationComponent;
   @ViewChild(SecurityDetailsComponent) securityDetails!: SecurityDetailsComponent;
   @ViewChild(FiscalRegulatoryComponent) fiscalRegulatory!: FiscalRegulatoryComponent;
 
   activeTab = 0;
   formType: string;
-  private initialData: any;
+  private refNumber: string | null;
 
   breadcumbs = [
     { label: 'Home', url: '/home/dashboard' },
@@ -31,37 +30,23 @@ export class FacultativeSubmissionComponent implements AfterViewInit, OnDestroy 
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private ls: LocalStorageCacheService,
-    private facultativeService: FacultativeService
+    private facultativeService: FacultativeService,
+    private reinsuranceService: ReinsuranceService
   ) {
-    const navState = this.router.getCurrentNavigation()?.extras.state;
-
-    if (navState?.['formType']) {
-      this.formType = navState['formType'];
-      this.initialData = navState['data'];
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify({ formType: this.formType, data: this.initialData }));
-    } else {
-      const saved = sessionStorage.getItem(SESSION_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        this.formType = parsed.formType;
-        this.initialData = parsed.data;
-      } else {
-        this.formType = 'Create Submission';
-      }
-    }
+    this.refNumber = this.route.snapshot.paramMap.get('refNumber');
+    this.formType = this.route.snapshot.queryParamMap.get('formType') ?? 'Create Submission';
   }
 
   ngAfterViewInit(): void {
-    if (this.initialData) {
-      this.generalInfo.form.patchValue(this.initialData.generalInfo);
-      this.securityDetails.form.patchValue(this.initialData.securityDetails);
-      this.fiscalRegulatory.form.patchValue(this.initialData.fiscalRegulatory);
+    if (this.refNumber) {
+      this.reinsuranceService.getSubmissionItemDetails(this.refNumber).subscribe(resp => {
+        this.generalInfo.form.patchValue(resp.generalInfo);
+        this.securityDetails.form.patchValue(resp.securityDetails);
+        this.fiscalRegulatory.form.patchValue(resp.fiscalRegulatory);
+      });
     }
-  }
-
-  ngOnDestroy(): void {
-    sessionStorage.removeItem(SESSION_KEY);
   }
 
   isActive(index: number): boolean {

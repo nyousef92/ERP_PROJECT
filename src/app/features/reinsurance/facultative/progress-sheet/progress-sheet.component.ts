@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   templateUrl: './progress-sheet.component.html'
 })
 export class ProgressSheetComponent {
-
+  
 }

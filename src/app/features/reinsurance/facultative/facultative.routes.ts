@@ -19,6 +19,10 @@ export const FACULTAIVE_ROUTES: Routes = [
                         path: 'add-facultative-submission',
                         component: FacultativeSubmissionComponent
                     },
+                    {
+                        path: 'add-facultative-submission/:refNumber',
+                        component: FacultativeSubmissionComponent
+                    },
                 ]
             },
             {

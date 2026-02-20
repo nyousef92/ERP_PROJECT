@@ -68,26 +68,21 @@ export class SubmissionComponent implements OnInit {
   }
 
   addNew() {
-    this.router.navigate(['home/reinsurance/facultative/submission/add-facultative-submission'],
-      { state: { formType: 'Create Submission' } })
+    this.router.navigate(['home/reinsurance/facultative/submission/add-facultative-submission']);
   }
 
   updateSubmission(refNum: string) {
-    this.reinsuranceService.getSubmissionItemDetails(refNum).subscribe(resp => {
-      this.router.navigate(
-        ['home/reinsurance/facultative/submission/add-facultative-submission'],
-        { state: { formType: 'Update Submission', data: resp } }
-      );
-    });
+    this.router.navigate(
+      ['home/reinsurance/facultative/submission/add-facultative-submission', refNum],
+      { queryParams: { formType: 'Update Submission' } }
+    );
   }
 
   renewSubmission(refNum: string) {
-    this.reinsuranceService.getSubmissionItemDetails(refNum).subscribe(resp => {
-      this.router.navigate(
-        ['home/reinsurance/facultative/submission/add-facultative-submission'],
-        { state: { formType: 'Renew', data: resp } }
-      );
-    });
+    this.router.navigate(
+      ['home/reinsurance/facultative/submission/add-facultative-submission', refNum],
+      { queryParams: { formType: 'Renew' } }
+    );
   }
 
   goToProgressSheet(refNum: string) {
