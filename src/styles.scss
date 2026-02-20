@@ -1,4 +1,62 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Primary - Blue (#3b82f6) */
+    --color-primary: 59 130 246;
+    --color-primary-light: 96 165 250;
+    --color-primary-dark: 37 99 235;
+
+    /* Secondary - Slate */
+    --color-secondary: 30 41 59;
+    --color-secondary-light: 51 65 85;
+    --color-secondary-dark: 15 23 42;
+
+    /* Accent - Amber */
+    --color-accent: 245 158 11;
+    --color-accent-light: 251 191 36;
+    --color-accent-dark: 217 119 6;
+
+    /* Success */
+    --color-success: 34 197 94;
+    --color-success-light: 74 222 128;
+    --color-success-dark: 22 163 74;
+
+    /* Warning */
+    --color-warning: 234 179 8;
+    --color-warning-light: 250 204 21;
+    --color-warning-dark: 202 138 4;
+
+    /* Danger */
+    --color-danger: 239 68 68;
+    --color-danger-light: 248 113 113;
+    --color-danger-dark: 220 38 38;
+
+    /* Info */
+    --color-info: 6 182 212;
+    --color-info-light: 34 211 238;
+    --color-info-dark: 8 145 178;
+
+    /* Surfaces & backgrounds */
+    --color-surface: 255 255 255;
+    --color-background: 241 245 249;
+
+    /* Text */
+    --color-text: 30 41 59;
+    --color-text-secondary: 100 116 139;
+    --color-text-muted: 148 163 184;
+
+    /* Border */
+    --color-border: 226 232 240;
+
+    /* Sidebar */
+    --color-sidebar: 30 41 59;
+    --color-sidebar-hover: 255 255 255;
+    --color-sidebar-active: 59 130 246;
+  }
+}
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: 'Inter', Roboto, "Helvetica Neue", sans-serif; }

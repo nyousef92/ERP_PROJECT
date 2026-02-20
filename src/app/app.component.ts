@@ -1,13 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ToastService } from './core/services/toaster.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SidebarComponent, MatSnackBarModule],
+  imports: [RouterOutlet, SidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

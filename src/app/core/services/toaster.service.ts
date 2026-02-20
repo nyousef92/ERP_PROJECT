@@ -1,30 +1,31 @@
-import { inject, Injectable } from '@angular/core';
-import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
+import { Injectable, signal } from '@angular/core';
 
 export interface Toast {
   message: string;
   type: 'success' | 'error' | 'info' | 'warning';
   duration?: number;
+  id?: number;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToastService {
-  private snackBar = inject(MatSnackBar);
+  private counter = 0;
+  toasts = signal<Toast[]>([]);
 
   show(toast: Toast): void {
-    this.snackBar.open(
-      toast.message, '✕', {
-      duration: 1000000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-      panelClass: [`${toast.type}-toast`] 
-    });
+    const id = ++this.counter;
+    const duration = toast.duration ?? 5000;
+    this.toasts.update(list => [...list, { ...toast, id }]);
+
+    setTimeout(() => {
+      this.toasts.update(list => list.filter(t => t.id !== id));
+    }, duration);
   }
 
   hide(): void {
-    this.snackBar.dismiss();
+    this.toasts.set([]);
   }
 
   showSuccess(message: string, duration = 5000): void {

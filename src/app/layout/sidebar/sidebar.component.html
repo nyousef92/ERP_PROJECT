@@ -1,71 +1,88 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    #sidenav
-    mode="side"
-    [opened]="true"
-    [style.width]="isExpanded ? '240px' : '64px'"
-    class="sidenav"
+<div class="flex h-screen">
+  <!-- Sidebar -->
+  <aside
+    class="bg-sidebar text-white transition-all duration-300 overflow-x-hidden overflow-y-auto fixed h-full z-50"
+    [class.w-60]="isExpanded"
+    [class.w-16]="!isExpanded"
   >
-    <div class="sidenav-header">
-      <mat-icon class="logo-icon">business</mat-icon>
+    <!-- Header -->
+    <div class="flex items-center gap-3 px-4 h-16 border-b border-white/10">
+      <span class="material-icons text-primary text-[28px]">business</span>
       @if (isExpanded) {
-        <span class="app-name">ERP System</span>
+        <span class="text-lg font-semibold whitespace-nowrap">ERP System</span>
       }
     </div>
 
-    <mat-nav-list>
+    <!-- Nav list -->
+    <nav class="pt-2">
       @for (item of menuItems; track item.label) {
 
-        <!-- Level 1: Has children -->
+        <!-- Level 1 -->
         @if (item.children) {
-          <div class="menu-item-wrapper">
-            <a mat-list-item (click)="toggleItem(item)" [title]="item.label">
-              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-              
+          <div>
+            <a (click)="toggleItem(item)" [title]="item.label" class="flex items-center px-4 py-2.5 text-white/70 hover:bg-white/[0.08] hover:text-white cursor-pointer transition-colors">
+              <span class="material-icons text-[20px] mr-3">{{ item.icon }}</span>
+              @if (isExpanded) {
+                <span class="text-sm flex-1">{{ item.label }}</span>
+                <span class="material-icons text-[18px] transition-transform duration-300" [class.rotate-180]="item.expanded">expand_more</span>
+              }
             </a>
 
-            <!-- Level 2 children -->
+            <!-- Level 2 -->
             @if (item.expanded && isExpanded) {
-              <div class="sub-menu level-1">
+              <div>
                 @for (child of item.children; track child.label) {
 
-                  <!-- Level 2: Has children -->
                   @if (child.children) {
-                    <a mat-list-item (click)="toggleItem(child)" [title]="child.label">
-                      @if (child.icon) {
-                        <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
-                      }
-                      <span matListItemTitle>{{ child.label }}</span>
-                    </a>
+                    <div>
+                      <a (click)="toggleItem(child)" [title]="child.label" class="flex items-center pl-10 pr-4 py-2 mx-2 rounded-lg text-white/70 hover:bg-white/[0.08] hover:text-white cursor-pointer transition-colors text-sm">
+                        <span class="w-1.5 h-1.5 rounded-full bg-white/30 mr-3 shrink-0"></span>
+                        <span class="flex-1">{{ child.label }}</span>
+                        <span class="material-icons text-[16px] transition-transform duration-300" [class.rotate-180]="child.expanded">expand_more</span>
+                      </a>
 
-                    <!-- Level 3 children -->
-                    @if (child.expanded) {
-                      <div class="sub-menu level-2">
-                        @for (grandchild of child.children; track grandchild.label) {
-                          <a
-                            mat-list-item
-                            [routerLink]="grandchild.route"
-                            routerLinkActive="active-link"
-                            [title]="grandchild.label"
-                          >
-                            <span matListItemTitle>{{ grandchild.label }}</span>
-                          </a>
-                        }
-                      </div>
-                    }
+                      <!-- Level 3 -->
+                      @if (child.expanded) {
+                        <div>
+                          @for (grandchild of child.children; track grandchild.label) {
+
+                            @if (grandchild.children) {
+                              <div>
+                                <a (click)="toggleItem(grandchild)" [title]="grandchild.label" class="flex items-center pl-16 pr-4 py-2 mx-2 rounded-lg text-white/70 hover:bg-white/[0.08] hover:text-white cursor-pointer transition-colors text-[13px]">
+                                  <span class="w-1 h-1 rounded-full bg-white/20 mr-3 shrink-0"></span>
+                                  <span class="flex-1">{{ grandchild.label }}</span>
+                                  <span class="material-icons text-[14px] transition-transform duration-300" [class.rotate-180]="grandchild.expanded">expand_more</span>
+                                </a>
+
+                                <!-- Level 4 -->
+                                @if (grandchild.expanded) {
+                                  <div>
+                                    @for (great of grandchild.children; track great.label) {
+                                      <a [routerLink]="great.route" routerLinkActive="!bg-primary !text-white" [title]="great.label" class="flex items-center pl-20 pr-4 py-1.5 mx-2 rounded-lg text-white/50 hover:bg-white/[0.08] hover:text-white cursor-pointer transition-colors text-[12px]">
+                                        <span class="w-0.5 h-0.5 rounded-full bg-white/20 mr-3 shrink-0"></span>
+                                        <span>{{ great.label }}</span>
+                                      </a>
+                                    }
+                                  </div>
+                                }
+
+                              </div>
+                            } @else {
+                              <a [routerLink]="grandchild.route" routerLinkActive="!bg-primary !text-white" [title]="grandchild.label" class="flex items-center pl-16 pr-4 py-2 mx-2 rounded-lg text-white/70 hover:bg-white/[0.08] hover:text-white cursor-pointer transition-colors text-[13px]">
+                                <span class="w-1 h-1 rounded-full bg-white/20 mr-3 shrink-0"></span>
+                                <span>{{ grandchild.label }}</span>
+                              </a>
+                            }
+
+                          }
+                        </div>
+                      }
+                    </div>
 
                   } @else {
-                    <!-- Level 2: Leaf item -->
-                    <a
-                      mat-list-item
-                      [routerLink]="child.route"
-                      routerLinkActive="active-link"
-                      [title]="child.label"
-                    >
-                      @if (child.icon) {
-                        <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
-                      }
-                      <span matListItemTitle>{{ child.label }}</span>
+                    <a [routerLink]="child.route" routerLinkActive="!bg-primary !text-white" [title]="child.label" class="flex items-center pl-10 pr-4 py-2 mx-2 rounded-lg text-white/70 hover:bg-white/[0.08] hover:text-white cursor-pointer transition-colors text-sm">
+                      <span class="w-1.5 h-1.5 rounded-full bg-white/30 mr-3 shrink-0"></span>
+                      <span>{{ child.label }}</span>
                     </a>
                   }
 
@@ -75,28 +92,28 @@
           </div>
 
         } @else {
-          <!-- Level 1: Leaf item (no children) -->
-          <a
-            mat-list-item
-            [routerLink]="item.route"
-            routerLinkActive="active-link"
-            [title]="item.label"
-          >
-            <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <!-- Level 1: Leaf -->
+          <a [routerLink]="item.route" routerLinkActive="!bg-primary !text-white" [title]="item.label" class="flex items-center px-4 py-2.5 mx-2 rounded-lg text-white/70 hover:bg-white/[0.08] hover:text-white cursor-pointer transition-colors">
+            <span class="material-icons text-[20px] mr-3">{{ item.icon }}</span>
             @if (isExpanded) {
-              <span matListItemTitle>{{ item.label }}</span>
+              <span class="text-sm">{{ item.label }}</span>
             }
           </a>
         }
 
       }
-    </mat-nav-list>
-  </mat-sidenav>
+    </nav>
+  </aside>
 
-  <mat-sidenav-content [style.margin-left]="isExpanded ? '240px' : '64px'">
+  <!-- Main content -->
+  <div
+    class="flex-1 flex flex-col transition-all duration-300"
+    [class.ml-60]="isExpanded"
+    [class.ml-16]="!isExpanded"
+  >
     <app-header (menuToggle)="toggleSidenav()" [isExpanded]="isExpanded" />
-    <div class="content-area">
+    <main class="flex-1 p-6 bg-background">
       <ng-content></ng-content>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </main>
+  </div>
+</div>

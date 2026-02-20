@@ -1,13 +1,16 @@
-<mat-toolbar class="header-toolbar">
-  <button mat-icon-button (click)="onMenuToggle()">
-    <mat-icon>menu</mat-icon>
+<header class="flex items-center h-16 px-4 bg-surface shadow-sm sticky top-0 z-40">
+  <button
+    (click)="onMenuToggle()"
+    class="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-background transition-colors"
+  >
+    <span class="material-icons">menu</span>
   </button>
-  <span class="app-title">ERP System</span>
-  <span class="spacer"></span>
-  <button mat-icon-button>
-    <mat-icon>notifications</mat-icon>
+  <span class="ml-2 text-lg font-medium text-text">ERP System</span>
+  <span class="flex-1"></span>
+  <button class="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-background transition-colors">
+    <span class="material-icons">notifications</span>
   </button>
-  <button mat-icon-button>
-    <mat-icon>account_circle</mat-icon>
+  <button class="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-background transition-colors ml-1">
+    <span class="material-icons">account_circle</span>
   </button>
-</mat-toolbar>
+</header>
