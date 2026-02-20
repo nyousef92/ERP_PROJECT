@@ -5,7 +5,7 @@ interface CacheEntry<T> {
   expiry: number | null;
 }
 
-export type keyType = '' | 'auth';
+export type keyType = '' | 'auth'|'submission';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +14,14 @@ export class LocalStorageCacheService {
 
   private readonly DEFAULT_TTL_MS = 5 * 60 * 60 * 1000;
   private readonly CACHE_KEY = 'app_data_cache';
-  private readonly DIAGRAM_CACHE_KEY = 'app_auth_cache';
+  private readonly AUTH_CACHE_KEY = 'app_auth_cache';
+  private readonly SUBMISSION_CACHE_KEY = 'app_auth_cache';
   constructor() { }
 
   getMainKey(keyType: keyType = '') {
-    return keyType === 'auth' ? this.DIAGRAM_CACHE_KEY : this.CACHE_KEY
+    if(keyType === 'auth' ) return  this.AUTH_CACHE_KEY 
+    if(keyType === 'submission' ) return  this.SUBMISSION_CACHE_KEY 
+    return  this.CACHE_KEY
   }
 
   get<T>(key: string, keyType: keyType = ''): T | null {

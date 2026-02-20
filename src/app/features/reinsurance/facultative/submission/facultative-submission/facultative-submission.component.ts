@@ -4,6 +4,7 @@ import { SecurityDetailsComponent } from './security-details/security-details.co
 import { FiscalRegulatoryComponent } from "./fiscal-regulatory/fiscal-regulatory.component";
 import { GeneralInformationComponent } from "./general-information/general-information.component";
 import { Router } from '@angular/router';
+import { LocalStorageCacheService } from '@core/services/local-storage-cache.service';
 @Component({
   selector: 'app-facultative-submission',
   imports: [BreadcrumbComponent, SecurityDetailsComponent, FiscalRegulatoryComponent, GeneralInformationComponent,],
@@ -12,16 +13,12 @@ import { Router } from '@angular/router';
 export class FacultativeSubmissionComponent {
   activeTab = 0;
   collectData = signal(false);
+  collectedData = {
+    "generalInfo": {},
+    "securityDetails": {},
+    "fiscalRegulatory": {},
+  };
   formType: string;
-
-  constructor(private router: Router) {
-    const navigation = this.router.getCurrentNavigation();
-    this.formType = navigation?.extras.state?.['formType'];
-  }
-
-  isActive(index: number): boolean {
-    return this.activeTab === index;
-  }
 
   breadcumbs = [
     {
@@ -38,9 +35,25 @@ export class FacultativeSubmissionComponent {
     },
   ]
 
-  saveClicked() {
-    this.collectData.update(v => true);
+  constructor(private router: Router,
+    private ls: LocalStorageCacheService
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+    this.formType = navigation?.extras.state?.['formType'];
   }
 
-  
+  isActive(index: number): boolean {
+    return this.activeTab === index;
+  }
+
+  saveClicked(data: any, key: string) {
+    if (data.type === 'submit') {
+      this.collectData.update(v => true);
+      (this.collectedData as any)[key] = data.value;
+    }
+    else {
+      this.ls.set('FacultativeSubmission', data.value, 'submission')
+    }
+  }
+
 }

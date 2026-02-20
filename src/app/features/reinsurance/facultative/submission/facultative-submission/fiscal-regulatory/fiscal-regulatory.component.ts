@@ -1,4 +1,4 @@
-import { Component, effect, Input, model } from '@angular/core';
+import { Component, effect, EventEmitter, Input, model, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { HelperService } from '@core/services/helper.service';
@@ -14,6 +14,8 @@ export class FiscalRegulatoryComponent {
   form: FormGroup;
   collectData = model.required<boolean>();
   @Input() formType = 'Create Submission';
+  @Output() saveClicked = new EventEmitter<any>();
+
 
   constructor(
     private fb: FormBuilder,
@@ -36,7 +38,7 @@ export class FiscalRegulatoryComponent {
   }
 
   onSubmit(): void {
-
+    this.saveClicked.emit(this.form.value);
   }
 
   getErrorMessage(controlName: string, lable: string) {

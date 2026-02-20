@@ -1,4 +1,4 @@
-import { Component, model, effect } from '@angular/core';
+import { Component, model, effect, EventEmitter, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { HelperService } from '@core/services/helper.service';
@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 export class SecurityDetailsComponent {
   form: FormGroup;
   collectData = model.required<boolean>();
+
+  @Output() saveClicked = new EventEmitter<any>();
 
   constructor(
     private fb: FormBuilder,
@@ -36,8 +38,9 @@ export class SecurityDetailsComponent {
   }
 
   onSubmit(): void {
-
+    this.saveClicked.emit(this.form.value);
   }
+
 
   getErrorMessage(controlName: string, lable: string) {
     return this.helper.getErrorsMessage(this.form, controlName, lable)

@@ -1,4 +1,4 @@
-import { Component, effect, model, OnInit } from '@angular/core';
+import { Component, effect, EventEmitter, model, OnInit, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { HelperService } from '@core/services/helper.service';
@@ -20,6 +20,8 @@ export class GeneralInformationComponent implements OnInit {
   facTypes: any[] = [];
   subTypes: any[] = [];
   typesDeatails: any[] = [];
+  @Output() saveClicked = new EventEmitter<any>();
+
   constructor(
     private fb: FormBuilder,
     private helper: HelperService,
@@ -57,6 +59,7 @@ export class GeneralInformationComponent implements OnInit {
       file: []
     });
   }
+
   ngOnInit(): void {
     this.getTypesInfo()
   }
@@ -72,7 +75,7 @@ export class GeneralInformationComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.form.value);
+    this.saveClicked.emit({ type: 'submit', value: this.form.value });
   }
 
   getErrorMessage(controlName: string, lable: string) {
@@ -84,7 +87,8 @@ export class GeneralInformationComponent implements OnInit {
   }
 
   onSaveAsDraft() {
-    console.log(this.form.value);
+    this.saveClicked.emit({ type: 'save', value: this.form.value });
+
   }
 
   facTypeChanges(selectedType: string | number) {
@@ -95,7 +99,7 @@ export class GeneralInformationComponent implements OnInit {
       label: item
     }));
   }
-  
+
   subTypeChanges(selectedType: string | number) {
     this.form.get('subtype')?.setValue(selectedType);
   }
