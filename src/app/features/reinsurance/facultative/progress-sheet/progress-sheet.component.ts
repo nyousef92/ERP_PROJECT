@@ -97,7 +97,6 @@ export class ProgressSheetComponent implements OnInit {
         }
       }, 'sm')
     });
-
   }
 
   getStatusClass(status: string): string {

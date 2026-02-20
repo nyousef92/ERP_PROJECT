@@ -1,3 +1,5 @@
+<app-modal />
+
 <div class="space-y-4 mb-3">
     <div class="flex items-start justify-between">
         <div>
@@ -60,13 +62,13 @@
                         <td class="px-6 py-4">{{ item.lastUpdated }}</td>
                         <td class="px-6 py-4">
                             <div class="flex justify-end gap-3">
-                                <button title="progress sheet" class="text-gray-400 ">
-                                    <span class="material-icons text-[18px] text-primary">description</span>
+                                <button title="progress sheet" class="text-gray-400 " (click)="editPlacement(item.refNo)">
+                                    <span class="material-icons text-[18px] text-primary">visibility</span>
                                 </button>
-                                <button title="edit" class="text-gray-400 ">
+                                <button title="edit" class="text-gray-400 " (click)="editPlacement(item.refNo)">
                                     <span class="material-icons text-[18px] text-text-secondary">edit</span>
                                 </button>
-                                <button title="update" class="text-gray-400 ">
+                                <button title="delete" class="text-gray-400" (click)="delete(item.refNo)">
                                     <span class="material-icons text-[14px] text-danger">delete</span>
                                 </button>
                             </div>

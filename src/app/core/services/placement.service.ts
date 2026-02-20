@@ -36,6 +36,41 @@ const placementClasses: Record<string, { trendIcon: string, trendColorClass: str
   providedIn: 'root',
 })
 export class PlacementService {
+  constructor() { }
+
+  deletePlacement(refNo: string) {
+    return of(true);
+  }
+
+  getPlacementDeatils(refNom: string) {
+    return of({
+      refNo: refNom,
+      cedant: 'ACME Insurance Co.',
+      status: 'In Progress',
+      placementName: 'Global Property Excess of Loss 2024',
+      sumInsured: '25,000,000',
+      rate: '0.75',
+      currency: 'USD',
+      grossPremium: '187,500',
+      cedingCommission: '12.5',
+      uibShare: '25',
+      netPremium: '140,625',
+      npos: '1,250',
+      securities: [
+        { security: 'Swiss Re', share: '25.00', riRate: '5.00', riPremium: '1,250,000', riComm: '125,000', riTax: '0.00', netRiPremium: '1,125,000' },
+        { security: 'Munich Re', share: '20.00', riRate: '5.00', riPremium: '1,000,000', riComm: '100,000', riTax: '0.00', netRiPremium: '900,000' },
+        { security: 'Hannover Re', share: '15.00', riRate: '5.00', riPremium: '750,000', riComm: '75,000', riTax: '0.00', netRiPremium: '675,000' },
+      ],
+    });
+  }
+
+  addNewPlacement(data: any) {
+    return of(true);
+  }
+  updatePlacement(refNom: string, data: any) {
+    return of(true);
+  }
+
   getPlacementList(arg0: {}) {
     return of({
       totalItems: 20,
@@ -79,7 +114,6 @@ export class PlacementService {
     });
   }
 
-  constructor() { }
 
   getPlacementStatuses() {
     return of([
@@ -97,6 +131,40 @@ export class PlacementService {
       { id: 2, name: 'Surplus Share' },
       { id: 3, name: 'Excess of Loss' },
     ])
+  }
+
+
+  getCedantList() {
+    return of([
+      { id: 1, value: 'ACME Insurance Co.', label: 'ACME Insurance Co.' },
+      { id: 2, value: 'Secure Insurers', label: 'Secure Insurers' },
+      { id: 3, value: 'Guardian General', label: 'Guardian General' },
+      { id: 4, value: 'National Coverage', label: 'National Coverage' },
+      { id: 5, value: 'Premier Insurance', label: 'Premier Insurance' },
+      { id: 6, value: 'Global Risk Partners', label: 'Global Risk Partners' },
+    ]);
+  }
+
+  getReinsurerList() {
+    return of([
+      { id: 1, value: 'Swiss Re', label: 'Swiss Re' },
+      { id: 2, value: 'Munich Re', label: 'Munich Re' },
+      { id: 3, value: 'Saudi Re', label: 'Saudi Re' },
+      { id: 4, value: 'Hannover Re', label: 'Hannover Re' },
+      { id: 5, value: "Lloyd's of London", label: "Lloyd's of London" },
+      { id: 6, value: 'SCOR', label: 'SCOR' },
+      { id: 7, value: 'Gen Re', label: 'Gen Re' },
+      { id: 8, value: 'Partner Re', label: 'Partner Re' },
+    ]);
+  }
+
+  getCurrencyList() {
+    return of([
+      { id: 1, value: 'USD', label: 'USD' },
+      { id: 2, value: 'SAR', label: 'SAR' },
+      { id: 3, value: 'EUR', label: 'EUR' },
+      { id: 4, value: 'GBP', label: 'GBP' },
+    ]);
   }
 
   getPlacementMetrics() {

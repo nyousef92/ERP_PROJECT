@@ -1,16 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PlacementService } from '@core/services/placement.service';
 import { ColoredCardsGridComponent } from "@shared/colored-cards-grid/colored-cards-grid.component";
 import { PlacemenrFilterComponent, PlacementFilterState } from "./placemenr-filter/placemenr-filter.component";
 import { NgClass } from '@angular/common';
 import { PaginatorComponent } from "@shared/paginator/paginator.component";
+import { ModalComponent } from '@shared/modal/modal.component';
+import { AddNewPlacementComponent } from './add-new-placement/add-new-placement.component';
+import { forkJoin } from 'rxjs';
+import { DeleteItemComponent } from '@shared/delete-item/delete-item.component';
 
 @Component({
   selector: 'app-placement',
-  imports: [ColoredCardsGridComponent, PlacemenrFilterComponent, NgClass, PaginatorComponent],
+  imports: [ColoredCardsGridComponent, PlacemenrFilterComponent, NgClass, PaginatorComponent, ModalComponent],
   templateUrl: './placement.component.html'
 })
 export class PlacementComponent implements OnInit {
+
+  @ViewChild(ModalComponent) modal!: ModalComponent;
 
   metrics: any[] = [];
   placements: any[] = [];
@@ -26,14 +32,57 @@ export class PlacementComponent implements OnInit {
     });
 
     this.placementService.getPlacementList({
-
     }).subscribe((data) => {
       this.placements = data.data;
       this.totalItems = data.totalItems;
     });
   }
 
-  addNew() { }
+  addNew() {
+    this.modal.open(AddNewPlacementComponent, {
+      onSaved: (data: any) => {
+        forkJoin(
+          [
+            this.placementService.addNewPlacement(data),
+            this.placementService.getPlacementList({})
+          ]
+        ).subscribe(res => {
+          this.placements = res[1].data;
+          this.totalItems = res[1].totalItems;
+        });
+      }
+    }, 'xl');
+  }
+
+
+  delete(refNo: string) {
+      this.modal.open(DeleteItemComponent, {
+          description: `Are you sure you want to delete placement with ref no ${refNo}?`,
+          onDelete: () => {
+            this.placementService.deletePlacement(refNo).subscribe(() => {
+              this.placements = this.placements.filter(p => p.refNo !== refNo);
+              this.totalItems--;
+            }); 
+          }
+        }, 'sm');
+    }
+
+  editPlacement(refNom: string) {
+    this.placementService.getPlacementDeatils(refNom).subscribe((data) => {
+      this.modal.open(AddNewPlacementComponent, {
+        placement: data,
+        onSaved: (updated: any) => {
+          forkJoin([
+            this.placementService.updatePlacement(refNom, updated),
+            this.placementService.getPlacementList({})
+          ]).subscribe(res => {
+            this.placements = res[1].data;
+            this.totalItems = res[1].totalItems;
+          });
+        }
+      }, 'xl');
+    });
+  }
 
   getStatusClass(status: string): string {
     status = status.trim().toLocaleLowerCase();
