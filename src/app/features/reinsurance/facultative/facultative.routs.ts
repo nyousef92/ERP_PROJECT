@@ -5,7 +5,7 @@ import { FacultativeComponent } from './facultative.component';
 export const FACULTAIVE_ROUTES: Routes = [
 
     {
-        path: 'facultative',
+        path: '',
         component: FacultativeComponent,
         children: [
             { path: '', redirectTo: 'submission', pathMatch: 'full' },
