@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { ApprovalService } from '@core/services/approval.service';
 import { forkJoin } from 'rxjs';
@@ -20,7 +20,6 @@ export enum ApprovalFilter {
   templateUrl: './approval.component.html'
 })
 export class ApprovalComponent implements OnInit {
-  reviewItem: any;
   constructor(
     private approvalservice: ApprovalService
   ) { }
@@ -29,6 +28,8 @@ export class ApprovalComponent implements OnInit {
   searchValue = '';
   filters: any[] = [];
   historyList: any[] = [];
+  reviewItem = signal<any>(null);
+
 
   ngOnInit(): void {
     forkJoin(
@@ -95,6 +96,6 @@ export class ApprovalComponent implements OnInit {
   }
 
   reviewPlacement(placement: any) {
-    this.reviewItem = placement
+    this.reviewItem.set(placement);
   }
 }

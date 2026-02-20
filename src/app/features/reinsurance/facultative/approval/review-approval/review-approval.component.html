@@ -1,1 +1,103 @@
-<p>review-approval works!</p>
+<div class="space-y-6 text-left">
+
+    <!-- Placement Details -->
+    <div>
+        <h3 class="text-base text-text mb-4">Placement Details</h3>
+        <div class="space-y-3">
+            <div>
+                <p class="text-xs text-text-muted">Reference Number</p>
+                <p class="text-sm text-text">{{ details()?.placementDetails?.referenceNumber }}</p>
+            </div>
+            <div>
+                <p class="text-xs text-text-muted">Insured Name</p>
+                <p class="text-sm text-text">{{ details()?.placementDetails?.insuredName }}</p>
+            </div>
+            <div>
+                <p class="text-xs text-text-muted">Class of Business</p>
+                <p class="text-sm text-text">{{ details()?.placementDetails?.classOfBusiness }}</p>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <p class="text-xs text-text-muted">Sum Insured</p>
+                    <p class="text-sm text-text">{{ details()?.placementDetails?.sumInsured }}</p>
+                </div>
+                <div>
+                    <p class="text-xs text-text-muted">Total Premium</p>
+                    <p class="text-sm text-text">{{ details()?.placementDetails?.totalPremium }}</p>
+                </div>
+            </div>
+            <div>
+                <p class="text-xs text-text-muted">Broker</p>
+                <p class="text-sm text-text">{{ details()?.placementDetails?.broker }}</p>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <p class="text-xs text-text-muted">Effective Date</p>
+                    <p class="text-sm text-text">{{ details()?.placementDetails?.effectiveDate }}</p>
+                </div>
+                <div>
+                    <p class="text-xs text-text-muted">Expiry Date</p>
+                    <p class="text-sm text-text">{{ details()?.placementDetails?.expiryDate }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reinsurer Distribution -->
+    <div>
+        <h4 class="text-sm text-text mb-3">Reinsurer Distribution</h4>
+        <div class="space-y-2">
+            @for (reinsurer of reviewItem().reinsurers; track reinsurer.name) {
+            <div class="flex justify-between items-center p-3 bg-background rounded-lg">
+                <div>
+                    <p class="text-sm text-text">{{ reinsurer.name }}</p>
+                    <p class="text-xs text-text-muted">{{ reinsurer.share }} share</p>
+                </div>
+                <p class="text-sm text-text">{{ reinsurer.premium }}</p>
+            </div>
+            }
+        </div>
+    </div>
+
+    <!-- Approval Notes -->
+    @if(status()==='pending'){
+    <div>
+        <app-input-field-text-area [(ngModel)]="approveNotes" label="Approval Notes"
+        [touched]="touched"
+            placeholder="Enter your approval notes or rejection reason..."
+            errorMessage="please fill approval notes first">
+        </app-input-field-text-area>
+
+    </div>
+    }@else{
+    <!-- Status Badge -->
+    <div class="text-center py-3">
+        <span [ngClass]="statusClass" class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs border">
+            <span class="material-icons text-[12px]">{{ statusIcon }}</span>
+            {{ statusLabel }}
+        </span>
+    </div>
+    }
+
+    @if(status()==='pending'){
+    <div class="flex gap-3">
+        <button (click)="approve()"
+            class="flex-1 px-4 py-2 bg-success text-white rounded-lg hover:bg-success-dark transition-colors text-sm">
+            Approve
+        </button>
+        <button (click)="reject()"
+            class="flex-1 px-4 py-2 bg-danger text-white rounded-lg hover:bg-danger-dark transition-colors disabled:bg-border disabled:cursor-not-allowed text-sm">
+            Reject
+        </button>
+    </div>
+
+    }
+    <!-- Close Button -->
+    <button
+    (click)="close()"
+        class="w-full px-4 py-2 border border-border text-text-secondary rounded-lg hover:bg-background transition-colors text-sm">
+        Close
+    </button>
+
+
+</div>

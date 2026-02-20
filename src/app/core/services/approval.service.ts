@@ -6,6 +6,12 @@ import { ApprovalFilter } from 'src/app/features/reinsurance/facultative/approva
   providedIn: 'root',
 })
 export class ApprovalService {
+  reject(refNom: any, approveNotes: string) {
+    return of(true);
+  }
+  approve(refNom: any, approveNotes: string) {
+    return of(true);
+  }
   getApprovalDetails(id: any) {
     return of(
       {

@@ -52,7 +52,7 @@
 
                             <tbody class="divide-y divide-gray-100 border-t border-gray-100">
                                 @for (item of ((historyList|filter:searchValue:'insured')|filter:activeFilter:'status');
-                                track item.refNo) {
+                                track item.refNom) {
 
                                 <tr class="hover:bg-gray-50 transition-colors">
 
@@ -83,8 +83,9 @@
             <div class="lg:col-span-1">
 
                 <div class="bg-surface rounded-lg  border border-border p-3 text-center">
-                    @if(reviewItem){
-                        <app-review-approval [reviewItem]="reviewItem"></app-review-approval>
+                    @if(reviewItem()){
+                    <app-review-approval [reviewItem]="reviewItem()"
+                        (closed)="reviewItem.set(null)"></app-review-approval>
                     }
                     @else{
                     <span class="material-icons text-7xl text-primary">description</span>
