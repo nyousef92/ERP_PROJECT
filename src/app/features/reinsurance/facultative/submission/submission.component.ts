@@ -6,18 +6,22 @@ import { NgClass } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { InputFieldComponent } from "../../../../shared/input-field/input-field.component";
 import { FilterPipe } from '../../../../core/pipes/filter.pipe';
+import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-submission',
-    imports: [TranslatePipe, ColoredCardsGridComponent, NgClass, InputFieldComponent, FilterPipe],
-    templateUrl: './submission.component.html'
+  selector: 'app-submission',
+  imports: [TranslatePipe, ColoredCardsGridComponent, NgClass, InputFieldComponent, FilterPipe],
+  templateUrl: './submission.component.html'
 })
 export class SubmissionComponent implements OnInit {
   searchText = '';
   metrics: any[] = [];
   history: any[] = [];
 
-  constructor(private reinsuranceService: ReinsuranceService) { }
+  constructor(
+    private reinsuranceService: ReinsuranceService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     forkJoin(
@@ -42,5 +46,9 @@ export class SubmissionComponent implements OnInit {
       case 'Submitted': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
       default: return 'bg-gray-100 text-gray-700';
     }
+  }
+
+  addNew() {
+    this.router.navigate(['home/reinsurance/facultative/submission/add-facultative-submission'])
   }
 }

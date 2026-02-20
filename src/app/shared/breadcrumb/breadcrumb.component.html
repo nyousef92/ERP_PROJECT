@@ -1,0 +1,26 @@
+<nav aria-label="breadcrumb">
+    <ol class="flex flex-wrap items-center gap-1 text-sm text-gray-500">
+        @for (item of items; track item.label; let last = $last; let first = $first) {
+
+        <!-- Separator -->
+        @if (!first) {
+        <li class="text-gray-400 select-none">{{ separator }}</li>
+        }
+
+        <!-- Breadcrumb Item -->
+        <li>
+            @if (!last && item.url) {
+            <a [routerLink]="item.url"
+                class="hover:text-blue-600 hover:underline transition-colors duration-200 cursor-pointer">
+                {{ item.label }}
+            </a>
+            } @else {
+            <span class="text-gray-900 font-medium" aria-current="page">
+                {{ item.label }}
+            </span>
+            }
+        </li>
+
+        }
+    </ol>
+</nav>
