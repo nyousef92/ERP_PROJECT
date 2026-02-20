@@ -24,7 +24,7 @@ export class PreviewFacultativeProgressSheetComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.refNumber) {
-      this.facultativeService.getProgressSheet(this.refNumber).subscribe((data) => {
+      this.facultativeService.getProgressSheetPreview(this.refNumber).subscribe((data) => {
         this.progressSheet = data;
         this.progressSheet.progress =
           this.progressSheet.progress.toLowerCase() === 'submitter' ? 25
@@ -46,5 +46,8 @@ export class PreviewFacultativeProgressSheetComponent implements OnInit {
     );
   }
 
-  editProgressSheet(){}
+  editProgressSheet() {
+    this.router.navigate(
+      ['home/reinsurance/facultative/progress-sheet/view-facultative-progress-sheet', this.refNumber]);
+  }
 }

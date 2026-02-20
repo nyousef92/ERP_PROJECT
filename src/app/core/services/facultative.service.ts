@@ -189,7 +189,7 @@ export class FacultativeService {
     });
   }
 
-  getProgressSheet(refNumber: string) {
+  getProgressSheetPreview(refNumber: string) {
     return of({
       refNumber: refNumber,
       submission: {
@@ -226,4 +226,7 @@ export class FacultativeService {
       summary: "All detailed information, including financials, documents, and notes, are available in the full progress sheet. Click below to view or edit the complete details of this facultative placement."
     });
   }
+
+  getProgressSheetDetailsView(refNumber: string) {}
+  
 }
