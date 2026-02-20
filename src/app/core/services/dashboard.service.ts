@@ -3,7 +3,20 @@ import { ApiService } from './api.service';
 import { HelperService } from './helper.service';
 import { map, Observable, of } from 'rxjs';
 import { INotification } from '../intefaces/notification';
-import { IconType } from '../intefaces/icon-config';
+import { IconType, TrendConfig } from '../intefaces/icon-config';
+
+const trendConfig: Record<IconType, TrendConfig> = {
+  [IconType.NearExpiry]: { trendIcon: 'trending_down', trendColorClass: 'text-warning' },
+  [IconType.PendingApproval]: { trendIcon: 'error_outline', trendColorClass: 'text-warning' },
+  [IconType.TravelRequest]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+  [IconType.LoanRequest]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+  [IconType.Processed]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+  [IconType.NewInvoice]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+  [IconType.Submission]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+  [IconType.Treaty]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+  [IconType.Claims]: { trendIcon: 'error_outline', trendColorClass: 'text-warning' },
+  [IconType.Employees]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+};
 
 
 @Injectable({
@@ -120,7 +133,7 @@ export class DashboardService {
         return items.map(
           (item => ({
             ...item,
-            ...this.helper.getTrendConfig(item.iconType),
+            ...trendConfig[item.iconType],
             icon: this.helper.getIcon(item.iconType)
           })
           ))

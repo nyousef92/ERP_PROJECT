@@ -1,8 +1,37 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { HelperService } from './helper.service';
 import { Observable, of } from 'rxjs';
 
+const submissionClasses: Record<string, { trendIcon: string, trendColorClass: string, cardClass: string, labelClass: string, valueClass: string }> = {
+  ['Total']: {
+    trendIcon: 'trending_up',
+    trendColorClass: 'text-blue-600',
+    cardClass: 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200',
+    labelClass: 'text-blue-700',
+    valueClass: 'text-blue-900',
+  },
+  ['Bound']: {
+    trendIcon: 'check_circle',
+    trendColorClass: 'text-green-600',
+    cardClass: 'bg-gradient-to-br from-green-50 to-green-100 border-green-200',
+    labelClass: 'text-green-700',
+    valueClass: 'text-green-900',
+  },
+  ['Quoted']: {
+    trendIcon: 'error_outline',
+    trendColorClass: 'text-sky-600',
+    cardClass: 'bg-gradient-to-br from-sky-50 to-sky-100 border-sky-200',
+    labelClass: 'text-sky-700',
+    valueClass: 'text-sky-900',
+  },
+  ['Pending']: {
+    trendIcon: 'schedule',
+    trendColorClass: 'text-yellow-600',
+    cardClass: 'bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200',
+    labelClass: 'text-yellow-700',
+    valueClass: 'text-yellow-900',
+  }
+};
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +39,6 @@ import { Observable, of } from 'rxjs';
 export class SubmissionService {
   constructor(
     private apiService: ApiService,
-    private helper: HelperService
   ) { }
 
 
@@ -96,7 +124,7 @@ export class SubmissionService {
       },
     ].map(item => ({
       ...item,
-      ...this.helper.getSubmissionIcon(item.label)
+      ...submissionClasses[item.label]
     })));
   }
 
