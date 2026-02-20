@@ -10,6 +10,7 @@ import { IconType } from '../intefaces/icon-config';
   providedIn: 'root'
 })
 export class FacultativeService {
+
   constructor(
     private apiService: ApiService,
     private helper: HelperService
@@ -42,6 +43,12 @@ export class FacultativeService {
           ]
         },
       ]);
+  }
+
+  saveFacultativeSubmission(arg0: { generalInfo: any; securityDetails: any; fiscalRegulatory: any; }) {
+    //return this.apiService.post('',arg0)
+
+    return of(true);
   }
 
 }

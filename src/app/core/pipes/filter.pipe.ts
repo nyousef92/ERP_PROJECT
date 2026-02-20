@@ -8,15 +8,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(items: any[], searchText: string, fieldName: string): any[] {
+  transform(items: any[], searchText: string): any[] {
     if (!items) return [];
     if (!searchText) return items;
 
     searchText = searchText.toLowerCase();
 
-    return items.filter(item => {
-      const value = fieldName ? item[fieldName] : item;
-      return value?.toString().toLowerCase().includes(searchText);
-    });
+    return items.filter(item =>
+      Object.values(item).some(val =>
+        val != null && String(val).toLowerCase().includes(searchText)
+      )
+    );
   }
 }

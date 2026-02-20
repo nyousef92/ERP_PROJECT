@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 border-t border-gray-100">
-                    @for (item of (history | filter:searchText:'refNo'); track item.refNo) {
+                    @for (item of history; track item.refNo) {
                     <tr class="hover:bg-gray-50 transition-colors">
                         <td class="px-6 py-4 font-medium text-gray-900">{{ item.refNo }}</td>
                         <td class="px-6 py-4">{{ item.account }}</td>
@@ -62,7 +62,7 @@
                                 <button title="print" class="text-gray-400 ">
                                     <span class="material-icons text-[18px] text-indigo-600">description</span>
                                 </button>
-                                <button title="edit" class="text-gray-400 ">
+                                <button title="edit" class="text-gray-400 " (click)="updateSubmission(item.refNo)">
                                     <span class="material-icons text-[18px]">edit</span>
                                 </button>
                                 <button title="update" class="text-gray-400 ">
@@ -76,6 +76,9 @@
             </table>
 
         </div>
-        <app-paginator (pageChange)="getSubmissionHistory($event)"></app-paginator>
+        <app-paginator 
+        listName="Submission"
+        [totalItems]="totalItems"
+        (pageChange)="getSubmissionHistory($event)"></app-paginator>
     </div>
 </div>

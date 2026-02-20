@@ -11,7 +11,7 @@ export class PaginatorComponent implements OnChanges {
   @Input() listName = '';
   @Input() currentPage = 1;
   @Input() totalItems = 0;
-  @Input() pageSize = 10;
+  @Input() pageSize = 6;
 
   @Output() pageChange = new EventEmitter<number>();
 

@@ -26,16 +26,25 @@
 </div>
 <div class="mt-3">
     <div [class.hidden]="activeTab!==0">
-        <app-general-information [(collectData)]="collectData" (saveClicked)="saveClicked($event,'generalInfo')">
+        <app-general-information
+            (save)="onSave()"
+            (saveDraft)="onSaveDraft()"
+            (cancel)="onCancel()">
         </app-general-information>
     </div>
     <div [class.hidden]="activeTab!==1">
-        <app-security-details [(collectData)]="collectData" (saveClicked)="saveClicked($event,'securityDetails')">
+        <app-security-details
+            (save)="onSave()"
+            (saveDraft)="onSaveDraft()"
+            (cancel)="onCancel()">
         </app-security-details>
     </div>
     <div [class.hidden]="activeTab!==2">
-        <app-fiscal-regulatory [(collectData)]="collectData" [formType]="formType"
-            (saveClicked)="saveClicked($event,'fiscalRegulatory')">
+        <app-fiscal-regulatory
+            [formType]="formType"
+            (save)="onSave()"
+            (saveDraft)="onSaveDraft()"
+            (cancel)="onCancel()">
         </app-fiscal-regulatory>
     </div>
 

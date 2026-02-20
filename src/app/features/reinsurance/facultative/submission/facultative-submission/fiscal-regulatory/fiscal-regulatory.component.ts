@@ -1,8 +1,7 @@
-import { Component, effect, EventEmitter, Input, model, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { HelperService } from '@core/services/helper.service';
-import { Router } from '@angular/router';
 @Component({
   selector: 'app-fiscal-regulatory',
   standalone: true,
@@ -12,22 +11,16 @@ import { Router } from '@angular/router';
 export class FiscalRegulatoryComponent {
 
   form: FormGroup;
-  collectData = model.required<boolean>();
   @Input() formType = 'Create Submission';
-  @Output() saveClicked = new EventEmitter<any>();
 
+  @Output() save = new EventEmitter<void>();
+  @Output() saveDraft = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
 
   constructor(
     private fb: FormBuilder,
     private helper: HelperService,
-    private router: Router
   ) {
-    effect(() => {
-      if (this.collectData()) {
-        this.onSubmit();
-      }
-    });
-
     this.form = this.fb.group({
       taxPayablebyUnderWritter: [''],
       taxPayableByInsured: [''],
@@ -38,7 +31,7 @@ export class FiscalRegulatoryComponent {
   }
 
   onSubmit(): void {
-    this.saveClicked.emit(this.form.value);
+    this.save.emit();
   }
 
   getErrorMessage(controlName: string, lable: string) {
@@ -46,10 +39,10 @@ export class FiscalRegulatoryComponent {
   }
 
   onCancel() {
-    this.router.navigate(['/home/reinsurance/facultative/submission'])
+    this.cancel.emit();
   }
 
   onSaveAsDraft() {
-    console.log(this.form.value);
+    this.saveDraft.emit();
   }
 }

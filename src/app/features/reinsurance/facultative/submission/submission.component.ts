@@ -4,19 +4,19 @@ import { ReinsuranceService } from '@core/services/reinsurance.service';
 import { NgClass } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { InputFieldComponent } from "@shared/input-field/input-field.component";
-import { FilterPipe } from '@core/pipes/filter.pipe';
 import { Router } from '@angular/router';
 import { PaginatorComponent } from "@shared/paginator/paginator.component";
 
 @Component({
   selector: 'app-submission',
-  imports: [ColoredCardsGridComponent, NgClass, InputFieldComponent, FilterPipe, PaginatorComponent],
+  imports: [ColoredCardsGridComponent, NgClass, InputFieldComponent, PaginatorComponent],
   templateUrl: './submission.component.html'
 })
 export class SubmissionComponent implements OnInit {
   searchText = '';
   metrics: any[] = [];
   history: any[] = [];
+  totalItems = 0;
 
   constructor(
     private reinsuranceService: ReinsuranceService,
@@ -26,27 +26,33 @@ export class SubmissionComponent implements OnInit {
   ngOnInit(): void {
     forkJoin(
       [
-        this.reinsuranceService.getSubmissionMetrics(), this.reinsuranceService.getSubmissionHistory({
+        this.reinsuranceService.getSubmissionMetrics(),
+        this.reinsuranceService.getSubmissionHistory({
           pageSize: 6,
-          currentPage: 1
+          currentPage: 1,
+          searchText: this.searchText
         })
       ]
     ).subscribe(data => {
       this.metrics = data[0];
-      this.history = data[1];
+      this.history = data[1].data;
+      this.totalItems = data[1].totalItems;
     });
   }
 
   updateSearchValue(value: string) {
     this.searchText = value;
+    this.getSubmissionHistory()
   }
 
   getSubmissionHistory(currentPage = 1) {
     this.reinsuranceService.getSubmissionHistory({
       pageSize: 6,
-      currentPage
+      currentPage,
+      searchText: this.searchText
     }).subscribe(resp => {
-      this.history = resp;
+      this.history = resp.data;
+      this.totalItems = resp.totalItems
     }).unsubscribe();
 
   }
@@ -63,5 +69,11 @@ export class SubmissionComponent implements OnInit {
   addNew() {
     this.router.navigate(['home/reinsurance/facultative/submission/add-facultative-submission'],
       { state: { formType: 'Create Submission' } })
+  }
+
+  updateSubmission(refNum: string) {
+    this.reinsuranceService.getSubmissionItemDetails(refNum).subscribe(resp => {
+
+    })
   }
 }

@@ -1,8 +1,7 @@
-import { Component, effect, EventEmitter, model, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { HelperService } from '@core/services/helper.service';
-import { Router } from '@angular/router';
 import { FacultativeService } from '@core/services/facultative.service';
 import { SelectDropdownComponent } from "@shared/select-dropdown/select-dropdown.component";
 import { dependantOn } from '@core/validations/dependent.validation';
@@ -16,24 +15,19 @@ import { FileUploadComponent } from "@shared/file-upload/file-upload.component";
 })
 export class GeneralInformationComponent implements OnInit {
   form: FormGroup;
-  collectData = model.required<boolean>();
   facTypes: any[] = [];
   subTypes: any[] = [];
   typesDeatails: any[] = [];
-  @Output() saveClicked = new EventEmitter<any>();
+
+  @Output() save = new EventEmitter<void>();
+  @Output() saveDraft = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
 
   constructor(
     private fb: FormBuilder,
     private helper: HelperService,
-    private router: Router,
     private facultativeService: FacultativeService
   ) {
-    effect(() => {
-      if (this.collectData()) {
-        this.onSubmit();
-      }
-    });
-
     this.form = this.fb.group({
       status: ['drafrt'],
       facType: ['', Validators.required],
@@ -75,7 +69,7 @@ export class GeneralInformationComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.saveClicked.emit({ type: 'submit', value: this.form.value });
+    this.save.emit();
   }
 
   getErrorMessage(controlName: string, lable: string) {
@@ -83,12 +77,11 @@ export class GeneralInformationComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['/home/reinsurance/facultative/submission'])
+    this.cancel.emit();
   }
 
   onSaveAsDraft() {
-    this.saveClicked.emit({ type: 'save', value: this.form.value });
-
+    this.saveDraft.emit();
   }
 
   facTypeChanges(selectedType: string | number) {
