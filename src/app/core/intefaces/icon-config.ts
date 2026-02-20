@@ -2,8 +2,11 @@ export interface IconConfig {
   name: string;
   bgClass: string;
   colorClass: string;
-  trendIcon?: string;
-  trendColorClass?: string;
+}
+
+export interface TrendConfig {
+  trendIcon: string;
+  trendColorClass: string;
 }
 
 export enum IconType {

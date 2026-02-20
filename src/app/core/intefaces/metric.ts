@@ -5,5 +5,7 @@ export interface Metric {
   value: string | number;
   subtitle: string;
   icon: IconConfig;
-  iconType:IconType
+  iconType: IconType;
+  trendIcon?: string;
+  trendColorClass?: string;
 }
