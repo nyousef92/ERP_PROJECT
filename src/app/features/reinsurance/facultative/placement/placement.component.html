@@ -1,0 +1,22 @@
+<div class="space-y-4 mb-3">
+    <div class="flex items-start justify-between">
+        <div>
+            <h1 class="text-xl text-text mb-1">
+                Placement
+            </h1>
+            <p class="text-sm text-text-muted">
+                Manage and create new placements from existing submissions
+            </p>
+        </div>
+        <div>
+            <button type="button" (click)="addNew()"
+                class="inline-flex items-center gap-1 py-2 px-4 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize">
+                <span class="material-icons text-[14px]">add</span>
+                <span>create new</span>
+            </button>
+        </div>
+    </div>
+    <div>
+        <app-colored-cards-grid [dataList]="metrics"></app-colored-cards-grid>
+    </div>
+</div>

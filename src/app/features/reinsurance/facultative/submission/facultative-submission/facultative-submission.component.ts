@@ -5,7 +5,7 @@ import { FiscalRegulatoryComponent } from "./fiscal-regulatory/fiscal-regulatory
 import { GeneralInformationComponent } from "./general-information/general-information.component";
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageCacheService } from '@core/services/local-storage-cache.service';
-import { FacultativeService } from '@core/services/facultative.service';
+import { SubmissionService } from '@core/services/submission.service';
 
 @Component({
   selector: 'app-facultative-submission',
@@ -31,7 +31,7 @@ export class FacultativeSubmissionComponent implements AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private ls: LocalStorageCacheService,
-    private facultativeService: FacultativeService
+    private submissionService: SubmissionService
   ) {
     this.refNumber = this.route.snapshot.paramMap.get('refNumber');
     this.formType = this.route.snapshot.queryParamMap.get('formType') ?? 'Create Submission';
@@ -39,7 +39,7 @@ export class FacultativeSubmissionComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.refNumber) {
-      this.facultativeService.getSubmissionItemDetails(this.refNumber).subscribe(resp => {
+      this.submissionService.getSubmissionItemDetails(this.refNumber).subscribe(resp => {
         this.generalInfo.form.patchValue(resp.generalInfo);
         this.securityDetails.form.patchValue(resp.securityDetails);
         this.fiscalRegulatory.form.patchValue(resp.fiscalRegulatory);
@@ -60,7 +60,7 @@ export class FacultativeSubmissionComponent implements AfterViewInit {
   }
 
   onSave(): void {
-    this.facultativeService.saveFacultativeSubmission(this.getAllData());
+    this.submissionService.saveFacultativeSubmission(this.getAllData());
   }
 
   onSaveDraft(): void {

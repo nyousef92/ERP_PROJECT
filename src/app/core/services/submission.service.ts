@@ -2,128 +2,16 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { HelperService } from './helper.service';
 import { Observable, of } from 'rxjs';
-import { INotification } from '../intefaces/notification';
-import { IconType } from '../intefaces/icon-config';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class FacultativeService {
+export class SubmissionService {
   constructor(
     private apiService: ApiService,
     private helper: HelperService
   ) { }
-
-  deleteProgressSheet(refNo: string) {
-    return of(true);
-  }
-
-  getProgressSheetHistory(payload: { search: string; currentPage: number; pageSize: number; }) {
-    return of(
-      {
-        totalItems: 10,
-        data: [
-          {
-            "refNo": "QS-2024-001",
-            "share": "Global Corp",
-            "cedant": "Secure Insurers",
-            "lob": "Property",
-            "inception": "01-Jan-2024",
-            "siLol": "$10,000,000",
-            "status": "Bound"
-          },
-          {
-            "refNo": "PRX-2024-001",
-            "share": "Mega Holdings",
-            "cedant": "Alpha Assurance",
-            "lob": "Casualty",
-            "inception": "15-Feb-2024",
-            "siLol": "$25,000,000",
-            "status": "Quoted"
-          },
-          {
-            "refNo": "SF-2024-001",
-            "share": "Pioneer Logistics",
-            "cedant": "Guardian General",
-            "lob": "Marine",
-            "inception": "01-Mar-2024",
-            "siLol": "$5,000,000",
-            "status": "Submitted"
-          },
-          {
-            "refNo": "PPX-2024-001",
-            "share": "Innovate Tech",
-            "cedant": "Secure Insurers",
-            "lob": "Technology",
-            "inception": "10-Mar-2024",
-            "siLol": "$50,000,000",
-            "status": "Bound"
-          },
-          {
-            "refNo": "SAF-2024-001",
-            "share": "Coastal Properties",
-            "cedant": "National Coverage",
-            "lob": "Property",
-            "inception": "20-Jan-2024",
-            "siLol": "$15,000,000",
-            "status": "Quoted"
-          },
-          {
-            "refNo": "QS-2024-002",
-            "share": "Tech Dynamics",
-            "cedant": "Premier Insurance",
-            "lob": "Technology",
-            "inception": "05-Apr-2024",
-            "siLol": "$8,000,000",
-            "status": "Submitted"
-          }
-        ]
-      }
-    );
-  }
-
-
-  getProgressSheetMetrics() {
-    return of([
-      {
-        label: 'Total Sheets',
-        value: '1',
-        subtitle: null,
-        iconType: null,
-        ValueColorClass: 'text-text'
-      },
-      {
-        label: 'Bound',
-        value: '2',
-        subtitle: null,
-        iconType: null,
-        ValueColorClass: 'text-success'
-      }
-      , {
-        label: 'Quoted',
-        value: '1',
-        subtitle: null,
-        iconType: null,
-        ValueColorClass: 'text-primary'
-      }
-      , {
-        label: 'Pending',
-        value: '5',
-        subtitle: null,
-        iconType: null,
-        ValueColorClass: 'text-warning'
-      }
-    ])
-  }
-
-  updateProgressSheet(id: any, progressSheet: any) {
-    return of(true);
-  }
-
-  addNewProgressSheet(progressSheet: any) {
-    return of(true);
-  }
 
 
   getLOBList() {
@@ -148,6 +36,8 @@ export class FacultativeService {
       { id: 7, value: 'Guardian General', label: 'Guardian General' },
     ]);
   }
+
+
   getSubmissionTypes(): Observable<any[]> {
     //return this.apiService.get('')
     return of(
@@ -389,25 +279,6 @@ export class FacultativeService {
         "Hannover Re"
       ],
       summary: "All detailed information, including financials, documents, and notes, are available in the full progress sheet. Click below to view or edit the complete details of this facultative placement."
-    });
-  }
-
-  getProgressSheetDetailsView(refNumber: string) {
-    return of({
-      account: 'Acc-001',
-      cedant: 'Global Insurance Co.',
-      lob: 'Property',
-      inceptionDate: '01/01/2023',
-      siLol: '$10,000,000',
-      rate: '5.25%',
-      commission: '15.00%',
-      receiptDate: '01/15/2023',
-      notes: 'Standard property coverage. Terms and conditions as per original slip. Subject to final survey report.',
-      reinsurers: [
-        { name: { id: 1, name: 'Swiss Re' }, share: 25.00, rate: 5.25, commission: 10.00, tax: 5.00, comments: 'Standard terms applied.' },
-        { name: { id: 2, name: 'Munich Re' }, share: 30.00, rate: 5.25, commission: 10.00, tax: 5.00, comments: 'Agreed, awaiting signed slip.' },
-        { name: { id: 3, name: 'Saudi Re' }, share: 15.00, rate: 5.30, commission: 11.50, tax: 0, comments: 'Subject to engineering survey.' },
-      ]
     });
   }
 

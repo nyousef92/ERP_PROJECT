@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FacultativeService } from '@core/services/facultative.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CurrencyPipe, NgStyle } from '@angular/common';
 import { ProgressSheetDocumentsComponent } from '../progress-sheet-documents/progress-sheet-documents.component';
+import { SubmissionService } from '@core/services/submission.service';
 
 @Component({
   selector: 'app-preview-facultative-progress-sheet',
@@ -17,14 +17,14 @@ export class PreviewFacultativeProgressSheetComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private facultativeService: FacultativeService
+    private submissionService: SubmissionService
   ) {
     this.refNumber = this.route.snapshot.paramMap.get('refNumber');
   }
 
   ngOnInit(): void {
     if (this.refNumber) {
-      this.facultativeService.getProgressSheetPreview(this.refNumber).subscribe((data) => {
+      this.submissionService.getProgressSheetPreview(this.refNumber).subscribe((data) => {
         this.progressSheet = data;
         this.progressSheet.progress =
           this.progressSheet.progress.toLowerCase() === 'submitter' ? 25

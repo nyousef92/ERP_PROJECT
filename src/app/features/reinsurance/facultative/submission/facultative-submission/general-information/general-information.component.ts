@@ -2,11 +2,11 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { HelperService } from '@core/services/helper.service';
-import { FacultativeService } from '@core/services/facultative.service';
 import { SelectDropdownComponent } from "@shared/select-dropdown/select-dropdown.component";
 import { dependantOn } from '@core/validations/dependent.validation';
 import { InputFieldTextareaComponent } from "@shared/input-field-text-area/input-field-text-area.component";
 import { FileUploadComponent } from "@shared/file-upload/file-upload.component";
+import { SubmissionService } from '@core/services/submission.service';
 @Component({
   selector: 'app-general-information',
   standalone: true,
@@ -26,7 +26,7 @@ export class GeneralInformationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private helper: HelperService,
-    private facultativeService: FacultativeService
+    private submissionService: SubmissionService,
   ) {
     this.form = this.fb.group({
       status: ['drafrt'],
@@ -59,7 +59,7 @@ export class GeneralInformationComponent implements OnInit {
   }
 
   getTypesInfo() {
-    this.facultativeService.getSubmissionTypes().subscribe(resp => {
+    this.submissionService.getSubmissionTypes().subscribe(resp => {
       this.typesDeatails = resp;
       this.facTypes = resp.map(item => item.facType).map((item: string) => ({
         value: item,

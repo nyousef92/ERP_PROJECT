@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FacultativeService } from '@core/services/facultative.service';
+import { ProgressSheetService } from '@core/services/progress.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbComponent, BreadcrumbItem } from '@shared/breadcrumb/breadcrumb.component';
 import { ModalComponent } from '@shared/modal/modal.component';
@@ -27,13 +27,13 @@ export class ViewFacultativeProgressSheetComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private facultativeService: FacultativeService
+    private progressSheetService: ProgressSheetService
   ) {
     this.refNumber = this.route.snapshot.paramMap.get('refNumber');
   }
 
   ngOnInit(): void {
-    this.facultativeService.getProgressSheetDetailsView(this.refNumber || '').subscribe((data) => {
+    this.progressSheetService.getProgressSheetDetailsView(this.refNumber || '').subscribe((data) => {
       this.progressSheet = data;
     });
   }
@@ -49,7 +49,7 @@ export class ViewFacultativeProgressSheetComponent implements OnInit {
         progressSheet: this.progressSheet,
         onSaved: (updated: any) => {
           this.progressSheet = { ...this.progressSheet, ...updated };
-          this.facultativeService.updateProgressSheet(this.progressSheet.id, this.progressSheet).subscribe();
+          this.progressSheetService.updateProgressSheet(this.progressSheet.id, this.progressSheet).subscribe();
         }
       }, 'xl')
   }

@@ -2,7 +2,7 @@
   @for (item of dataList; track item.label) {
   <div class="rounded border p-1.5" [class]="item.cardClass">
     <div class="flex items-center justify-between mb-0.5">
-      <span class="text-[9px]" [class]="item.labelClass">{{ item.label }}</span>
+      <span class="text-[9px] capitalize" [class]="item.labelClass">{{ item.label }}</span>
       <span class="material-icons text-[13px]" [class]="item.trendColorClass">{{ item.trendIcon }}</span>
     </div>
     <p class="text-sm" [class]="item.valueClass">{{ item.value }}</p>

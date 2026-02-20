@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalComponent } from '@shared/modal/modal.component';
-import { FacultativeService } from '@core/services/facultative.service';
+import { ProgressSheetService } from '@core/services/progress.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EditProgressSheetComponent } from './edit-progress-sheet/edit-progress-sheet.component';
 import { CardsGridComponent } from "@shared/cards-grid/cards-grid.component";
@@ -29,13 +29,13 @@ export class ProgressSheetComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private facultativeService: FacultativeService) {
+    private progressSheetService: ProgressSheetService) {
   }
 
   ngOnInit(): void {
     forkJoin([
-      this.facultativeService.getProgressSheetMetrics(),
-      this.facultativeService.getProgressSheetHistory({
+      this.progressSheetService.getProgressSheetMetrics(),
+      this.progressSheetService.getProgressSheetHistory({
         search: '',
         currentPage: this.currentPage,
         pageSize: 6
@@ -53,7 +53,7 @@ export class ProgressSheetComponent implements OnInit {
   updateSearchValue(value: string, page: number) {
     this.searchValue = value;
     this.currentPage = page;
-    this.facultativeService.getProgressSheetHistory(
+    this.progressSheetService.getProgressSheetHistory(
       {
         search: this.searchValue,
         currentPage: this.currentPage,
@@ -69,17 +69,17 @@ export class ProgressSheetComponent implements OnInit {
     this.modal.open(EditProgressSheetComponent, {
       progressSheet: null,
       onSaved: (updated: any) => {
-        this.facultativeService.addNewProgressSheet(updated).subscribe()
+        this.progressSheetService.addNewProgressSheet(updated).subscribe()
       }
     }, 'xl')
   }
 
   edit(refNo: string) {
-    this.facultativeService.getProgressSheetDetailsView(refNo).subscribe((data) => {
+    this.progressSheetService.getProgressSheetDetailsView(refNo).subscribe((data) => {
       this.modal.open(EditProgressSheetComponent, {
         progressSheet: data,
         onSaved: (updated: any) => {
-          this.facultativeService.updateProgressSheet(refNo, updated).subscribe()
+          this.progressSheetService.updateProgressSheet(refNo, updated).subscribe()
         }
       }, 'xl')
     });
@@ -87,13 +87,13 @@ export class ProgressSheetComponent implements OnInit {
   }
 
   delete(refNo: string) {
-    this.facultativeService.getProgressSheetDetailsView(refNo).subscribe((data) => {
+    this.progressSheetService.getProgressSheetDetailsView(refNo).subscribe((data) => {
       this.modal.open(DeleteItemComponent, {
         description: `Are you sure you want to delete progress sheet with ref no ${refNo}?`,
         onDelete: () => {
           this.modal.close();
           this.history = this.history.filter(h => h.refNo !== refNo);
-          this.facultativeService.deleteProgressSheet(refNo).subscribe()
+          this.progressSheetService.deleteProgressSheet(refNo).subscribe()
         }
       }, 'sm')
     });

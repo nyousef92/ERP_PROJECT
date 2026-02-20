@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FacultativeService } from '@core/services/facultative.service';
+import { ProgressSheetService } from '@core/services/progress.service';
 import { HelperService } from '@core/services/helper.service';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { SelectDropdownComponent } from "@shared/select-dropdown/select-dropdown.component";
@@ -23,11 +23,11 @@ export class EditReinsuranceComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private helper: HelperService,
-    private facultativeService: FacultativeService
+    private progressSheetService: ProgressSheetService
   ) { }
 
   ngOnInit(): void {
-    this.facultativeService.getSecuritiesList().subscribe((data) => {
+    this.progressSheetService.getSecuritiesList().subscribe((data) => {
       this.reinsurerList = data
 
       this.form = this.fb.group({

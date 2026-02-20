@@ -5,7 +5,7 @@ import { forkJoin } from 'rxjs';
 import { InputFieldComponent } from "@shared/input-field/input-field.component";
 import { Router } from '@angular/router';
 import { PaginatorComponent } from "@shared/paginator/paginator.component";
-import { FacultativeService } from '@core/services/facultative.service';
+import { SubmissionService } from '@core/services/submission.service';
 
 @Component({
   selector: 'app-submission',
@@ -20,15 +20,15 @@ export class SubmissionComponent implements OnInit {
   totalItems = 0;
 
   constructor(
-    private facultativeService: FacultativeService,
+    private submissionService: SubmissionService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     forkJoin(
       [
-        this.facultativeService.getSubmissionMetrics(),
-        this.facultativeService.getSubmissionHistory({
+        this.submissionService.getSubmissionMetrics(),
+        this.submissionService.getSubmissionHistory({
           pageSize: 6,
           currentPage: 1,
           searchText: this.searchText
@@ -47,7 +47,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   getSubmissionHistory(currentPage = 1) {
-    this.facultativeService.getSubmissionHistory({
+    this.submissionService.getSubmissionHistory({
       pageSize: 6,
       currentPage,
       searchText: this.searchText

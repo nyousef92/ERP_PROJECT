@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
-import { FacultativeService } from '@core/services/facultative.service';
+import { ProgressSheetService } from '@core/services/progress.service';
 import { HelperService } from '@core/services/helper.service';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { InputFieldTextareaComponent } from '@shared/input-field-text-area/input-field-text-area.component';
@@ -30,13 +30,13 @@ export class EditProgressSheetComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private helper: HelperService,
-    private facultativeService: FacultativeService
+    private progressSheetService: ProgressSheetService
   ) {}
 
   ngOnInit(): void {
     forkJoin({
-      lobList: this.facultativeService.getLOBList(),
-      cedantList: this.facultativeService.getCedantList()
+      lobList: this.progressSheetService.getLOBList(),
+      cedantList: this.progressSheetService.getCedantList()
     }).subscribe(({ lobList, cedantList }) => {
       this.lobList = lobList;
       this.cedantList = cedantList;
