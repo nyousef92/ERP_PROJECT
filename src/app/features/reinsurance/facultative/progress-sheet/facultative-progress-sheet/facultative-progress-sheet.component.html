@@ -1,0 +1,150 @@
+@if (progressSheet) {
+<div class="lg:col-span-2 space-y-6">
+
+  <!-- Submission Summary -->
+  <div class="bg-white rounded-lg border border-gray-200 p-6">
+    <h2 class="text-gray-900 mb-4">Submission Summary</h2>
+    <div class="grid grid-cols-2 gap-6">
+      <div>
+        <label class="block text-xs text-gray-500 mb-1">Insured Name</label>
+        <p class="text-sm text-gray-900">{{ progressSheet.submission.insuredName }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-gray-500 mb-1">Ceding Company</label>
+        <p class="text-sm text-gray-900">{{ progressSheet.submission.cedingCompany }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-gray-500 mb-1">Reinsurance Type</label>
+        <p class="text-sm text-gray-900">{{ progressSheet.submission.reinsuranceType }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-gray-500 mb-1">Underlying Policy</label>
+        <p class="text-sm text-gray-900">{{ progressSheet.submission.underlyingPolicy }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-gray-500 mb-1">Effective Date</label>
+        <p class="text-sm text-gray-900">{{ progressSheet.submission.effectiveDate }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-gray-500 mb-1">Expiry Date</label>
+        <p class="text-sm text-gray-900">{{ progressSheet.submission.expiryDate }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Financials -->
+  <div class="bg-white rounded-lg border border-gray-200 p-6">
+    <h2 class="text-gray-900 mb-4">Financials</h2>
+    <div class="grid grid-cols-2 gap-6">
+      <div>
+        <label class="block text-xs text-gray-500 mb-1">Policy Limit</label>
+        <p class="text-gray-900">{{ progressSheet.financials.policyLimit | currency:'USD':'symbol':'1.0-0' }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-gray-500 mb-1">Attachment Point</label>
+        <p class="text-gray-900">{{ progressSheet.financials.attachmentPoint | currency:'USD':'symbol':'1.0-0' }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-gray-500 mb-1">Gross Written Premium</label>
+        <p class="text-gray-900">{{ progressSheet.financials.grossWrittenPremium | currency:'USD':'symbol':'1.0-0' }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-gray-500 mb-1">Ceded Premium</label>
+        <p class="text-gray-900">{{ progressSheet.financials.cededPremium | currency:'USD':'symbol':'1.0-0' }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-gray-500 mb-1">Commission Rate</label>
+        <p class="text-gray-900">{{ progressSheet.financials.commissionRate }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-gray-500 mb-1">Participation Share</label>
+        <p class="text-gray-900">{{ progressSheet.financials.participationShare }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Documents -->
+  <div class="bg-white rounded-lg border border-gray-200 p-6">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h2 class="text-gray-900">Documents</h2>
+        <div class="flex gap-4 mt-3 text-sm">
+          <button
+            (click)="setActiveTab('documents')"
+            [class]="activeTab === 'documents' ? 'text-blue-600 border-b-2 border-blue-600 pb-2' : 'text-gray-500 pb-2'">
+            Documents
+          </button>
+          <button
+            (click)="setActiveTab('notes')"
+            [class]="activeTab === 'notes' ? 'text-blue-600 border-b-2 border-blue-600 pb-2' : 'text-gray-500 pb-2'">
+            Notes &amp; Activity
+          </button>
+          <button
+            (click)="setActiveTab('claims')"
+            [class]="activeTab === 'claims' ? 'text-blue-600 border-b-2 border-blue-600 pb-2' : 'text-gray-500 pb-2'">
+            Claims
+          </button>
+        </div>
+      </div>
+      <button class="text-blue-600 text-sm flex items-center gap-2 hover:text-blue-700">
+        <span>📄</span>Upload Document
+      </button>
+    </div>
+
+    @if (activeTab === 'documents') {
+      <p class="text-sm text-gray-700 mb-4">{{ progressSheet.documents.length }} Documents</p>
+      <div class="space-y-3">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-gray-200">
+              <th class="text-left text-xs text-gray-600 pb-2">DOCUMENT NAME</th>
+              <th class="text-left text-xs text-gray-600 pb-2">TYPE</th>
+              <th class="text-left text-xs text-gray-600 pb-2">UPLOAD DATE</th>
+              <th class="text-left text-xs text-gray-600 pb-2">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            @for (doc of progressSheet.documents; track doc.name) {
+              <tr>
+                <td class="py-3 text-sm text-gray-900">{{ doc.name }}</td>
+                <td class="py-3 text-sm text-gray-600">{{ doc.type }}</td>
+                <td class="py-3 text-sm text-gray-600">{{ doc.uploadDate }}</td>
+                <td class="py-3">
+                  <div class="flex items-center gap-2">
+                    <button class="text-gray-600 hover:text-gray-900">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        aria-hidden="true">
+                        <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                    </button>
+                    <button class="text-gray-600 hover:text-gray-900">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        aria-hidden="true">
+                        <path d="M12 15V3"></path>
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <path d="m7 10 5 5 5-5"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    @if (activeTab === 'notes') {
+      <p class="text-sm text-gray-500 py-4 text-center">No notes or activity yet.</p>
+    }
+
+    @if (activeTab === 'claims') {
+      <p class="text-sm text-gray-500 py-4 text-center">No claims recorded.</p>
+    }
+  </div>
+
+</div>
+}

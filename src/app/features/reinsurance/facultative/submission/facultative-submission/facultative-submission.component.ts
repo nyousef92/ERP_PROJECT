@@ -6,7 +6,6 @@ import { GeneralInformationComponent } from "./general-information/general-infor
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageCacheService } from '@core/services/local-storage-cache.service';
 import { FacultativeService } from '@core/services/facultative.service';
-import { ReinsuranceService } from '@core/services/reinsurance.service';
 
 @Component({
   selector: 'app-facultative-submission',
@@ -32,8 +31,7 @@ export class FacultativeSubmissionComponent implements AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private ls: LocalStorageCacheService,
-    private facultativeService: FacultativeService,
-    private reinsuranceService: ReinsuranceService
+    private facultativeService: FacultativeService
   ) {
     this.refNumber = this.route.snapshot.paramMap.get('refNumber');
     this.formType = this.route.snapshot.queryParamMap.get('formType') ?? 'Create Submission';
@@ -41,7 +39,7 @@ export class FacultativeSubmissionComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.refNumber) {
-      this.reinsuranceService.getSubmissionItemDetails(this.refNumber).subscribe(resp => {
+      this.facultativeService.getSubmissionItemDetails(this.refNumber).subscribe(resp => {
         this.generalInfo.form.patchValue(resp.generalInfo);
         this.securityDetails.form.patchValue(resp.securityDetails);
         this.fiscalRegulatory.form.patchValue(resp.fiscalRegulatory);

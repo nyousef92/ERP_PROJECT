@@ -6,6 +6,7 @@ import { forkJoin } from 'rxjs';
 import { InputFieldComponent } from "@shared/input-field/input-field.component";
 import { Router } from '@angular/router';
 import { PaginatorComponent } from "@shared/paginator/paginator.component";
+import { FacultativeService } from '@core/services/facultative.service';
 
 @Component({
   selector: 'app-submission',
@@ -20,15 +21,15 @@ export class SubmissionComponent implements OnInit {
   totalItems = 0;
 
   constructor(
-    private reinsuranceService: ReinsuranceService,
+    private facultativeService: FacultativeService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     forkJoin(
       [
-        this.reinsuranceService.getSubmissionMetrics(),
-        this.reinsuranceService.getSubmissionHistory({
+        this.facultativeService.getSubmissionMetrics(),
+        this.facultativeService.getSubmissionHistory({
           pageSize: 6,
           currentPage: 1,
           searchText: this.searchText
@@ -47,7 +48,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   getSubmissionHistory(currentPage = 1) {
-    this.reinsuranceService.getSubmissionHistory({
+    this.facultativeService.getSubmissionHistory({
       pageSize: 6,
       currentPage,
       searchText: this.searchText
@@ -86,9 +87,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   goToProgressSheet(refNum: string) {
-    this.reinsuranceService.getSubmissionItemDetails(refNum).subscribe(resp => {
-      this.router.navigate(
-        ['home/reinsurance/facultative/progress-sheet']);
-    })
+    this.router.navigate(
+      ['home/reinsurance/facultative/progress-sheet/preView', refNum]);
   }
 }
