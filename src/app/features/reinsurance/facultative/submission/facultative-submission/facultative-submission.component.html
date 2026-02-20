@@ -3,7 +3,10 @@
 
     <div>
         <h1 class="text-xl text-gray-900 mb-1">Create New Facultative Submission</h1>
-        <p class="text-sm text-gray-600">Fill in the details below to create a new facultative reinsurance submission. Fields marked with * are required.</p>
+        <p class="text-sm text-gray-600">
+            Fill in the details below to create a new facultative reinsurance submission.
+            Fields marked with * are required.
+        </p>
     </div>
 
     <div class="flex gap-1">
@@ -21,10 +24,14 @@
         </button>
     </div>
 </div>
-<div>
-    @switch (activeTab) {
-    @case (1) {
-    <app-security-details></app-security-details>
-    }
-    }
+<div class="mt-3">
+
+    <app-fiscal-regulatory 
+    [(collectData)]="collectData" [class.d-none]="activeTab!==0">
+    </app-fiscal-regulatory>
+
+    <app-security-details [(collectData)]="collectData" [class.d-none]="activeTab!==1">
+    </app-security-details>
+    <app-fiscal-regulatory [(collectData)]="collectData" [class.d-none]="activeTab!==2">
+    </app-fiscal-regulatory>
 </div>

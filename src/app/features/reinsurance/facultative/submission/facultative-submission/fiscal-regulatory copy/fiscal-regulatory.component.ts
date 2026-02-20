@@ -1,16 +1,16 @@
-import { Component, Input, model, Signal, effect, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, effect, model } from '@angular/core';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { InputFieldComponent } from '../../../../../../shared/input-field/input-field.component';
 import { HelperService } from '../../../../../../core/services/helper.service';
-import { InputFieldTextareaComponent } from '../../../../../../shared/input-field-text-area/input-field-text-area.component';
 import { Router } from '@angular/router';
 @Component({
-  selector: 'app-security-details',
+  selector: 'app-fiscal-regulatory',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, InputFieldComponent, InputFieldTextareaComponent],
-  templateUrl: './security-details.component.html'
+  imports: [FormsModule, ReactiveFormsModule, InputFieldComponent],
+  templateUrl: './fiscal-regulatory.component.html'
 })
-export class SecurityDetailsComponent implements OnInit {
+export class FiscalRegulatoryComponent {
+
   form: FormGroup;
   collectData = model.required<boolean>();
 
@@ -20,16 +20,15 @@ export class SecurityDetailsComponent implements OnInit {
     private router: Router
   ) {
     this.form = this.fb.group({
-      reinsuranceLiabilityClause: ['', [Validators.required]],
-      orderHereon: [''],
-      basisOfWritten: [''],
-      basisOfSignedLine: [''],
-      writtenLines: [''],
-      signingProvisions: ['']
+      taxPayablebyUnderWritter: [''],
+      taxPayableByInsured: [''],
+      premiumRate: [''],
+      commission: [''],
+      fees: ['']
     });
-
   }
 
+  
   ngOnInit(): void {
     effect(() => {
       if (this.collectData()) {

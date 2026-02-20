@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { BreadcrumbComponent } from "../../../../../shared/breadcrumb/breadcrumb.component";
 import { SecurityDetailsComponent } from './security-details/security-details.component';
+import { FiscalRegulatoryComponent } from "./fiscal-regulatory/fiscal-regulatory.component";
 @Component({
   selector: 'app-facultative-submission',
-  imports: [BreadcrumbComponent, SecurityDetailsComponent],
+  imports: [BreadcrumbComponent, SecurityDetailsComponent, FiscalRegulatoryComponent],
   templateUrl: './facultative-submission.component.html'
 })
 export class FacultativeSubmissionComponent {
   activeTab = 0;
+  collectData = signal(false);
 
   isActive(index: number): boolean {
     return this.activeTab === index;
