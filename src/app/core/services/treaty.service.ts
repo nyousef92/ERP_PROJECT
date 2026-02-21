@@ -222,4 +222,157 @@ export class TreatyService {
         };
         return of(formOptions);
     }
+
+    getTreatyForEdit(id: string) {
+        // Simulated treaty records — in production this would be an API call
+        const treatyRecords: Record<string, any> = {
+            'QS-2024-123': {
+                selectedCompany: 'COMP-88291',
+                treatyCode: 'QS-2024-123',
+                description: 'Property Treaty 2024',
+                treatyType: 'Proportional',
+                treatySubType: 'Quota Share',
+                currency: 'SAR',
+                fromDate: '2024-01-01',
+                toDate: '2024-12-31',
+                comments: '',
+                lob: 'Property',
+                subLob: 'Fire',
+                isCatastropheCoverage: false
+            },
+            'RE-2024-456': {
+                selectedCompany: 'COMP-77342',
+                treatyCode: 'RE-2024-456',
+                description: 'Casualty Treaty 2024',
+                treatyType: 'Non-Proportional',
+                treatySubType: 'Risk Excess',
+                currency: 'SAR',
+                fromDate: '2024-03-01',
+                toDate: '2024-12-31',
+                comments: 'Annual renewal',
+                lob: 'Casualty',
+                subLob: '',
+                isCatastropheCoverage: true
+            },
+            'SS-2024-789': {
+                selectedCompany: 'COMP-66510',
+                treatyCode: 'SS-2024-789',
+                description: 'Marine Treaty 2024',
+                treatyType: 'Proportional',
+                treatySubType: 'Surplus',
+                currency: 'USD',
+                fromDate: '2024-01-01',
+                toDate: '2024-12-31',
+                comments: '',
+                lob: 'Marine',
+                subLob: 'Marine Cargo',
+                isCatastropheCoverage: false
+            },
+            'TRT-12348': {
+                selectedCompany: 'COMP-55123',
+                treatyCode: 'TRT-12348',
+                description: 'Life Treaty 2024',
+                treatyType: 'Proportional',
+                treatySubType: 'Quota Share',
+                currency: 'SAR',
+                fromDate: '2024-06-01',
+                toDate: '2025-06-01',
+                comments: '',
+                lob: 'Life',
+                subLob: 'Group Life',
+                isCatastropheCoverage: false
+            }
+        };
+
+        const record = treatyRecords[id] ?? treatyRecords['QS-2024-123'];
+        const company = [
+            { id: 'COMP-88291', name: 'Tawuniya', account: 'ACC-00129388', fax: '+966 11 123 4567', phone: '+966 11 123 4567', email: 'reinsurance@tawuniya.com.sa', address: '' },
+            { id: 'COMP-77342', name: 'Bupa Arabia', account: 'ACC-00994421', fax: '+966 12 667 0761', phone: '+966 12 667 0761', email: 're@bupa.com.sa', address: '' },
+            { id: 'COMP-66510', name: 'Al Rajhi Takaful', account: 'ACC-00441100', fax: '+966 11 228 1111', phone: '+966 11 228 1111', email: 'info@alrajhitakaful.com', address: '' },
+            { id: 'COMP-55123', name: 'Malath Insurance', account: 'ACC-00223388', fax: '+966 11 216 1212', phone: '+966 11 216 1212', email: 'treaty@malath.com.sa', address: '' }
+        ].find(c => c.id === record.selectedCompany)!;
+
+        return of({
+            companies: [
+                { id: 'COMP-88291', name: 'Tawuniya', account: 'ACC-00129388', fax: '+966 11 123 4567', phone: '+966 11 123 4567', email: 'reinsurance@tawuniya.com.sa', address: '' },
+                { id: 'COMP-77342', name: 'Bupa Arabia', account: 'ACC-00994421', fax: '+966 12 667 0761', phone: '+966 12 667 0761', email: 're@bupa.com.sa', address: '' },
+                { id: 'COMP-66510', name: 'Al Rajhi Takaful', account: 'ACC-00441100', fax: '+966 11 228 1111', phone: '+966 11 228 1111', email: 'info@alrajhitakaful.com', address: '' },
+                { id: 'COMP-55123', name: 'Malath Insurance', account: 'ACC-00223388', fax: '+966 11 216 1212', phone: '+966 11 216 1212', email: 'treaty@malath.com.sa', address: '' }
+            ],
+            treatyTypes: [
+                { value: 'Proportional', label: 'Proportional' },
+                { value: 'Non-Proportional', label: 'Non-Proportional' }
+            ],
+            treatySubTypesMap: {
+                Proportional: [
+                    { value: 'Quota Share', label: 'Quota Share' },
+                    { value: 'Surplus', label: 'Surplus' }
+                ],
+                'Non-Proportional': [
+                    { value: 'Risk Excess', label: 'Risk Excess' },
+                    { value: 'Catastrophe Excess', label: 'Catastrophe Excess' },
+                    { value: 'Aggregate XoL', label: 'Aggregate XoL' },
+                    { value: 'Clash Cover', label: 'Clash Cover' }
+                ]
+            },
+            currencies: [
+                { value: 'SAR', label: 'SAR - Saudi Riyal' },
+                { value: 'USD', label: 'USD - US Dollar' },
+                { value: 'EUR', label: 'EUR - Euro' },
+                { value: 'GBP', label: 'GBP - British Pound' },
+                { value: 'AED', label: 'AED - UAE Dirham' }
+            ],
+            lineOfBusiness: [
+                { value: 'Property', label: 'Property' },
+                { value: 'Casualty', label: 'Casualty' },
+                { value: 'Marine', label: 'Marine' },
+                { value: 'Life', label: 'Life' },
+                { value: 'Health', label: 'Health' },
+                { value: 'Motor', label: 'Motor' },
+                { value: 'Engineering', label: 'Engineering' }
+            ],
+            subLOBs: {
+                Property: [
+                    { value: 'Fire', label: 'Fire' },
+                    { value: 'Burglary', label: 'Burglary' },
+                    { value: 'Homeowners', label: 'Homeowners' }
+                ],
+                Motor: [
+                    { value: 'Motor Third Party', label: 'Motor Third Party' },
+                    { value: 'Motor Comprehensive', label: 'Motor Comprehensive' }
+                ],
+                Marine: [
+                    { value: 'Marine Hull', label: 'Marine Hull' },
+                    { value: 'Marine Cargo', label: 'Marine Cargo' }
+                ],
+                Life: [
+                    { value: 'Group Life', label: 'Group Life' },
+                    { value: 'Individual Life', label: 'Individual Life' }
+                ]
+            },
+            // pre-filled values
+            companyInfo: {
+                selectedCompany: record.selectedCompany,
+                companyId: company?.id ?? '',
+                accountNo: company?.account ?? '',
+                phoneNo: company?.phone ?? '',
+                fax: company?.fax ?? '',
+                email: company?.email ?? '',
+                address: company?.address ?? ''
+            },
+            treatyDetails: {
+                treatyCode: record.treatyCode,
+                description: record.description,
+                treatyType: record.treatyType,
+                treatySubType: record.treatySubType,
+                currency: record.currency,
+                fromDate: record.fromDate,
+                toDate: record.toDate,
+                comments: record.comments,
+                lob: record.lob,
+                subLob: record.subLob,
+                isCatastropheCoverage: record.isCatastropheCoverage
+            }
+        });
+    }
 }

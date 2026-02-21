@@ -10,6 +10,7 @@ import { PreviewTreatyDetailsComponent } from '../preview-treaty-details/preview
 import { ModalComponent } from '@shared/modal/modal.component';
 import { ModalOptions } from '@shared/modal/modal.component';
 import { AddNewTreatyComponent } from '../add-new-treaty/add-new-treaty.component';
+import { EditTreatyComponent } from '../edit-treaty/edit-treaty.component';
 
 @Component({
   selector: 'app-treaty',
@@ -68,11 +69,8 @@ export class TreatyComponent implements OnInit {
     this.modal.open(AddNewTreatyComponent, {}, 'xl', { disableBackdropClose: true });
   }
 
-  updateSubmission(refNum: string) {
-    this.router.navigate(
-      ['home/reinsurance/facultative/submission/add-facultative-submission', refNum],
-      { queryParams: { formType: 'Update Submission' } }
-    );
+  editTreaty(treatyId: string) {
+    this.modal.open(EditTreatyComponent, { treatyId }, 'xl', { disableBackdropClose: true });
   }
 
   renewSubmission(refNum: string) {
