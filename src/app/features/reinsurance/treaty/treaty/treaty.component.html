@@ -1,67 +1,65 @@
 <app-modal />
 <div class="space-y-4 mb-3">
-    <div class="flex items-start justify-between">
+
+    <!-- Page header -->
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <h1 class="text-xl text-text mb-1">
-                Treaty</h1>
-            <p class="text-sm text-text-muted">
-                Manage treaty reinsurance contracts and agreements</p>
+            <h1 class="text-xl text-text mb-0.5">Treaty</h1>
+            <p class="text-sm text-text-muted">Manage treaty reinsurance contracts and agreements</p>
         </div>
-        <div>
-            <button type="button" (click)="addNew()"
-                class="inline-flex items-center gap-1 py-2 px-4 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize">
-                <span class="material-icons text-[14px]">add</span>
-                <span>Add New</span>
-            </button>
-        </div>
+        <button type="button" (click)="addNew()"
+            class="inline-flex items-center gap-1 py-2 px-4 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize self-start sm:self-auto">
+            <span class="material-icons text-[14px]">add</span>
+            <span>Add New</span>
+        </button>
     </div>
+
+    <!-- Metrics cards -->
     <div>
         <app-colored-cards-grid [dataList]="metrics"></app-colored-cards-grid>
     </div>
-    <div class="bg-surface rounded-lg  border border-border ">
-        <div class="flex items-start justify-between m-3">
-            <div>
-                <h2 class="text-l text-text mb-1">
-                    Submissions
-                </h2>
-            </div>
-            <div>
-                <app-input-field placeholder="search" (valueChange)="updateSearchValue($event)"></app-input-field>
-            </div>
+
+    <!-- Submissions panel -->
+    <div class="bg-surface rounded-lg border border-border">
+
+        <!-- Panel header -->
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between p-3">
+            <h2 class="text-base text-text">Submissions</h2>
+            <app-input-field placeholder="search" (valueChange)="updateSearchValue($event)"></app-input-field>
         </div>
-        <div class="overflow-hidden shadow-sm">
+
+        <!-- ── Desktop table (hidden on mobile) ───────────────────────── -->
+        <div class="hidden md:block overflow-x-auto">
             <table class="w-full border-collapse bg-surface text-left text-sm text-secondary-dark">
-                <thead class="bg-background font-medium  text-text ">
+                <thead class="bg-background font-medium text-text">
                     <tr>
-                        <th scope="col" class="px-6 py-4 text-xs">Treaty Code</th>
-                        <th scope="col" class="px-6 py-4 text-xs">Company</th>
-                        <th scope="col" class="px-6 py-4 text-xs">Type</th>
-                        <th scope="col" class="px-6 py-4 text-xs">Class</th>
-                        <th scope="col" class="px-6 py-4 text-xs">Currency</th>
-                        <th scope="col" class="px-6 py-4 text-xs">Status</th>
-                        <th scope="col" class="px-6 py-4 text-right">Actions</th>
+                        <th scope="col" class="px-4 py-3 text-xs">Treaty Code</th>
+                        <th scope="col" class="px-4 py-3 text-xs">Company</th>
+                        <th scope="col" class="px-4 py-3 text-xs">Type</th>
+                        <th scope="col" class="px-4 py-3 text-xs">Class</th>
+                        <th scope="col" class="px-4 py-3 text-xs">Currency</th>
+                        <th scope="col" class="px-4 py-3 text-xs">Status</th>
+                        <th scope="col" class="px-4 py-3 text-xs">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 border-t border-gray-100">
                     @for (item of history; track item.id) {
                     <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-6 py-4 font-medium  text-text ">{{ item.treatyCode }}</td>
-                        <td class="px-6 py-4">{{ item.company }}</td>
-                        <td class="px-6 py-4">{{ item.type }}</td>
-                        <td class="px-6 py-4">{{ item.class }}</td>
-                        <td class="px-6 py-4">{{ item.currency }}</td>
-                        <td class="px-6 py-4">
-
+                        <td class="px-4 py-3 font-medium text-text">{{ item.treatyCode }}</td>
+                        <td class="px-4 py-3 text-sm">{{ item.company }}</td>
+                        <td class="px-4 py-3 text-sm">{{ item.type }}</td>
+                        <td class="px-4 py-3 text-sm">{{ item.class }}</td>
+                        <td class="px-4 py-3 text-sm">{{ item.currency }}</td>
+                        <td class="px-4 py-3">
                             <span [ngClass]="item.trendColorClass"
                                 class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold border">
                                 <div class="flex items-center gap-1">
                                     @if (item.statusIcon !== 'draft') {
                                     <span class="material-icons text-[14px]">{{ item.statusIcon }}</span>
                                     } @else {
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="lucide lucide-square-pen w-3 h-3"
-                                        aria-hidden="true">
+                                        stroke-linejoin="round" aria-hidden="true">
                                         <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                                         <path
                                             d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z">
@@ -72,81 +70,132 @@
                                 </div>
                             </span>
                         </td>
-                        <td class="px-6 py-4">
-                            <div class="flex justify-start gap-1 items-center">
-
-                                <!-- View / progress sheet -->
-                                <button title="View details" (click)="openDetails(item.id)"
-                                    class="p-1.5 rounded text-gray-400 hover:text-primary hover:bg-gray-100 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                        stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                                        <circle cx="12" cy="12" r="3" />
-                                    </svg>
-                                </button>
-
-                                <!-- Edit -->
-                                <button title="Edit treaty" (click)="editTreaty(item.id)"
-                                    class="p-1.5 rounded text-gray-400 hover:text-blue-600 hover:bg-gray-100 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                        stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                                        <path
-                                            d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
-                                    </svg>
-                                </button>
-
-                                <!-- Delete -->
-                                <button title="Delete treaty" (click)="deleteTreaty(item.id)"
-                                    class="p-1.5 rounded text-gray-400 hover:text-red-600 hover:bg-gray-100 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                        stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M3 6h18" />
-                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                                    </svg>
-                                </button>
-
-                                <!-- Submit to Approval (Draft only) -->
-                                @if(item.status === 'Draft') {
-                                <button title="Submit for approval" (click)="submitToApproval(item.id)"
-                                    class="p-1.5 rounded text-gray-400 hover:text-green-600 hover:bg-gray-100 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                        stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M22 2 11 13" />
-                                        <path d="M22 2 15 22 11 13 2 9l20-7z" />
-                                    </svg>
-                                </button>
-                                }
-
-                                <!-- Post to Finance (Approved only) -->
-                                @if(item.status === 'Approved') {
-                                <button title="Post to finance" (click)="postToFinance(item.id)"
-                                    class="p-1.5 rounded text-gray-400 hover:text-blue-600 hover:bg-gray-100 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                        stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-                                        <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-                                        <path d="m9 15 2 2 4-4" />
-                                    </svg>
-                                </button>
-                                }
-
-                            </div>
-
+                        <td class="px-4 py-3">
+                            <ng-container *ngTemplateOutlet="actionBtns; context: { $implicit: item }"></ng-container>
                         </td>
                     </tr>
                     }
                 </tbody>
             </table>
-
         </div>
+
+        <!-- ── Mobile card list (visible only on mobile) ──────────────── -->
+        <div class="md:hidden divide-y divide-border">
+            @for (item of history; track item.id) {
+            <div class="p-3 space-y-2">
+
+                <!-- Row 1: Code + Status badge -->
+                <div class="flex items-center justify-between">
+                    <span class="font-semibold text-text text-sm">{{ item.treatyCode }}</span>
+                    <span [ngClass]="item.trendColorClass"
+                        class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold border">
+                        @if (item.statusIcon !== 'draft') {
+                        <span class="material-icons text-[12px]">{{ item.statusIcon }}</span>
+                        } @else {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path
+                                d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z">
+                            </path>
+                        </svg>
+                        }
+                        {{ item.status }}
+                    </span>
+                </div>
+
+                <!-- Row 2: Company -->
+                <p class="text-sm text-text-muted">{{ item.company }}</p>
+
+                <!-- Row 3: Type / Class / Currency chips -->
+                <div class="flex flex-wrap gap-1.5">
+                    <span class="bg-background text-text-muted text-xs rounded px-2 py-0.5 border border-border">{{
+                        item.type }}</span>
+                    <span class="bg-background text-text-muted text-xs rounded px-2 py-0.5 border border-border">{{
+                        item.class }}</span>
+                    <span class="bg-background text-text-muted text-xs rounded px-2 py-0.5 border border-border">{{
+                        item.currency }}</span>
+                </div>
+
+                <!-- Row 4: Action buttons -->
+                <div class="flex items-center gap-1 pt-1">
+                    <ng-container *ngTemplateOutlet="actionBtns; context: { $implicit: item }"></ng-container>
+                </div>
+            </div>
+            }
+        </div>
+
         <app-paginator listName="Submission" [totalItems]="totalItems"
             (pageChange)="getTreatyHistory($event)"></app-paginator>
     </div>
 </div>
+
+<!-- ── Shared action buttons template ─────────────────────────────────────── -->
+<ng-template #actionBtns let-item>
+    <div class="flex items-center gap-1">
+
+        <!-- View -->
+        <button title="View details" (click)="openDetails(item.id)"
+            class="p-1.5 rounded text-gray-400 hover:text-primary hover:bg-gray-100 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                <circle cx="12" cy="12" r="3" />
+            </svg>
+        </button>
+
+        <!-- Edit -->
+        <button title="Edit treaty" (click)="editTreaty(item.id)"
+            class="p-1.5 rounded text-gray-400 hover:text-blue-600 hover:bg-gray-100 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path
+                    d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
+            </svg>
+        </button>
+
+        <!-- Delete -->
+        <button title="Delete treaty" (click)="deleteTreaty(item.id)"
+            class="p-1.5 rounded text-gray-400 hover:text-red-600 hover:bg-gray-100 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <path d="M3 6h18" />
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+            </svg>
+        </button>
+
+        <!-- Submit to Approval (Draft only) -->
+        @if(item.status === 'Draft') {
+        <button title="Submit for approval" (click)="submitToApproval(item.id)"
+            class="p-1.5 rounded text-gray-400 hover:text-green-600 hover:bg-gray-100 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <path d="M22 2 11 13" />
+                <path d="M22 2 15 22 11 13 2 9l20-7z" />
+            </svg>
+        </button>
+        }
+
+        <!-- Post to Finance (Approved only) -->
+        @if(item.status === 'Approved') {
+        <button title="Post to finance" (click)="postToFinance(item.id)"
+            class="p-1.5 rounded text-gray-400 hover:text-blue-600 hover:bg-gray-100 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                <path d="m9 15 2 2 4-4" />
+            </svg>
+        </button>
+        }
+
+    </div>
+</ng-template>

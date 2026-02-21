@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ColoredCardsGridComponent } from "@shared/colored-cards-grid/colored-cards-grid.component";
-import { JsonPipe, NgClass } from '@angular/common';
+import { JsonPipe, NgClass, NgTemplateOutlet } from '@angular/common';
 import { forkJoin, map } from 'rxjs';
 import { InputFieldComponent } from "@shared/input-field/input-field.component";
 import { Router } from '@angular/router';
@@ -15,7 +15,7 @@ import { SendTreatyToApprovalComponent } from '../send-treaty-to-approval/send-t
 
 @Component({
   selector: 'app-treaty',
-  imports: [ColoredCardsGridComponent, NgClass, InputFieldComponent, PaginatorComponent, ModalComponent],
+  imports: [ColoredCardsGridComponent, NgClass, NgTemplateOutlet, InputFieldComponent, PaginatorComponent, ModalComponent],
   templateUrl: './treaty.component.html'
 })
 export class TreatyComponent implements OnInit {
