@@ -25,15 +25,15 @@ export class TreatyComponent implements OnInit {
   totalItems = 0;
 
   constructor(
-    private facultativeService: TreatyService,
+    private treatyService: TreatyService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     forkJoin(
       [
-        this.facultativeService.getSubmissionMetrics(),
-        this.facultativeService.getTreatyHistory({
+        this.treatyService.getSubmissionMetrics(),
+        this.treatyService.getTreatyHistory({
           pageSize: 6,
           currentPage: 1,
           searchText: this.searchText
@@ -54,7 +54,7 @@ export class TreatyComponent implements OnInit {
   }
 
   getTreatyHistory(currentPage = 1) {
-    this.facultativeService.getTreatyHistory({
+    this.treatyService.getTreatyHistory({
       pageSize: 6,
       currentPage,
       searchText: this.searchText
@@ -84,5 +84,26 @@ export class TreatyComponent implements OnInit {
     this.modal.open(PreviewTreatyDetailsComponent, {
       refNumber,
     }, 'md')
+  }
+
+  deleteTreaty(id: string): void {
+    const item = this.history.find(x => x.id === id);
+
+    console.log(item);
+
+    this.history = this.history.filter(x => x.id !== id);
+    this.totalItems--;
+
+    this.treatyService.deleteTreaty(id).subscribe((response) => {
+      if (response.success) {
+        console.log(response);
+        this.getTreatyHistory();
+        return;
+      }
+
+      this.history.push(item);
+      this.totalItems++;
+
+    }).unsubscribe();
   }
 }
