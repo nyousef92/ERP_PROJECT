@@ -158,15 +158,6 @@ export class PlacementService {
     ]);
   }
 
-  getCurrencyList() {
-    return of([
-      { id: 1, value: 'USD', label: 'USD' },
-      { id: 2, value: 'SAR', label: 'SAR' },
-      { id: 3, value: 'EUR', label: 'EUR' },
-      { id: 4, value: 'GBP', label: 'GBP' },
-    ]);
-  }
-
   getPlacementMetrics() {
     // Mock data for progress metrics
     return of([

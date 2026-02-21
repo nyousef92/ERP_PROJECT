@@ -58,14 +58,13 @@
                     <td class="px-6 py-4 ">{{ item.siLol }}</td>
                     <td class="px-6 py-4">{{ item.share }}</td>
                     <td class="px-6 py-4">
-                        <span 
-                        [ngClass]="item.statusClass"
+                        <span [ngClass]="item.statusClass"
                             class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold border">
                             {{ item.status }}
                         </span>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="flex justify-end gap-3">
+                        <!-- <div class="flex justify-end gap-3">
                             <button title="view" class="text-gray-400 " (click)="preViewProgressSheet(item.refNo)">
                                 <span class="material-icons text-[18px] text-primary">visibility</span>
                             </button>
@@ -75,7 +74,7 @@
                             <button title="delete" class="text-gray-400 " (click)="delete(item.refNo)">
                                 <span class="material-icons text-[18px] text-danger">delete</span>
                             </button>
-                        </div>
+                        </div> -->
                     </td>
                 </tr>
                 }

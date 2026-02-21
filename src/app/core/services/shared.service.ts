@@ -148,4 +148,20 @@ export class SharedService {
     return of(['All', 'Reinsurance', 'Claims', 'Finance', 'HR', 'Audit', 'Reports']);
   }
 
+  getCurrencies() {
+    return of([
+      { id: 1, value: "USD", label: "USD - US Dollar" },
+      { id: 2, value: "EUR", label: "EUR - Euro" },
+      { id: 3, value: "GBP", label: "GBP - British Pound" },
+      { id: 4, value: "JPY", label: "JPY - Japanese Yen" },
+      { id: 5, value: "AUD", label: "AUD - Australian Dollar" },
+      { id: 6, value: "CAD", label: "CAD - Canadian Dollar" },
+      { id: 7, value: "CHF", label: "CHF - Swiss Franc" },
+      { id: 8, value: "CNY", label: "CNY - Chinese Yuan" },
+      { id: 9, value: "INR", label: "INR - Indian Rupee" },
+      { id: 10, value: "AED", label: "AED - UAE Dirham" },
+    ]
+    )
+  }
+
 }

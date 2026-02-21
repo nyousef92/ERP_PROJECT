@@ -6,6 +6,7 @@ import { PlacementService } from '@core/services/placement.service';
 import { HelperService } from '@core/services/helper.service';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { SelectDropdownComponent } from '@shared/select-dropdown/select-dropdown.component';
+import { SharedService } from '@core/services/shared.service';
 
 interface Security {
   security: string;
@@ -37,14 +38,15 @@ export class AddNewPlacementComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private helper: HelperService,
-    private placementService: PlacementService
+    private placementService: PlacementService,
+    private shared:SharedService
   ) { }
 
   ngOnInit(): void {
     forkJoin({
       cedants: this.placementService.getCedantList(),
       reinsurers: this.placementService.getReinsurerList(),
-      currencies: this.placementService.getCurrencyList(),
+      currencies: this.shared.getCurrencies(),
     }).subscribe(({ cedants, reinsurers, currencies }) => {
       this.cedantList = cedants;
       this.reinsurerList = reinsurers;

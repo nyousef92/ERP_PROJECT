@@ -1,7 +1,8 @@
 import { Routes } from "@angular/router";
 import { LifeComponent } from "./life.component";
 import { SubmissionComponent } from "./submission/submission.component";
-import { AddNewLifeSubmissionComponent } from "./submission/add-new-life-submission/add-new-life-submission.component";
+import { AddLifeSubmissionComponent } from "./submission/add-life-submission/add-life-submission.component";
+import { ProgressSheetComponent } from "./progress-sheet/progress-sheet.component";
 
 export const LIFE_ROUTES: Routes = [
     {
@@ -13,7 +14,9 @@ export const LIFE_ROUTES: Routes = [
                 path: 'submission',
                 children: [
                     { path: '', component: SubmissionComponent },
-                    { path: 'add-life-submission', component: AddNewLifeSubmissionComponent }
+                    { path: 'add-life-submission', component: AddLifeSubmissionComponent },
+                    { path: 'add-life-submission/:refNumber', component: AddLifeSubmissionComponent },
+                    { path: 'progress-sheet', component: ProgressSheetComponent },
                 ]
             }
         ]

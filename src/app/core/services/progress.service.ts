@@ -12,7 +12,70 @@ export class ProgressSheetService {
     return of(true);
   }
 
-  getProgressSheetHistory(payload: { search: string; currentPage: number; pageSize: number; }) {
+  getFacutlatativeProgressSheetHistory(payload: { search: string; currentPage: number; pageSize: number; }) {
+    return of(
+      {
+        totalItems: 10,
+        data: [
+          {
+            "refNo": "QS-2024-001",
+            "share": "Global Corp",
+            "cedant": "Secure Insurers",
+            "lob": "Property",
+            "inception": "01-Jan-2024",
+            "siLol": "$10,000,000",
+            "status": "Bound"
+          },
+          {
+            "refNo": "PRX-2024-001",
+            "share": "Mega Holdings",
+            "cedant": "Alpha Assurance",
+            "lob": "Casualty",
+            "inception": "15-Feb-2024",
+            "siLol": "$25,000,000",
+            "status": "Quoted"
+          },
+          {
+            "refNo": "SF-2024-001",
+            "share": "Pioneer Logistics",
+            "cedant": "Guardian General",
+            "lob": "Marine",
+            "inception": "01-Mar-2024",
+            "siLol": "$5,000,000",
+            "status": "Submitted"
+          },
+          {
+            "refNo": "PPX-2024-001",
+            "share": "Innovate Tech",
+            "cedant": "Secure Insurers",
+            "lob": "Technology",
+            "inception": "10-Mar-2024",
+            "siLol": "$50,000,000",
+            "status": "Bound"
+          },
+          {
+            "refNo": "SAF-2024-001",
+            "share": "Coastal Properties",
+            "cedant": "National Coverage",
+            "lob": "Property",
+            "inception": "20-Jan-2024",
+            "siLol": "$15,000,000",
+            "status": "Quoted"
+          },
+          {
+            "refNo": "QS-2024-002",
+            "share": "Tech Dynamics",
+            "cedant": "Premier Insurance",
+            "lob": "Technology",
+            "inception": "05-Apr-2024",
+            "siLol": "$8,000,000",
+            "status": "Submitted"
+          }
+        ]
+      }
+    );
+  }
+  getFileProgressSheetHistory(payload: { search: string; currentPage: number; pageSize: number; }) {
     return of(
       {
         totalItems: 10,
@@ -96,7 +159,40 @@ export class ProgressSheetService {
     });
   }
   
-  getProgressSheetMetrics() {
+  getFacultativeProgressSheetMetrics() {
+    return of([
+      {
+        label: 'Total Sheets',
+        value: '1',
+        subtitle: null,
+        iconType: null,
+        ValueColorClass: 'text-text'
+      },
+      {
+        label: 'Bound',
+        value: '2',
+        subtitle: null,
+        iconType: null,
+        ValueColorClass: 'text-success'
+      }
+      , {
+        label: 'Quoted',
+        value: '1',
+        subtitle: null,
+        iconType: null,
+        ValueColorClass: 'text-primary'
+      }
+      , {
+        label: 'Pending',
+        value: '5',
+        subtitle: null,
+        iconType: null,
+        ValueColorClass: 'text-warning'
+      }
+    ])
+  }
+
+  getFileProgressSheetMetrics() {
     return of([
       {
         label: 'Total Sheets',

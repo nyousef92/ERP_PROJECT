@@ -1,0 +1,161 @@
+<div class="space-y-4">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-3">
+
+    <div class="bg-surface rounded-lg border border-border p-4 ">
+      <h2 class="text-base text-text mb-3">
+        General Information
+      </h2>
+      <div class=" grid grid-cols-1 md:grid-cols-3 gap-3">
+        <app-input-field label="Status" placeholder="Enter status" [disabled]="true" formControlName="status">
+        </app-input-field>
+
+        <app-select-dropdown label="type" [options]="facTypes" [touched]="touched('facType')"
+          (selectionChange)="facTypeChanges($event)" formControlName="facType" [required]="true"
+          [errorMessage]="getErrorMessage('facType','fac type')">
+        </app-select-dropdown>
+
+        <app-select-dropdown label="sub type" [options]="subTypes" formControlName="subType"
+          [required]="form.get('facType')?.value??false" [errorMessage]="getErrorMessage('subType','sub type')">
+        </app-select-dropdown>
+
+      </div>
+    </div>
+
+
+    <div class="bg-surface rounded-lg border border-border p-4 ">
+      <h2 class="text-base text-text mb-3"> Broker Remuneration and Deductions</h2>
+      <div class=" grid grid-cols-1 md:grid-cols-2 gap-3">
+
+        <app-input-field label="Original Insured " placeholder="Enter Original Insured "
+          formControlName="originalInsured" [required]="true" [touched]="touched('originalInsured')"
+          [errorMessage]="getErrorMessage('originalInsured','Original Insured')">
+          >
+        </app-input-field>
+        <app-input-field label="Reinsured" placeholder="Enter Reinsured" formControlName="reinsured">
+        </app-input-field>
+
+        <app-select-dropdown label="LOB (Line of Business)" [options]="lobTypes" [touched]="touched('lineOfBusiness')"
+          formControlName="lineOfBusiness" [required]="true"
+          [errorMessage]="getErrorMessage('lineOfBusiness','Line of Business')">
+        </app-select-dropdown>
+        
+
+        <app-input-field label="address" placeholder="Enter address" formControlName="address"
+          [touched]="touched('address')" [errorMessage]="getErrorMessage('address','Address')">
+        </app-input-field>
+      </div>
+      <div class=" grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+        <app-input-field [required]="true" type="date" label="Period From" placeholder="Enter Period From"
+          formControlName="periodFrom" [touched]="touched('periodFrom')"
+          [errorMessage]="getErrorMessage('periodFrom','Period From')">
+        </app-input-field>
+        <app-input-field [required]="true" type="date" label="Period To" placeholder="Enter Period To"
+          formControlName="periodTo" [touched]="touched('periodTo')"
+          [errorMessage]="getErrorMessage('periodTo','Period To')">
+        </app-input-field>
+
+        <app-input-field label="geographical Limit" placeholder="Enter address" formControlName="address"
+          [touched]="touched('geographicalLimit')"
+          [errorMessage]="getErrorMessage('geographicalLimit','geographical Limit')">
+        </app-input-field>
+      </div>
+      <div class="mt-3">
+        <app-input-field-text-area label="Description" placeholder="Enter Description" formControlName="description"
+          [touched]="touched('description')" [errorMessage]="getErrorMessage('description','Description')">
+        </app-input-field-text-area>
+      </div>
+    </div>
+
+
+    <div class="bg-surface rounded-lg border border-border p-4">
+      <h2 class="text-base text-text mb-3">Coverage &amp; Liability</h2>
+      <div class="space-y-3">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <app-input-field label="Total Assured" placeholder="USD 0.00" formControlName="totalAssured"
+            [touched]="touched('totalAssured')" [errorMessage]="getErrorMessage('totalAssured','Total Assured')">
+          </app-input-field>
+
+          <app-input-field label="FIX/CAT/ Basis Sum Insured" placeholder="USD 0.00" formControlName="basisSumInsured"
+            [touched]="touched('basisSumInsured')"
+            [errorMessage]="getErrorMessage('basisSumInsured','FIX/CAT/ Basis Sum Insured')">
+          </app-input-field>
+
+          <app-input-field label="Age Limit" formControlName="ageLimit" [touched]="touched('ageLimit')"
+            [errorMessage]="getErrorMessage('ageLimit','Age Limit')">
+          </app-input-field>
+
+          <app-input-field label="eligible" formControlName="eligible" [touched]="touched('eligible')"
+            [errorMessage]="getErrorMessage('eligible','Eligible')">
+          </app-input-field>
+
+          <app-input-field label="groupSize" formControlName="groupSize" [touched]="touched('groupSize')"
+            [errorMessage]="getErrorMessage('groupSize','Group Size')">
+          </app-input-field>
+
+          <app-input-field label="freeCoverLimit" formControlName="freeCoverLimit" [touched]="touched('freeCoverLimit')"
+            [errorMessage]="getErrorMessage('freeCoverLimit','Free Cover Limit')">
+          </app-input-field>
+
+        </div>
+        <div>
+          <app-input-field-text-area label="Original Conditions" placeholder="Describe Original Conditions..."
+            formControlName="originalConditions" [touched]="touched('originalConditions')"
+            [errorMessage]="getErrorMessage('originalConditions','Original Conditions')">
+          </app-input-field-text-area>
+          <app-input-field-text-area label="Benefits" placeholder="Enter benefits..." formControlName="benefits"
+            [touched]="touched('benefits')" [errorMessage]="getErrorMessage('benefits','Benefits')">
+          </app-input-field-text-area>
+          <app-input-field-text-area label="Choice of Law & Jurisdiction"
+            placeholder="Enter choice of law and jurisdiction details..." formControlName="choiceOfLaw"
+            [touched]="touched('choiceOfLaw')"
+            [errorMessage]="getErrorMessage('choiceOfLaw','Choice of Law & Jurisdiction')">
+          </app-input-field-text-area>
+
+
+          <app-input-field-text-area label="RI Condition" placeholder="Enter condition details..."
+            formControlName="riCondition" [touched]="touched('riCondition')"
+            [errorMessage]="getErrorMessage('riCondition','RI Condition')">
+          </app-input-field-text-area>
+
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <app-input-field label="Underwriting Requirements" placeholder="Enter Underwriting Requirements"
+            formControlName="underwritingRequirements" [touched]="touched('underwritingRequirements')"
+            [errorMessage]="getErrorMessage('underwritingRequirements','Underwriting Requirements')">
+          </app-input-field>
+          <app-input-field label="Subjectivities" placeholder="Enter subjectivities" formControlName="subjectivities"
+            [touched]="touched('subjectivities')" [errorMessage]="getErrorMessage('subjectivities','Subjectivities')">
+          </app-input-field>
+
+        </div>
+        <app-input-field-text-area label="Exclusion" placeholder="List any exclusions..." formControlName="exclusion"
+          [touched]="touched('exclusion')" [errorMessage]="getErrorMessage('exclusion','Exclusion')">
+        </app-input-field-text-area>
+
+      </div>
+      <div class="bg-surface rounded-lg border border-border p-4">
+        <h2 class="text-base text-text mb-3">Attachments</h2>
+
+        <app-file-upload (filesChange)="fileUploaded($event)"></app-file-upload>
+      </div> 
+    </div>
+
+    <div class="flex items-center justify-end gap-2 pb-4">
+      <button type="button"
+        class="px-4 py-2 text-sm border border-border rounded-lg text-text hover:bg-background transition-colors"
+        (click)="onCancel()">
+        Cancel
+      </button>
+      <button type="button" (click)="onSaveAsDraft()"
+        class="px-4 py-2 text-sm border border-primary text-primary rounded-lg hover:bg-primary/10 transition-colors">
+        Save as Draft
+      </button>
+      <button type="button"
+        class="px-4 py-2 text-sm bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+        (click)="onSubmit()">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

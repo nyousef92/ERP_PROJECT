@@ -6,6 +6,7 @@ import { InputFieldComponent } from "@shared/input-field/input-field.component";
 import { Router } from '@angular/router';
 import { PaginatorComponent } from "@shared/paginator/paginator.component";
 import { FacultativeSubmissionService } from '@core/services/facultative.submission.service';
+import { HelperService } from '@core/services/helper.service';
 
 @Component({
   selector: 'app-submission',
@@ -21,7 +22,8 @@ export class SubmissionComponent implements OnInit {
 
   constructor(
     private submissionService: FacultativeSubmissionService,
-    private router: Router
+    private router: Router,
+    private helper: HelperService
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +38,9 @@ export class SubmissionComponent implements OnInit {
       ]
     ).subscribe(data => {
       this.metrics = data[0];
-      this.history = data[1].data;
+      this.history = data[1].data.map(item => (
+        { ...item, statusClasses: this.helper.getStatusClass(item.status) }
+      ));;
       this.totalItems = data[1].totalItems;
     });
   }
@@ -52,19 +56,12 @@ export class SubmissionComponent implements OnInit {
       currentPage,
       searchText: this.searchText
     }).subscribe(resp => {
-      this.history = resp.data;
+      this.history = resp.data.map(item => (
+        { ...item, statusClasses: this.helper.getStatusClass(item.status) }
+      ));
       this.totalItems = resp.totalItems
     }).unsubscribe();
 
-  }
-
-  getStatusClass(status: string): string {
-    switch (status) {
-      case 'Bound': return 'bg-green-100 text-green-700 border-green-200';
-      case 'Quoted': return 'bg-blue-100 text-blue-700 border-blue-200';
-      case 'Submitted': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
-      default: return 'bg-gray-100 text-gray-700';
-    }
   }
 
   addNew() {
