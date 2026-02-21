@@ -31,9 +31,9 @@ export class SharedService {
             {
               label: 'Treaty',
               children: [
-                { label: 'Treaty', route: '/reinsurance/treaty/treaty' },
-                { label: 'Claim', route: '/reinsurance/treaty/claim' },
-                { label: 'Approval', route: '/reinsurance/treaty/approval' },
+                { label: 'Treaty', route: '/home/reinsurance/treaty/treaty' },
+                { label: 'Claim', route: '/home/reinsurance/treaty/claim' },
+                { label: 'Approval', route: '/home/reinsurance/treaty/approval' },
               ]
             },
             {
