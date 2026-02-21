@@ -16,7 +16,12 @@ export const LIFE_ROUTES: Routes = [
                     { path: '', component: SubmissionComponent },
                     { path: 'add-life-submission', component: AddLifeSubmissionComponent },
                     { path: 'add-life-submission/:refNumber', component: AddLifeSubmissionComponent },
-                    { path: 'progress-sheet', component: ProgressSheetComponent },
+                ]
+            },
+            {
+                path: 'progress-sheet',
+                children: [
+                    { path: '', component: ProgressSheetComponent },
                 ]
             }
         ]

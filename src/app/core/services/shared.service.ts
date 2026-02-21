@@ -40,7 +40,7 @@ export class SharedService {
               label: 'Life',
               children: [
                 { label: 'Submission', route: '/home/reinsurance/life/submission' },
-                { label: 'Progress Sheet', route: '/reinsurance/life/progress-sheet' },
+                { label: 'Progress Sheet', route: '/home/reinsurance/life/progress-sheet' },
                 { label: 'Placement', route: '/reinsurance/life/placement' },
                 { label: 'Approval', route: '/reinsurance/life/approval' },
               ]

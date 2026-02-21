@@ -77,4 +77,17 @@ export class ProgressSheetComponent {
       this.totalItems = data.totalItems;
     });
   }
+
+  delete(refNo: string) {
+    this.progressSheetService.getProgressSheetDetailsView(refNo).subscribe((data) => {
+      this.modal.open(DeleteItemComponent, {
+        description: `Are you sure you want to delete progress sheet with ref no ${refNo}?`,
+        onDelete: () => {
+          this.modal.close();
+          this.history = this.history.filter(h => h.refNo !== refNo);
+          this.progressSheetService.deleteProgressSheet(refNo).subscribe()
+        }
+      }, 'sm')
+    });
+  }
 }
