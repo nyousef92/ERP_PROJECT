@@ -6,7 +6,7 @@ import { SelectDropdownComponent } from "@shared/select-dropdown/select-dropdown
 import { dependantOn } from '@core/validations/dependent.validation';
 import { InputFieldTextareaComponent } from "@shared/input-field-text-area/input-field-text-area.component";
 import { FileUploadComponent } from "@shared/file-upload/file-upload.component";
-import { SubmissionService } from '@core/services/submission.service';
+import { FacultativeSubmissionService } from '@core/services/facultative.submission.service';
 @Component({
   selector: 'app-general-information',
   standalone: true,
@@ -27,7 +27,7 @@ export class GeneralInformationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private helper: HelperService,
-    private submissionService: SubmissionService,
+    private submissionService: FacultativeSubmissionService,
   ) {
     this.form = this.fb.group({
       status: ['drafrt'],

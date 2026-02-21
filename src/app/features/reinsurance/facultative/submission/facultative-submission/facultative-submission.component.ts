@@ -5,7 +5,7 @@ import { FiscalRegulatoryComponent } from "./fiscal-regulatory/fiscal-regulatory
 import { GeneralInformationComponent } from "./general-information/general-information.component";
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageCacheService } from '@core/services/local-storage-cache.service';
-import { SubmissionService } from '@core/services/submission.service';
+import { FacultativeSubmissionService } from '@core/services/facultative.submission.service';
 
 @Component({
   selector: 'app-facultative-submission',
@@ -31,7 +31,7 @@ export class FacultativeSubmissionComponent implements AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private ls: LocalStorageCacheService,
-    private submissionService: SubmissionService
+    private submissionService: FacultativeSubmissionService
   ) {
     this.refNumber = this.route.snapshot.paramMap.get('refNumber');
     this.formType = this.route.snapshot.queryParamMap.get('formType') ?? 'Create Submission';

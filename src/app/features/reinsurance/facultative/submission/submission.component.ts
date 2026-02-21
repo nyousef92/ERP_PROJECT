@@ -5,7 +5,7 @@ import { forkJoin } from 'rxjs';
 import { InputFieldComponent } from "@shared/input-field/input-field.component";
 import { Router } from '@angular/router';
 import { PaginatorComponent } from "@shared/paginator/paginator.component";
-import { SubmissionService } from '@core/services/submission.service';
+import { FacultativeSubmissionService } from '@core/services/facultative.submission.service';
 
 @Component({
   selector: 'app-submission',
@@ -20,7 +20,7 @@ export class SubmissionComponent implements OnInit {
   totalItems = 0;
 
   constructor(
-    private submissionService: SubmissionService,
+    private submissionService: FacultativeSubmissionService,
     private router: Router
   ) { }
 
