@@ -60,7 +60,7 @@ export class FacultativeSubmissionComponent implements AfterViewInit {
   }
 
   onSave(): void {
-    this.submissionService.saveFacultativeSubmission(this.getAllData());
+    this.submissionService.saveFacultativeSubmission(this.getAllData()).subscribe();
   }
 
   onSaveDraft(): void {

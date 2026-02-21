@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, forwardRef, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, OnInit, input } from '@angular/core';
 
 import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor, ReactiveFormsModule, FormControl } from '@angular/forms';
 
@@ -21,6 +21,7 @@ export class InputFieldComponent implements ControlValueAccessor, OnInit {
   @Input() type: string = 'text';
   @Input() errorMessage?: string;
   @Input() touched?: boolean;
+  @Input() required: boolean = false;
   @Input() set disabled(value: boolean) {
     this._disabled = value;
     if (value) {

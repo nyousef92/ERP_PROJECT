@@ -18,6 +18,7 @@ export class GeneralInformationComponent implements OnInit {
   facTypes: any[] = [];
   subTypes: any[] = [];
   typesDeatails: any[] = [];
+  lobTypes: any[] = [];
 
   @Output() save = new EventEmitter<void>();
   @Output() saveDraft = new EventEmitter<void>();
@@ -32,14 +33,16 @@ export class GeneralInformationComponent implements OnInit {
       status: ['drafrt'],
       facType: ['', Validators.required],
       subType: ['', dependantOn('facType', 'Fac Type')],
-      originalInsured: [''],
+      lineOfBusiness: ['',Validators.required],
+      subLineOfBusiness: ['', dependantOn('lineOfBusiness', 'Line of Business')],
+      originalInsured: ['', Validators.required],
       reinsured: [''],
       address: [''],
-      periodFrom: [''],
-      periodTo: [''],
+      periodFrom: ['',Validators.required],
+      periodTo: ['',Validators.required],
       description: [''],
-      totalInsured: [''],
-      limitOfLiability: [''],
+      totalInsured: ['',Validators.pattern(/^\d+(\.\d{1,2})?$/)],
+      limitOfLiability: ['',Validators.pattern(/^\d+(\.\d{1,2})?$/)],
       cover: [''],
       interest: [''],
       topLocation: [''],
@@ -65,10 +68,17 @@ export class GeneralInformationComponent implements OnInit {
         value: item,
         label: item
       }));
-    })
+    });
+    this.submissionService.getLineOfBusinessTypes().subscribe(resp => {
+      this.lobTypes = resp.map((item) => ({
+        value: item.id,
+        label: item.type
+      }));  
+    });
   }
 
   onSubmit(): void {
+    this.form.markAllAsTouched();
     this.save.emit();
   }
 
@@ -93,11 +103,11 @@ export class GeneralInformationComponent implements OnInit {
     }));
   }
 
-  subTypeChanges(selectedType: string | number) {
-    this.form.get('subtype')?.setValue(selectedType);
-  }
-
   fileUploaded(uploadedFiles: File[]) {
     this.form.get('file')?.setValue(uploadedFiles);
+  }
+
+   touched(controlName: string) {
+    return this.form.get(controlName)?.touched;
   }
 }

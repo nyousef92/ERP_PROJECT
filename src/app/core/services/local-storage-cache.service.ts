@@ -15,7 +15,7 @@ export class LocalStorageCacheService {
   private readonly DEFAULT_TTL_MS = 5 * 60 * 60 * 1000;
   private readonly CACHE_KEY = 'app_data_cache';
   private readonly AUTH_CACHE_KEY = 'app_auth_cache';
-  private readonly SUBMISSION_CACHE_KEY = 'app_auth_cache';
+  private readonly SUBMISSION_CACHE_KEY = 'app_submission_cache';
   constructor() { }
 
   getMainKey(keyType: keyType = '') {

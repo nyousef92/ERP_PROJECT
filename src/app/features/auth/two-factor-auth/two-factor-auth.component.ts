@@ -5,14 +5,15 @@ import { HelperService } from '@core/services/helper.service';
 import { AuthService } from '@core/services/auth.service';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { exhaustMap} from 'rxjs/operators';
+import { exhaustMap } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-login',
-    imports: [ReactiveFormsModule, InputFieldComponent],
-    templateUrl: './login.component.html'
+  selector: 'app-two-factor-auth',
+  imports: [ReactiveFormsModule, InputFieldComponent],
+  templateUrl: './two-factor-auth.component.html'
 })
-export class LoginComponent implements OnInit {
+export class TwoFactorAuthComponent {
+
 
   fb = inject(FormBuilder);
   helper = inject(HelperService);
@@ -23,7 +24,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      userName: ['', Validators.required],
       password: ['', Validators.required]
     });
 
@@ -32,9 +32,9 @@ export class LoginComponent implements OnInit {
 
 
   addEventListener() {
-    this.loginClick.pipe(exhaustMap(()=> this.doLogin()))
+    this.loginClick.pipe(exhaustMap(() => this.doLogin()))
       .subscribe(resp => {
-        this.router.navigate(['/two-factor-auth'])
+        this.router.navigate(['/home'])
       });
   }
 
@@ -49,7 +49,8 @@ export class LoginComponent implements OnInit {
 
   doLogin() {
     const body = this.loginForm.value;
-   return this.auth.login(body);
+    return this.auth.login(body);
   }
 
 }
+
