@@ -9,12 +9,14 @@
         <app-input-field label="Status" placeholder="Enter status" [disabled]="true" formControlName="status">
         </app-input-field>
 
-        <app-select-dropdown label="fac type" [options]="facTypes" (selectionChange)="facTypeChanges($event)"
-          formControlName="facType">
+        <app-select-dropdown label="fac type" [options]="facTypes"
+        [touched]="touched('facType')"
+        (selectionChange)="facTypeChanges($event)"
+          formControlName="facType" [required]="true" [errorMessage]="getErrorMessage('facType','fac type')">
         </app-select-dropdown>
 
-        <app-select-dropdown label="sub type" [options]="subTypes" (selectionChange)="subTypeChanges($event)"
-          formControlName="subType" [errorMessage]="getErrorMessage('subType','sub type')">
+        <app-select-dropdown label="sub type" [options]="subTypes" formControlName="subType" [required]="form.get('facType')?.value??false"
+          [errorMessage]="getErrorMessage('subType','sub type')">
         </app-select-dropdown>
 
       </div>
@@ -26,22 +28,43 @@
       <div class=" grid grid-cols-1 md:grid-cols-2 gap-3">
 
         <app-input-field label="Original Insured " placeholder="Enter Original Insured "
-          formControlName="originalInsured">
+          formControlName="originalInsured" [required]="true" [touched]="touched('originalInsured')"
+          [errorMessage]="getErrorMessage('originalInsured','Original Insured')">
+          >
         </app-input-field>
         <app-input-field label="Reinsured" placeholder="Enter Reinsured" formControlName="reinsured">
         </app-input-field>
-        <app-input-field label="address" placeholder="Enter address" formControlName="address">
+
+        <app-select-dropdown label="LOB (Line of Business)" [options]="lobTypes" [touched]="touched('lineOfBusiness')"
+           formControlName="lineOfBusiness" [required]="true"
+          [errorMessage]="getErrorMessage('lineOfBusiness','Line of Business')">
+        </app-select-dropdown>
+
+        <app-select-dropdown [touched]="touched('subLineOfBusiness')" label="sub type" [options]="subTypes"
+          formControlName="subLineOfBusiness" 
+          [required]="form.get('lineOfBusiness')?.value??false"
+          
+          [errorMessage]="getErrorMessage('subLineOfBusiness','Sub Line of Business')">
+        </app-select-dropdown>
+
+        <app-input-field label="address" placeholder="Enter address" formControlName="address"
+          [touched]="touched('address')" [errorMessage]="getErrorMessage('address','Address')">
         </app-input-field>
       </div>
       <div class=" grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-        <app-input-field type="date" label="Period From" placeholder="Enter Period From" formControlName="periodFrom">
+        <app-input-field [required]="true" type="date" label="Period From" placeholder="Enter Period From"
+          formControlName="periodFrom" [touched]="touched('periodFrom')"
+          [errorMessage]="getErrorMessage('periodFrom','Period From')">
         </app-input-field>
-        <app-input-field type="date" label="Period To" placeholder="Enter Period To" formControlName="periodTo">
+        <app-input-field [required]="true" type="date" label="Period To" placeholder="Enter Period To"
+          formControlName="periodTo" [touched]="touched('periodTo')"
+          [errorMessage]="getErrorMessage('periodTo','Period To')">
         </app-input-field>
       </div>
       <div class="mt-3">
-        <app-input-field-text-area label="Description" placeholder="Enter Description"
-          formControlName="description"></app-input-field-text-area>
+        <app-input-field-text-area label="Description" placeholder="Enter Description" formControlName="description"
+          [touched]="touched('description')" [errorMessage]="getErrorMessage('description','Description')">
+        </app-input-field-text-area>
       </div>
     </div>
 
@@ -51,53 +74,68 @@
       <div class="space-y-3">
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <app-input-field label="Total Insured" placeholder="USD 0.00" formControlName="totalInsured">
+          <app-input-field label="Total Insured" placeholder="USD 0.00" formControlName="totalInsured"
+            [touched]="touched('totalInsured')" [errorMessage]="getErrorMessage('totalInsured','Total Insured')">
           </app-input-field>
-          <app-input-field label="Limit of Liability" placeholder="USD 0.00" formControlName="limitOfLiability">
+          <app-input-field label="Limit of Liability" placeholder="USD 0.00" formControlName="limitOfLiability"
+            [touched]="touched('limitOfLiability')"
+            [errorMessage]="getErrorMessage('limitOfLiability','Limit of Liability')">
           </app-input-field>
         </div>
 
-        <app-input-field-text-area label="Cover" placeholder="Describe the cover..." formControlName="cover">
+        <app-input-field-text-area label="Cover" placeholder="Describe the cover..." formControlName="cover"
+          [touched]="touched('cover')" [errorMessage]="getErrorMessage('cover','Cover')">
         </app-input-field-text-area>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <app-input-field label="Interest" placeholder="Enter interest" formControlName="interest">
+          <app-input-field label="Interest" placeholder="Enter interest" formControlName="interest"
+            [touched]="touched('interest')" [errorMessage]="getErrorMessage('interest','Interest')">
           </app-input-field>
-          <app-input-field label="TOP Location" placeholder="Enter TOP location" formControlName="topLocation">
+          <app-input-field label="TOP Location" placeholder="Enter TOP location" formControlName="topLocation"
+            [touched]="touched('topLocation')" [errorMessage]="getErrorMessage('topLocation','TOP Location')">
           </app-input-field>
         </div>
 
-        <app-input-field-text-area label="Original Conditions" placeholder="Enter original conditions..." formControlName="originalConditions">
+        <app-input-field-text-area label="Original Conditions" placeholder="Enter original conditions..."
+          formControlName="originalConditions" [touched]="touched('originalConditions')"
+          [errorMessage]="getErrorMessage('originalConditions','Original Conditions')">
         </app-input-field-text-area>
 
-        <app-input-field-text-area label="Choice of Law & Jurisdiction" placeholder="Enter choice of law and jurisdiction details..." formControlName="choiceOfLaw">
+        <app-input-field-text-area label="Choice of Law & Jurisdiction"
+          placeholder="Enter choice of law and jurisdiction details..." formControlName="choiceOfLaw"
+          [touched]="touched('choiceOfLaw')"
+          [errorMessage]="getErrorMessage('choiceOfLaw','Choice of Law & Jurisdiction')">
         </app-input-field-text-area>
 
-        <app-input-field-text-area label="RI Condition" placeholder="Enter condition details..." formControlName="riCondition">
+        <app-input-field-text-area label="RI Condition" placeholder="Enter condition details..."
+          formControlName="riCondition" [touched]="touched('riCondition')"
+          [errorMessage]="getErrorMessage('riCondition','RI Condition')">
         </app-input-field-text-area>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <app-input-field label="Warranties" placeholder="Enter warranties" formControlName="warranties">
+          <app-input-field label="Warranties" placeholder="Enter warranties" formControlName="warranties"
+            [touched]="touched('warranties')" [errorMessage]="getErrorMessage('warranties','Warranties')">
           </app-input-field>
-          <app-input-field label="Subjectivities" placeholder="Enter subjectivities" formControlName="subjectivities">
+          <app-input-field label="Subjectivities" placeholder="Enter subjectivities" formControlName="subjectivities"
+            [touched]="touched('subjectivities')" [errorMessage]="getErrorMessage('subjectivities','Subjectivities')">
           </app-input-field>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <app-input-field label="Deductibles" placeholder="Enter deductibles" formControlName="deductibles">
+          <app-input-field label="Deductibles" placeholder="Enter deductibles" formControlName="deductibles"
+            [touched]="touched('deductibles')" [errorMessage]="getErrorMessage('deductibles','Deductibles')">
           </app-input-field>
         </div>
 
-        <app-input-field-text-area label="Exclusion" placeholder="List any exclusions..." formControlName="exclusion">
+        <app-input-field-text-area label="Exclusion" placeholder="List any exclusions..." formControlName="exclusion"
+          [touched]="touched('exclusion')" [errorMessage]="getErrorMessage('exclusion','Exclusion')">
         </app-input-field-text-area>
 
       </div>
       <div class="bg-surface rounded-lg border border-border p-4">
-      <h2 class="text-base text-text mb-3">Attachments</h2>
-    
-      <app-file-upload
-      (filesChange)="fileUploaded($event)"
-      ></app-file-upload>
+        <h2 class="text-base text-text mb-3">Attachments</h2>
+
+        <app-file-upload (filesChange)="fileUploaded($event)"></app-file-upload>
       </div>
     </div>
 

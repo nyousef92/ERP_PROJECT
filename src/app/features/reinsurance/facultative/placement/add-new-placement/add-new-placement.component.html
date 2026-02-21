@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <div class="p-4 sm:p-6 space-y-6 overflow-y-auto flex-1" [formGroup]="form">
+  <form class="p-4 sm:p-6 space-y-6 overflow-y-auto flex-1" [formGroup]="form">
 
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
       <app-input-field formControlName="refNo" label="Ref No. (Manual)" placeholder="Enter Ref No." />
@@ -136,7 +136,7 @@
       </div>
     </div>
 
-  </div>
+  </form>
 
   <div
     class="px-4 sm:px-6 py-4 border-t border-border flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 flex-shrink-0">

@@ -1,4 +1,4 @@
-<div class="p-6" [formGroup]="form">
+<form class="p-6" [formGroup]="form">
 
   <h2 class="text-text mb-1">Edit Reinsurance Detail</h2>
   <p class="text-sm text-text-muted mb-6">Make changes to the reinsurance details below.</p>
@@ -8,7 +8,9 @@
     <div class="col-span-2">
       <app-select-dropdown label="Reinsurer" formControlName="name"
         [errorMessage]="getErrorMeassage('name', 'Reinsurer Name')" [touched]="form.get('name')?.touched"
-        [options]="reinsurerList"></app-select-dropdown>
+        [options]="reinsurerList"
+        [required]="true"
+        ></app-select-dropdown>
     </div>
 
     <app-input-field formControlName="share" label="Share (%)" placeholder="e.g. 25" type="number"
@@ -48,4 +50,4 @@
 
   </div>
 
-</div>
+</form>

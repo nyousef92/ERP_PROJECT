@@ -1,0 +1,40 @@
+<div class="min-h-screen flex items-center justify-center relative">
+    <div class="absolute inset-0 bg-cover bg-center"
+        style="background-image:url( https://iron-pickle-14170756.figma.site/_assets/v11/f8688dd4fefc83b2e9abb9a8759db08b5ece8e3a.png);">
+    </div>
+    <div class="relative z-10 w-full max-w-sm mx-4">
+        <div class="bg-surface/85 backdrop-blur-xl rounded-xl shadow-2xl p-4">
+            <div class="flex items-start gap-3">
+                <div class="flex-shrink-0">
+                    <div class="w-14 h-14 flex items-center justify-center">
+                        <div class="relative">
+                            <span class="relative inline-flex">
+                                <span class="material-icons text-cyan-400  text-[33px]">shield</span>
+                                <span
+                                    class="material-icons text-brand-cyan absolute text-[18px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">language</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <div class="mb-3">
+                        <h1 class="text-slate-800 mb-0 text-2xl leading-none font-bold">UIB
+                        </h1>
+                        <p class="text-slate-500 text-xs mt-0">
+                            Please enter the OTP you've received om your phone and email
+                        </p>
+                    </div>
+                    <form class="space-y-2" [formGroup]="loginForm">
+                        <app-input-field [errorMessage]="getErrorMessage('password', 'password')" placeholder="Enter OTP"
+                            label="OTP" [type]="'password'">
+                        </app-input-field>
+                        <button type="submit" (click)="loginClick.next()"
+                            class="w-full py-2 px-4 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize ">
+                            submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

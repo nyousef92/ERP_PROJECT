@@ -119,6 +119,7 @@ export class SelectDropdownComponent implements ControlValueAccessor, OnInit {
 
   ngOnInit() {
     // Always initialize with empty value to show placeholder
+    this.placeholder = this.placeholder === 'Select' ? `Select ${this.label || ''}` : this.placeholder;
     if (!this.selectedValue) {
       this.writeValue('');
     } else {
