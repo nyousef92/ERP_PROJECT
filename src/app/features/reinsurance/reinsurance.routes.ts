@@ -6,5 +6,10 @@ export const REINSURANCE_ROUTES: Routes = [
         path: 'facultative',
         loadChildren: () => import('./facultative/facultative.routes')
             .then(mod => mod.FACULTAIVE_ROUTES)
+    },
+    {
+        path: 'treaty',
+        loadChildren: () => import('./treaty/treaty-container.routes')
+            .then(mod => mod.TREATY_ROUTES)
     }
 ];
