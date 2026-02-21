@@ -379,4 +379,12 @@ export class TreatyService {
     deleteTreaty(id: string) {
         return of({ success: true });
     }
+
+    submitToApproval(id: string) {
+        return of({ success: true });
+    }
+
+    postToFinance(id: string) {
+        return of({ success: true });
+    }
 }

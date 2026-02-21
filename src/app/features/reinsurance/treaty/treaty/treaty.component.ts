@@ -11,6 +11,7 @@ import { ModalComponent } from '@shared/modal/modal.component';
 import { ModalOptions } from '@shared/modal/modal.component';
 import { AddNewTreatyComponent } from '../add-new-treaty/add-new-treaty.component';
 import { EditTreatyComponent } from '../edit-treaty/edit-treaty.component';
+import { SendTreatyToApprovalComponent } from '../send-treaty-to-approval/send-treaty-to-approval.component';
 
 @Component({
   selector: 'app-treaty',
@@ -104,6 +105,18 @@ export class TreatyComponent implements OnInit {
       this.history.push(item);
       this.totalItems++;
 
+    }).unsubscribe();
+  }
+
+  submitToApproval(id: string): void {
+    this.modal.open(SendTreatyToApprovalComponent, { refNumber: id }, 'md');
+  }
+
+  postToFinance(id: string): void {
+    this.treatyService.postToFinance(id).subscribe(resp => {
+      if (resp.success) {
+        this.getTreatyHistory();
+      }
     }).unsubscribe();
   }
 }
