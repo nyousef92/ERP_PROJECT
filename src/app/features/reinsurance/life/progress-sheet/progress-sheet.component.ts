@@ -48,7 +48,7 @@ export class ProgressSheetComponent {
           this.totalItems += 1;
         })
       }
-    });
+    }, 'xl');
   }
 
   edit(refNo: string) {

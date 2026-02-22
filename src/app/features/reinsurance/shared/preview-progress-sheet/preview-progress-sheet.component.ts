@@ -53,10 +53,12 @@ export class PreviewProgressSheetComponent implements OnInit {
   }
 
   editProgressSheet() {
-    // const rout = this.sheetType == 'facultative' ?
-    //   'home/reinsurance/facultative/progress-sheet/view-facultative-progress-sheet' :
-    //TODO add new component and new rout same ad view-facultative-progress-sheet but for life and update the rout here 
-    this.router.navigate(
-      ['home/reinsurance/facultative/progress-sheet/view-facultative-progress-sheet', this.refNumber]);
+    debugger;
+    console.log(this.sheetType);
+    
+    const route = this.sheetType === 'life'
+      ? 'home/reinsurance/life/progress-sheet/view-life-progress-sheet'
+      : 'home/reinsurance/facultative/progress-sheet/view-facultative-progress-sheet';
+    this.router.navigate([route, this.refNumber]);
   }
 }

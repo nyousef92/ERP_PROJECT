@@ -140,24 +140,35 @@ export class ProgressSheetService {
   }
 
 
-  getProgressSheetDetailsView(refNumber: string, type = 'faculatitve') {
-    let cedant = 'Global Insurance Co.';
-    let lob = 'Property';
-
-    if (type !== 'faculatitve') {
-      cedant = 'Premier Life Assurance';
-      lob = 'Term Life'
+  getProgressSheetDetailsView(refNumber: string, type = 'facultative') {
+    if (type === 'life') {
+      return of({
+        account: 'LIFE-ACC-001',
+        cedant: 'Premier Life Assurance',
+        lob: 'Term Life',
+        inceptionDate: '01/01/2024',
+        siLol: 'SR 10,000,000',
+        rate: '3.75%',
+        commission: '10.00%',
+        receiptDate: '01/15/2024',
+        notes: 'Standard life coverage. Terms and conditions as per original policy. Subject to final medical assessment.',
+        currency: 'SAR',
+        cedentRetention: '2,000,000',
+        freeCoverLimit: '500,000',
+        noOfInsured: '250',
+        orderHereon: '65.00',
+        reinsuranceDetails: 'Standard life reinsurance terms apply.',
+        reinsurers: [
+          { name: { id: 10, name: 'RGA Reinsurance' }, share: 30.00, rate: 3.75, commission: 8.50, tax: 5.00, comments: 'Standard life terms applied.' },
+          { name: { id: 2, name: 'Munich Re Life' }, share: 25.00, rate: 3.75, commission: 8.50, tax: 5.00, comments: 'Agreed, awaiting medical report.' },
+          { name: { id: 3, name: 'Saudi Re Life' }, share: 10.00, rate: 3.80, commission: 9.00, tax: 0, comments: 'Subject to underwriting review.' },
+        ]
+      });
     }
     return of({
-      reinsuranceDetails: 'reinsuranceDetails',
-      orderHereon: 2,
-      noOfInsured: 2,
-      freeCoverLimit: 5,
-      cedentRetention: 2,
-      currency: "USD",
       account: 'Acc-001',
-      cedant: 'Premier Life Assurance',
-      lob: 'Term Life',
+      cedant: 'Global Insurance Co.',
+      lob: 'Property',
       inceptionDate: '01/01/2023',
       siLol: '$10,000,000',
       rate: '5.25%',
