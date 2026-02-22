@@ -22,16 +22,14 @@
                         </h1>
                         <p class="text-slate-500 text-xs mt-0">ERP</p>
                     </div>
-                    <form class="space-y-2" [formGroup]="loginForm" >
+                    <form class="space-y-2" [formGroup]="loginForm">
                         <app-input-field [errorMessage]="getErrorMessage('userName', 'user name')"
-                            placeholder="user name" label="user name">
+                            placeholder="user name" label="user name" formControlName="userName">
                         </app-input-field>
-                        <app-input-field [errorMessage]="getErrorMessage('password', 'password')"
-                            placeholder="password" label="password"
-                            [type]="'password'">
+                        <app-input-field [errorMessage]="getErrorMessage('password', 'password')" placeholder="password"
+                            label="password" [type]="'password'" formControlName="password">
                         </app-input-field>
-                        <button type="submit"
-                        (click)="loginClick.next()"
+                        <button type="submit" (click)="loginClick.next()"
                             class="w-full py-2 px-4 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize ">
                             login
                         </button>

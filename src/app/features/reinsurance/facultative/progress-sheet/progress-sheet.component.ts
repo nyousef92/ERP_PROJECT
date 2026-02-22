@@ -108,7 +108,7 @@ export class ProgressSheetComponent implements OnInit {
 
   preViewProgressSheet(refNo: any) {
     this.router.navigate(
-      ['home/reinsurance/facultative/progress-sheet/preview-facultative-progress-sheet', refNo]
+      ['home/reinsurance/facultative/progress-sheet/preview', refNo,'facultative']
     );
   }
 }

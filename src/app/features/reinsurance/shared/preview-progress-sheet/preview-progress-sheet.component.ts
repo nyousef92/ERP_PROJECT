@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CurrencyPipe, NgStyle } from '@angular/common';
-import { ProgressSheetDocumentsComponent } from '../progress-sheet-documents/progress-sheet-documents.component';
 import { FacultativeSubmissionService } from '@core/services/facultative.submission.service';
+import { ProgressSheetDocumentsComponent } from "../progress-sheet-documents/progress-sheet-documents.component";
 
 @Component({
-  selector: 'app-preview-facultative-progress-sheet',
-  imports: [CurrencyPipe, ProgressSheetDocumentsComponent, NgStyle],
-  templateUrl: './preview-facultative-progress-sheet.component.html'
+  selector: 'app-preview-progress-sheet',
+  imports: [CurrencyPipe, NgStyle, ProgressSheetDocumentsComponent],
+  templateUrl: './preview-progress-sheet.component.html'
 })
-export class PreviewFacultativeProgressSheetComponent implements OnInit {
+export class PreviewProgressSheetComponent implements OnInit {
 
   refNumber: string | null;
+  sheetType: string | null;
   progressSheet: any;
 
   constructor(
@@ -20,6 +21,7 @@ export class PreviewFacultativeProgressSheetComponent implements OnInit {
     private submissionService: FacultativeSubmissionService
   ) {
     this.refNumber = this.route.snapshot.paramMap.get('refNumber');
+    this.sheetType = this.route.snapshot.paramMap.get('sheetType');
   }
 
   ngOnInit(): void {
@@ -40,13 +42,20 @@ export class PreviewFacultativeProgressSheetComponent implements OnInit {
   }
 
   editSubmission() {
+    const rout = this.sheetType == 'facultative' ?
+      'home/reinsurance/facultative/submission/add-facultative-submission' :
+      'home/reinsurance/life/submission/add-life-submission'
+
     this.router.navigate(
-      ['home/reinsurance/facultative/submission/add-facultative-submission', this.refNumber],
+      [rout, this.refNumber],
       { queryParams: { formType: 'Update Submission' } }
     );
   }
 
   editProgressSheet() {
+    // const rout = this.sheetType == 'facultative' ?
+    //   'home/reinsurance/facultative/progress-sheet/view-facultative-progress-sheet' :
+    //TODO add new component and new rout same ad view-facultative-progress-sheet but for life and update the rout here 
     this.router.navigate(
       ['home/reinsurance/facultative/progress-sheet/view-facultative-progress-sheet', this.refNumber]);
   }

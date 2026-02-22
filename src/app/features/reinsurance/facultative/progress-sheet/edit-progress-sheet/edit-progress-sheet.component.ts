@@ -7,7 +7,7 @@ import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { InputFieldTextareaComponent } from '@shared/input-field-text-area/input-field-text-area.component';
 import { SelectDropdownComponent } from '@shared/select-dropdown/select-dropdown.component';
 import { ModalComponent } from '@shared/modal/modal.component';
-import { EditReinsuranceComponent } from '../view-facultative-progress-sheet/edit-reinsurance/edit-reinsurance.component';
+import { EditReinsuranceComponent } from '../../../shared/edit-reinsurance/edit-reinsurance.component';
 
 @Component({
   selector: 'app-edit-progress-sheet',
@@ -31,7 +31,7 @@ export class EditProgressSheetComponent implements OnInit {
     private fb: FormBuilder,
     private helper: HelperService,
     private progressSheetService: ProgressSheetService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     forkJoin({
@@ -42,25 +42,20 @@ export class EditProgressSheetComponent implements OnInit {
       this.cedantList = cedantList;
       this.reinsurers = [...(this.progressSheet?.reinsurers ?? [])];
       this.form = this.fb.group({
-       refNo:       [this.progressSheet?.refNo       ?? ''],
-        cedant:        [this.progressSheet?.cedant        ?? '', Validators.required],
-        lob:           [this.progressSheet?.lob           ?? '', Validators.required],
-        rate:          [this.progressSheet?.rate          ?? ''],
-        commission:    [this.progressSheet?.commission    ?? ''],
-        siLol:         [this.progressSheet?.siLol         ?? ''],
-        inceptionDate: [this.toIsoDate(this.progressSheet?.inceptionDate)],
-        receiptDate:   [this.toIsoDate(this.progressSheet?.receiptDate)],
-        notes:         [this.progressSheet?.notes         ?? ''],
+        refNo: [this.progressSheet?.refNo ?? ''],
+        cedant: [this.progressSheet?.cedant ?? '', Validators.required],
+        lob: [this.progressSheet?.lob ?? '', Validators.required],
+        rate: [this.progressSheet?.rate ?? ''],
+        commission: [this.progressSheet?.commission ?? ''],
+        siLol: [this.progressSheet?.siLol ?? ''],
+        inceptionDate: [this.helper.toIsoDate(this.progressSheet?.inceptionDate)],
+        receiptDate: [this.helper.toIsoDate(this.progressSheet?.receiptDate)],
+        notes: [this.progressSheet?.notes ?? ''],
       });
     });
   }
 
-  private toIsoDate(dateStr: string): string {
-    if (!dateStr) return '';
-    const parts = dateStr.split('/');
-    if (parts.length === 3) return `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
-    return dateStr;
-  }
+  
 
   onSave(): void {
     if (this.form.invalid) {

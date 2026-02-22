@@ -6,7 +6,7 @@ import { of } from 'rxjs';
   providedIn: 'root'
 })
 export class ProgressSheetService {
-  
+
 
   deleteProgressSheet(refNo: string) {
     return of(true);
@@ -140,11 +140,24 @@ export class ProgressSheetService {
   }
 
 
-  getProgressSheetDetailsView(refNumber: string) {
+  getProgressSheetDetailsView(refNumber: string, type = 'faculatitve') {
+    let cedant = 'Global Insurance Co.';
+    let lob = 'Property';
+
+    if (type !== 'faculatitve') {
+      cedant = 'Premier Life Assurance';
+      lob = 'Term Life'
+    }
     return of({
+      reinsuranceDetails: 'reinsuranceDetails',
+      orderHereon: 2,
+      noOfInsured: 2,
+      freeCoverLimit: 5,
+      cedentRetention: 2,
+      currency: "USD",
       account: 'Acc-001',
-      cedant: 'Global Insurance Co.',
-      lob: 'Property',
+      cedant: 'Premier Life Assurance',
+      lob: 'Term Life',
       inceptionDate: '01/01/2023',
       siLol: '$10,000,000',
       rate: '5.25%',
@@ -158,7 +171,7 @@ export class ProgressSheetService {
       ]
     });
   }
-  
+
   getFacultativeProgressSheetMetrics() {
     return of([
       {
@@ -233,6 +246,29 @@ export class ProgressSheetService {
     return of(true);
   }
 
+  addNewLifeProgressSheet(progressSheet: any) {
+    return of({ refNo: 'LIFE-2026-' + Math.floor(Math.random() * 900 + 100) });
+  }
+
+  getLifeLOBList() {
+    return of([
+      { id: 1, value: 'Term Life', label: 'Term Life' },
+      { id: 2, value: 'Whole Life', label: 'Whole Life' },
+      { id: 3, value: 'Universal Life', label: 'Universal Life' },
+      { id: 4, value: 'Group Life', label: 'Group Life' },
+      { id: 5, value: 'Critical Illness', label: 'Critical Illness' },
+    ]);
+  }
+
+  getLifeCedantList() {
+    return of([
+      { id: 1, value: 'Premier Life Assurance', label: 'Premier Life Assurance' },
+      { id: 2, value: 'Guardian Life Insurance', label: 'Guardian Life Insurance' },
+      { id: 3, value: 'National Life Company', label: 'National Life Company' },
+      { id: 4, value: 'Secure Life Partners', label: 'Secure Life Partners' },
+      { id: 5, value: 'Heritage Life Insurance', label: 'Heritage Life Insurance' },
+    ]);
+  }
 
   getLOBList() {
     return of([

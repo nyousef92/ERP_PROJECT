@@ -1,1 +1,153 @@
-<p>add-progress-sheet works!</p>
+<app-modal />
+
+@if (form) {
+<div class="bg-surface rounded-lg w-full relative flex flex-col max-h-[90vh]">
+
+  <!-- Header -->
+  <div class="p-4 sm:p-6 border-b border-border flex-shrink-0">
+    <div class="flex items-start justify-between gap-4">
+      <div class="flex-1 min-w-0">
+        <h2 class="text-text">Progress Sheet</h2>
+        <p class="text-sm text-text-muted mt-1">Fill in the details to create a new life progress sheet.</p>
+      </div>
+      <button (click)="onCancel()" class="text-text-muted hover:text-text-secondary transition-colors flex-shrink-0">
+        <span class="material-icons text-[20px]">close</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <form class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1" [formGroup]="form">
+
+    <!-- Row 1: Ref No / LOB / Cedant -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <app-input-field formControlName="refNo" label="Ref No. (Auto-generated)" [disabled]="true" placeholder="e.g. LIFE-2026-001" />
+     
+      <app-select-dropdown 
+      [selectedValue]="form.get('lob')?.value??''"
+      formControlName="lob" label="LOB" [options]="lobList" [required]="true"
+        [errorMessage]="getError('lob', 'LOB')" [touched]="form.get('lob')?.touched" />
+      <app-select-dropdown formControlName="cedant" label="Cedant" [options]="cedantList" [required]="true"
+        [errorMessage]="getError('cedant', 'Cedant')" [touched]="form.get('cedant')?.touched" />
+    </div>
+
+    <!-- Row 2: Currency / Inception Date / Receipt Date -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <app-select-dropdown formControlName="currency" label="Currency" [options]="currencyList" [required]="true"
+        [errorMessage]="getError('currency', 'Currency')" [touched]="form.get('currency')?.touched" />
+      <app-input-field formControlName="inceptionDate" label="Inception Date" type="date" />
+      <app-input-field formControlName="receiptDate" label="Receipt Date" type="date" />
+    </div>
+
+    <!-- Row 3: Rate / Cedent Retention / SI/LOL -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <app-input-field formControlName="rate" label="Rate (%)" placeholder="0.00" type="number" />
+      <app-input-field formControlName="cedentRetention" label="Cedent Retention" placeholder="0" />
+      <app-input-field formControlName="siLol" label="SI/LOL" placeholder="0" />
+    </div>
+
+    <!-- Row 4: Free Cover Limit / No. of Insured / Order Hereon -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <app-input-field formControlName="freeCoverLimit" label="Free Cover Limit" placeholder="0" />
+      <app-input-field formControlName="noOfInsured" label="No. of Insured" placeholder="0" type="number" />
+      <app-input-field formControlName="orderHereon" label="Order Hereon (%)" placeholder="0.00" type="number" />
+    </div>
+
+    <!-- Notes -->
+    <app-input-field-text-area formControlName="notes" label="Notes" placeholder="Add any additional details here..." />
+
+    <!-- Reinsurance Details -->
+    <app-input-field-text-area formControlName="reinsuranceDetails" label="Reinsurance Details" placeholder="Add reinsurance specific details here..." />
+
+    <!-- Save Basic Info -->
+    <div class="flex justify-end pt-2">
+      <button type="button" (click)="saveBasicInfo()"
+        class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors flex items-center gap-2 text-sm">
+        Save Basic Info
+      </button>
+    </div>
+
+    <!-- Reinsurers Section -->
+    <div class="border-t border-border pt-4 mt-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm text-text">Reinsurers</h3>
+        <button type="button" (click)="addReinsurer()" [disabled]="!basicInfoSaved"
+          class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-2 text-sm"
+          [class.bg-primary]="basicInfoSaved" [class.text-white]="basicInfoSaved"
+          [class.hover:bg-primary-dark]="basicInfoSaved" [class.bg-background]="!basicInfoSaved"
+          [class.text-text-muted]="!basicInfoSaved" [class.cursor-not-allowed]="!basicInfoSaved"
+          [class.border]="!basicInfoSaved" [class.border-border]="!basicInfoSaved">
+          <span class="material-icons text-[16px]">add</span>
+          Add Reinsurer
+        </button>
+      </div>
+
+      <div class="overflow-x-auto border border-border rounded-lg">
+        <table class="w-full">
+          <thead class="bg-background border-b border-border">
+            <tr>
+              <th class="px-3 py-2 text-left text-xs text-text-muted">REINSURER</th>
+              <th class="px-3 py-2 text-left text-xs text-text-muted">SHARE (%)</th>
+              <th class="px-3 py-2 text-left text-xs text-text-muted">RATE (%)</th>
+              <th class="px-3 py-2 text-left text-xs text-text-muted">COMM. (%)</th>
+              <th class="px-3 py-2 text-left text-xs text-text-muted">TAX (%)</th>
+              <th class="px-3 py-2 text-left text-xs text-text-muted">COMMENTS</th>
+              <th class="px-3 py-2 text-left text-xs text-text-muted">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border">
+            @for (reinsurer of reinsurers; track $index) {
+            <tr class="hover:bg-background transition-colors">
+              <td class="px-3 py-2 text-sm text-text">{{ reinsurerName(reinsurer) }}</td>
+              <td class="px-3 py-2 text-sm text-text-secondary">{{ reinsurer.share }}</td>
+              <td class="px-3 py-2 text-sm text-text-secondary">{{ reinsurer.rate }}</td>
+              <td class="px-3 py-2 text-sm text-text-secondary">{{ reinsurer.commission }}</td>
+              <td class="px-3 py-2 text-sm text-text-secondary">{{ reinsurer.tax }}</td>
+              <td class="px-3 py-2 text-sm text-text-secondary">{{ reinsurer.comments }}</td>
+              <td class="px-3 py-2">
+                <div class="flex items-center gap-1">
+                  <button type="button" (click)="editReinsurer(reinsurer, $index)"
+                    class="p-1 hover:bg-background rounded transition-colors">
+                    <span class="material-icons text-[14px] text-text-secondary">edit</span>
+                  </button>
+                  <button type="button" (click)="deleteReinsurer($index)"
+                    class="p-1 hover:bg-danger-light rounded transition-colors">
+                    <span class="material-icons text-[14px] text-danger">delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            } @empty {
+            <tr>
+              <td colspan="7" class="px-3 py-6 text-center text-sm text-text-muted">
+                No reinsurers added yet.
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </form>
+
+  <!-- Footer -->
+  <div
+    class="px-4 sm:px-6 py-4 border-t border-border flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 flex-shrink-0">
+    <button type="button" (click)="onCancel()"
+      class="px-4 py-2 border border-border rounded-lg text-sm text-text-secondary hover:bg-background transition-colors">
+      Cancel
+    </button>
+    <button type="button" (click)="onSave()"
+      [disabled]="!basicInfoSaved"
+      class="px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm"
+      [class.bg-primary]="basicInfoSaved" [class.text-white]="basicInfoSaved"
+      [class.hover:bg-primary-dark]="basicInfoSaved" [class.bg-background]="!basicInfoSaved"
+      [class.text-text-muted]="!basicInfoSaved" [class.cursor-not-allowed]="!basicInfoSaved"
+      [class.border]="!basicInfoSaved" [class.border-border]="!basicInfoSaved">
+      Save Progress Sheet
+    </button>
+  </div>
+
+</div>
+}

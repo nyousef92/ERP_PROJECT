@@ -26,7 +26,9 @@
                     </div>
                     <form class="space-y-2" [formGroup]="loginForm">
                         <app-input-field [errorMessage]="getErrorMessage('password', 'password')" placeholder="Enter OTP"
-                            label="OTP" [type]="'password'">
+                            label="OTP" [type]="'password'"
+                            formControlName="password"
+                            >
                         </app-input-field>
                         <button type="submit" (click)="loginClick.next()"
                             class="w-full py-2 px-4 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize ">

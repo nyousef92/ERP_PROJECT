@@ -8,8 +8,7 @@
             </p>
         </div>
         <div>
-            <!--  (click)="addNew()" -->
-            <button type="button"
+            <button type="button" (click)="addNew()"
                 class="inline-flex items-center gap-1 py-2 px-4 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize">
                 <span class="material-icons text-[14px]">add</span>
                 <span> Create Progress Sheet</span>
@@ -30,7 +29,7 @@
         </div>
         <div>
             <app-input-field placeholder="search" [(ngModel)]="searchValue"
-                (valueChange)="updateSearchValue($event,currentPage)"></app-input-field>
+                (valueChange)="searchBalueChanged.next($event)"></app-input-field>
         </div>
     </div>
 
@@ -66,12 +65,12 @@
                     </td>
                     <td class="px-6 py-4">
                         <div class="flex justify-end gap-3">
-                            <!--    <button title="view" class="text-gray-400 " (click)="preViewProgressSheet(item.refNo)">
+                            <button title="view" class="text-gray-400 " (click)="preViewProgressSheet(item.refNo)">
                                 <span class="material-icons text-[18px] text-primary">visibility</span>
-                            </button>-->
-                            <!--  <button title="edit" class="text-gray-400 " (click)="edit(item.refNo)">
+                            </button>
+                             <button title="edit" class="text-gray-400 " (click)="edit(item.refNo)">
                                 <span class="material-icons text-[18px] text-text-secondary">edit</span>
-                            </button>-->
+                            </button>
                             <button title="delete" class="text-gray-400 " (click)="delete(item.refNo)">
                                 <span class="material-icons text-[18px] text-danger">delete</span>
                             </button>

@@ -3,7 +3,7 @@ import { ProgressSheetService } from '@core/services/progress.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbComponent, BreadcrumbItem } from '@shared/breadcrumb/breadcrumb.component';
 import { ModalComponent } from '@shared/modal/modal.component';
-import { EditReinsuranceComponent } from './edit-reinsurance/edit-reinsurance.component';
+import { EditReinsuranceComponent } from '../../../shared/edit-reinsurance/edit-reinsurance.component';
 import { EditProgressSheetComponent } from '../edit-progress-sheet/edit-progress-sheet.component';
 import { DeleteItemComponent } from '@shared/delete-item/delete-item.component';
 
@@ -40,7 +40,7 @@ export class ViewFacultativeProgressSheetComponent implements OnInit {
 
   goBack() {
     this.router.navigate(
-      ['home/reinsurance/facultative/progress-sheet/preview-facultative-progress-sheet', this.refNumber]
+      ['home/reinsurance/facultative/progress-sheet/preview', this.refNumber]
     );
   }
 

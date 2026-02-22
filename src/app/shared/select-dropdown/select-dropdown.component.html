@@ -13,7 +13,7 @@
         class="w-full px-3 py-2 text-sm text-text bg-surface border border-border rounded-lg outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-background disabled:text-text-muted disabled:cursor-not-allowed"
         [class.!border-danger]="showError()">
         <option value="">{{placeholder}}</option>
-        @for(option of options;track option.value){
+        @for(option of options;track option.id||option.value){
         <option [value]="option.value">
             {{option.label}}
         </option>

@@ -23,11 +23,7 @@ export class ProfileListComponent {
   }
 
   logout() {
-    this.auth.logout().subscribe(() => {
-      this.router.navigate(['']);
-    }
-
-    );
+    this.auth.logout();
   }
 
 }

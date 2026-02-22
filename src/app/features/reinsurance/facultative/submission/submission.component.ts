@@ -84,6 +84,6 @@ export class SubmissionComponent implements OnInit {
 
   goToProgressSheet(refNum: string) {
     this.router.navigate(
-      ['home/reinsurance/facultative/progress-sheet/preview-facultative-progress-sheet', refNum]);
+      ['home/reinsurance/facultative/progress-sheet/preview', refNum, 'facultative']);
   }
 }

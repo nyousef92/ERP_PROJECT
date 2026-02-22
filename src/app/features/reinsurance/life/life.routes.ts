@@ -3,6 +3,7 @@ import { LifeComponent } from "./life.component";
 import { SubmissionComponent } from "./submission/submission.component";
 import { AddLifeSubmissionComponent } from "./submission/add-life-submission/add-life-submission.component";
 import { ProgressSheetComponent } from "./progress-sheet/progress-sheet.component";
+import { PreviewProgressSheetComponent } from "../shared/preview-progress-sheet/preview-progress-sheet.component";
 
 export const LIFE_ROUTES: Routes = [
     {
@@ -22,6 +23,7 @@ export const LIFE_ROUTES: Routes = [
                 path: 'progress-sheet',
                 children: [
                     { path: '', component: ProgressSheetComponent },
+                    { path: 'preview/:refNumber/:sheetType', component: PreviewProgressSheetComponent }
                 ]
             }
         ]

@@ -4,7 +4,7 @@ import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { HelperService } from '@core/services/helper.service';
 import { AuthService } from '@core/services/auth.service';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { exhaustMap } from 'rxjs/operators';
 
 @Component({
@@ -34,7 +34,8 @@ export class TwoFactorAuthComponent {
   addEventListener() {
     this.loginClick.pipe(exhaustMap(() => this.doLogin()))
       .subscribe(resp => {
-        this.router.navigate(['/home'])
+        if (resp)
+          this.router.navigate(['/home'])
       });
   }
 
@@ -48,6 +49,10 @@ export class TwoFactorAuthComponent {
   }
 
   doLogin() {
+    if ((this.loginForm.invalid)) {
+      this.loginForm.markAllAsTouched();
+      return of(false);
+    }
     const body = this.loginForm.value;
     return this.auth.login(body);
   }

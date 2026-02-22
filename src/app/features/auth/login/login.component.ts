@@ -4,13 +4,13 @@ import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { HelperService } from '@core/services/helper.service';
 import { AuthService } from '@core/services/auth.service';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { exhaustMap} from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+import { exhaustMap } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-login',
-    imports: [ReactiveFormsModule, InputFieldComponent],
-    templateUrl: './login.component.html'
+  selector: 'app-login',
+  imports: [ReactiveFormsModule, InputFieldComponent],
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
 
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       userName: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', [Validators.required,Validators.minLength(8)]]
     });
 
     this.addEventListener();
@@ -32,9 +32,11 @@ export class LoginComponent implements OnInit {
 
 
   addEventListener() {
-    this.loginClick.pipe(exhaustMap(()=> this.doLogin()))
+    this.loginClick.pipe(exhaustMap(() => this.doLogin()))
       .subscribe(resp => {
-        this.router.navigate(['/two-factor-auth'])
+        if (resp) {
+          this.router.navigate(['/two-factor-auth'])
+        }
       });
   }
 
@@ -48,8 +50,12 @@ export class LoginComponent implements OnInit {
   }
 
   doLogin() {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return of(false);
+    }
     const body = this.loginForm.value;
-   return this.auth.login(body);
+    return this.auth.login(body);
   }
 
 }
