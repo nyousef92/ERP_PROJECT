@@ -45,8 +45,7 @@ export const FACULTAIVE_ROUTES: Routes = [
             {
                 path: 'approval',
                 children: [
-                    { path: '', component: ApprovalComponent },
-
+                    { path: '', component: ApprovalComponent, data: { sheetType: 'facultative' } },
                 ]
             }
         ]

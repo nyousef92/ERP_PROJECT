@@ -27,6 +27,7 @@
                     <form class="space-y-2" [formGroup]="loginForm">
                         <app-input-field [errorMessage]="getErrorMessage('password', 'password')" placeholder="Enter OTP"
                             label="OTP" [type]="'password'"
+                            [touched]="loginForm.get('password')?.touched"
                             formControlName="password"
                             >
                         </app-input-field>

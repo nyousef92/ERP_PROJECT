@@ -23,6 +23,7 @@ export class TwoFactorAuthComponent {
   loginClick: Subject<void> = new Subject();
 
   ngOnInit(): void {
+    if (this.router.getCurrentNavigation()?.extras.state) { }
     this.loginForm = this.fb.group({
       password: ['', Validators.required]
     });

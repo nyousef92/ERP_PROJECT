@@ -39,8 +39,7 @@ export const LIFE_ROUTES: Routes = [
             {
                 path: 'approval',
                 children: [
-                    { path: '', component: ApprovalComponent },
-
+                    { path: '', component: ApprovalComponent, data: { sheetType: 'life' } },
                 ]
             }
         ]

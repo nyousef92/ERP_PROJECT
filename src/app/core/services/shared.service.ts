@@ -42,7 +42,7 @@ export class SharedService {
                 { label: 'Submission', route: '/home/reinsurance/life/submission' },
                 { label: 'Progress Sheet', route: '/home/reinsurance/life/progress-sheet' },
                 { label: 'Placement', route: '/home/reinsurance/life/placement' },
-                { label: 'Approval', route: '/reinsurance/life/approval' },
+                { label: 'Approval', route: '/home/reinsurance/life/approval' },
               ]
             },
             { label: 'Contracts', route: '/reinsurance/contracts' },

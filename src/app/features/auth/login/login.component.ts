@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       userName: ['', Validators.required],
-      password: ['', [Validators.required,Validators.minLength(8)]]
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
 
     this.addEventListener();
@@ -34,9 +34,8 @@ export class LoginComponent implements OnInit {
   addEventListener() {
     this.loginClick.pipe(exhaustMap(() => this.doLogin()))
       .subscribe(resp => {
-        if (resp) {
-          this.router.navigate(['/two-factor-auth'])
-        }
+        const body = this.loginForm.value;
+        this.router.navigate(['/two-factor-auth'], { state: { body } })
       });
   }
 
@@ -54,8 +53,7 @@ export class LoginComponent implements OnInit {
       this.loginForm.markAllAsTouched();
       return of(false);
     }
-    const body = this.loginForm.value;
-    return this.auth.login(body);
+    return of(true)
   }
 
 }
