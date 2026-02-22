@@ -1,26 +1,38 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { TreatyService } from '../../../../core/services/treaty.service';
 import { NgClass } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
+import { ModalComponent } from '@shared/modal/modal.component';
+import { SubDetailsManagementComponent } from './sub-details-management/sub-details-management.component';
 
 @Component({
   selector: 'app-add-new-treaty',
-  imports: [ReactiveFormsModule, InputFieldComponent, NgClass],
+  imports: [ReactiveFormsModule, InputFieldComponent, NgClass, ModalComponent],
   templateUrl: './add-new-treaty.component.html'
 })
 export class AddNewTreatyComponent implements OnInit {
+  @ViewChild(ModalComponent) modal!: ModalComponent;
   treatyService = inject(TreatyService);
   fb = inject(FormBuilder);
 
   treatyData!: any;
   treatyForm!: FormGroup;
 
+  rInsurerenceCompanies: any[] = [];
+
   close!: () => void;
 
   ngOnInit(): void {
     this.initForm();
     this.getTreatyData();
+    this.setReInsurerenceCompanies();
+  }
+
+  setReInsurerenceCompanies(): void {
+    this.treatyService.getReInsurerenceCompanies().subscribe(resp => {
+      this.rInsurerenceCompanies = resp;
+    });
   }
 
   onCancel(): void {
@@ -71,8 +83,19 @@ export class AddNewTreatyComponent implements OnInit {
       company: ['', Validators.required],
       limit: [''],
       deductible: [''],
-      premium: ['']
+      premium: [''],
+      subDetails: this.fb.array([])
     });
+  }
+
+  /** Returns the subDetails FormArray for a given reinsurer row index */
+  getSubDetails(reinsurerIndex: number): FormArray {
+    return this.getReinsurerGroup(reinsurerIndex).get('subDetails') as FormArray;
+  }
+
+  /** Badge count shown next to the Add Details link */
+  getSubDetailCount(reinsurerIndex: number): number {
+    return this.getSubDetails(reinsurerIndex).length;
   }
 
   get currentLob(): string {
@@ -91,6 +114,57 @@ export class AddNewTreatyComponent implements OnInit {
     } else {
       this.treatyForm.markAllAsTouched();
     }
+  }
+
+  AddSubDetails(reinsurerIndex: number): void {
+    const fb = this.fb;
+    const subDetailsArray = this.getSubDetails(reinsurerIndex);
+    const existingSubDetails = subDetailsArray.getRawValue();
+
+    this.modal.open(
+      SubDetailsManagementComponent,
+      {
+        existingSubDetails,
+        onSave: (rows: any[]) => {
+          // Clear current entries and rebuild from saved rows (including excess nested data)
+          subDetailsArray.clear();
+          rows.forEach(row => {
+            // Rebuild inline excess FormArray
+            const excessArray = fb.array([] as FormGroup[]);
+            if (row.excess?.length) {
+              row.excess.forEach((e: any) => {
+                excessArray.push(fb.group({
+                  company: [e.company ?? ''],
+                  signedPct: [e.signedPct ?? ''],
+                  writtenPct: [e.writtenPct ?? ''],
+                  brokerPct: [e.brokerPct ?? ''],
+                  taxPct: [e.taxPct ?? ''],
+                  commPct: [e.commPct ?? ''],
+                  reason: [e.reason ?? ''],
+                  description: [e.description ?? '']
+                }));
+              });
+            }
+
+            subDetailsArray.push(fb.group({
+              company: [row.company ?? ''],
+              signedPct: [row.signedPct ?? ''],
+              writtenPct: [row.writtenPct ?? ''],
+              brokerPct: [row.brokerPct ?? ''],
+              taxPct: [row.taxPct ?? ''],
+              commPct: [row.commPct ?? ''],
+              reason: [row.reason ?? ''],
+              description: [row.description ?? ''],
+              excess: excessArray
+            }));
+          });
+        }
+      },
+      'lg',
+      {
+        disableBackdropClose: true,
+      }
+    );
   }
 
   private getTreatyData(): void {

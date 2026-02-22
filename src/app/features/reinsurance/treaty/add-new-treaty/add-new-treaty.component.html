@@ -1,3 +1,4 @@
+<app-modal />
 <form [formGroup]="treatyForm" (ngSubmit)="onSubmit()"
     class="bg-white rounded-lg w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden flex flex-col relative">
 
@@ -219,8 +220,8 @@
                                 <select formControlName="company"
                                     class="w-full h-[32px] px-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white">
                                     <option value="">Select Company</option>
-                                    @for (company of treatyData?.reInsureParticipantionsCompanies; track company.id) {
-                                    <option [value]="company.id">{{ company.name }}</option>
+                                    @for (company of rInsurerenceCompanies; track company.id) {
+                                    <option [value]="company.value">{{ company.value }}</option>
                                     }
                                 </select>
                             </td>
@@ -237,10 +238,14 @@
                                     class="w-full h-[32px] px-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400">
                             </td>
                             <td class="px-2 py-2 text-center">
-                                <a href="javascript:void(0)"
-                                    class="text-blue-600 hover:text-blue-800 text-xs font-medium">
+                                <button type="button" (click)="AddSubDetails($index)"
+                                    class="text-blue-600 hover:text-blue-800 text-xs font-medium underline-offset-2 hover:underline transition-colors">
+                                    @if (getSubDetailCount($index) > 0) {
+                                    {{ getSubDetailCount($index) }} Details
+                                    } @else {
                                     Add Details
-                                </a>
+                                    }
+                                </button>
                             </td>
                             <td class="px-2 py-2 text-center">
                                 <button type="button" (click)="removeReinsurer($index)"

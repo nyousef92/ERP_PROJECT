@@ -387,4 +387,43 @@ export class TreatyService {
     postToFinance(id: string) {
         return of({ success: true });
     }
+
+    getReInsurerenceCompanies() {
+        const companies = [
+            { id: 1, value: "Swiss Re" },
+            { id: 2, value: "Munich Re" },
+            { id: 3, value: "Hannover Re" },
+            { id: 4, value: "SCOR SE" },
+            { id: 5, value: "Lloyd's of London" },
+            { id: 6, value: "Berkshire Hathaway Re" },
+            { id: 7, value: "Everest Re" },
+            { id: 8, value: "TransRe" },
+            { id: 9, value: "PartnerRe" },
+            { id: 10, value: "RenaissanceRe" },
+            { id: 11, value: "XL Catlin" },
+            { id: 12, value: "Arch Capital" },
+            { id: 13, value: "Axis Capital" },
+            { id: 14, value: "Alleghany Capital" },
+            { id: 15, value: "Fairfax Financial" }
+        ];
+        return of(companies);
+    }
+
+    getReInsurerenceSubDetailsCompanies() {
+        const companies = [
+            { id: 1, value: "Swiss Re" },
+            { id: 2, value: "Munich Re" },
+            { id: 3, value: "Hannover Re" },
+            { id: 4, value: "SCOR SE" },
+            { id: 5, value: "Lloyd's of London" },
+            { id: 6, value: "Berkshire Hathaway Re" },
+            { id: 7, value: "Everest Re" },
+            { id: 8, value: "TransRe" },
+            { id: 12, value: "Arch Capital" },
+            { id: 13, value: "Axis Capital" },
+            { id: 14, value: "Alleghany Capital" },
+            { id: 15, value: "Fairfax Financial" }
+        ];
+        return of(companies);
+    }
 }
