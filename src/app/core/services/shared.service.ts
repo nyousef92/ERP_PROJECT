@@ -39,10 +39,10 @@ export class SharedService {
             {
               label: 'Life',
               children: [
-                { label: 'Submission', route: '/reinsurance/life/submission' },
-                { label: 'Progress Sheet', route: '/reinsurance/life/progress-sheet' },
-                { label: 'Placement', route: '/reinsurance/life/placement' },
-                { label: 'Approval', route: '/reinsurance/life/approval' },
+                { label: 'Submission', route: '/home/reinsurance/life/submission' },
+                { label: 'Progress Sheet', route: '/home/reinsurance/life/progress-sheet' },
+                { label: 'Placement', route: '/home/reinsurance/life/placement' },
+                { label: 'Approval', route: '/home/reinsurance/life/approval' },
               ]
             },
             { label: 'Contracts', route: '/reinsurance/contracts' },
@@ -146,6 +146,22 @@ export class SharedService {
   getModuleTypes() {
     //return this.api.get('');
     return of(['All', 'Reinsurance', 'Claims', 'Finance', 'HR', 'Audit', 'Reports']);
+  }
+
+  getCurrencies() {
+    return of([
+      { id: 1, value: "USD", label: "USD - US Dollar" },
+      { id: 2, value: "EUR", label: "EUR - Euro" },
+      { id: 3, value: "GBP", label: "GBP - British Pound" },
+      { id: 4, value: "JPY", label: "JPY - Japanese Yen" },
+      { id: 5, value: "AUD", label: "AUD - Australian Dollar" },
+      { id: 6, value: "CAD", label: "CAD - Canadian Dollar" },
+      { id: 7, value: "CHF", label: "CHF - Swiss Franc" },
+      { id: 8, value: "CNY", label: "CNY - Chinese Yuan" },
+      { id: 9, value: "INR", label: "INR - Indian Rupee" },
+      { id: 10, value: "AED", label: "AED - UAE Dirham" },
+    ]
+    )
   }
 
 }

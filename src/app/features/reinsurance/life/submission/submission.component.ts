@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { ColoredCardsGridComponent } from "@shared/colored-cards-grid/colored-cards-grid.component";
 import { NgClass } from '@angular/common';
-import { forkJoin } from 'rxjs';
-import { InputFieldComponent } from "@shared/input-field/input-field.component";
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PaginatorComponent } from "@shared/paginator/paginator.component";
-import { FacultativeSubmissionService } from '@core/services/facultative.submission.service';
 import { HelperService } from '@core/services/helper.service';
+import { LifeSubmissionService } from '@core/services/life.submission.service';
+import { ColoredCardsGridComponent } from '@shared/colored-cards-grid/colored-cards-grid.component';
+import { InputFieldComponent } from '@shared/input-field/input-field.component';
+import { PaginatorComponent } from '@shared/paginator/paginator.component';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-submission',
-  imports: [ColoredCardsGridComponent, NgClass, InputFieldComponent, PaginatorComponent],
+  imports: [ColoredCardsGridComponent,
+    InputFieldComponent,
+    PaginatorComponent,
+    NgClass
+  ],
   templateUrl: './submission.component.html'
 })
 export class SubmissionComponent implements OnInit {
@@ -21,7 +25,7 @@ export class SubmissionComponent implements OnInit {
   totalItems = 0;
 
   constructor(
-    private submissionService: FacultativeSubmissionService,
+    private submissionService: LifeSubmissionService,
     private router: Router,
     private helper: HelperService
   ) { }
@@ -40,9 +44,15 @@ export class SubmissionComponent implements OnInit {
       this.metrics = data[0];
       this.history = data[1].data.map(item => (
         { ...item, statusClasses: this.helper.getStatusClass(item.status) }
-      ));;
+      ));
       this.totalItems = data[1].totalItems;
     });
+  }
+
+
+
+  addNew() {
+    this.router.navigate(['home/reinsurance/life/submission/add-life-submission']);
   }
 
   updateSearchValue(value: string) {
@@ -64,26 +74,17 @@ export class SubmissionComponent implements OnInit {
 
   }
 
-  addNew() {
-    this.router.navigate(['home/reinsurance/facultative/submission/add-facultative-submission']);
-  }
-
   updateSubmission(refNum: string) {
     this.router.navigate(
-      ['home/reinsurance/facultative/submission/add-facultative-submission', refNum],
+      ['home/reinsurance/life/submission/add-life-submission', refNum],
       { queryParams: { formType: 'Update Submission' } }
     );
   }
 
   renewSubmission(refNum: string) {
     this.router.navigate(
-      ['home/reinsurance/facultative/submission/add-facultative-submission', refNum],
+      ['home/reinsurance/life/submission/add-life-submission', refNum],
       { queryParams: { formType: 'Renew' } }
     );
-  }
-
-  goToProgressSheet(refNum: string) {
-    this.router.navigate(
-      ['home/reinsurance/facultative/progress-sheet/preview', refNum, 'facultative']);
   }
 }

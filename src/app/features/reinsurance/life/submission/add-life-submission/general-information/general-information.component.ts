@@ -6,11 +6,17 @@ import { SelectDropdownComponent } from "@shared/select-dropdown/select-dropdown
 import { dependantOn } from '@core/validations/dependent.validation';
 import { InputFieldTextareaComponent } from "@shared/input-field-text-area/input-field-text-area.component";
 import { FileUploadComponent } from "@shared/file-upload/file-upload.component";
-import { FacultativeSubmissionService } from '@core/services/facultative.submission.service';
+import { LifeSubmissionService } from '@core/services/life.submission.service';
+
 @Component({
   selector: 'app-general-information',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, InputFieldComponent, SelectDropdownComponent, InputFieldTextareaComponent, FileUploadComponent],
+  imports: [FormsModule,
+    ReactiveFormsModule,
+    InputFieldComponent,
+    SelectDropdownComponent,
+    InputFieldTextareaComponent,
+    FileUploadComponent],
   templateUrl: './general-information.component.html'
 })
 export class GeneralInformationComponent implements OnInit {
@@ -27,31 +33,37 @@ export class GeneralInformationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private helper: HelperService,
-    private submissionService: FacultativeSubmissionService,
+    private submissionService: LifeSubmissionService,
   ) {
     this.form = this.fb.group({
       status: ['drafrt'],
       facType: ['', Validators.required],
       subType: ['', dependantOn('facType', 'Fac Type')],
-      lineOfBusiness: ['',Validators.required],
-      subLineOfBusiness: ['', dependantOn('lineOfBusiness', 'Line of Business')],
       originalInsured: ['', Validators.required],
       reinsured: [''],
+      lineOfBusiness: ['', Validators.required],
+      // subLineOfBusiness: ['', dependantOn('lineOfBusiness', 'Line of Business')],
       address: [''],
-      periodFrom: ['',Validators.required],
-      periodTo: ['',Validators.required],
+      periodFrom: ['', Validators.required],
+      periodTo: ['', Validators.required],
+      geographicalLimit: [''],
       description: [''],
-      totalInsured: ['',Validators.pattern(/^\d+(\.\d{1,2})?$/)],
-      limitOfLiability: ['',Validators.pattern(/^\d+(\.\d{1,2})?$/)],
-      cover: [''],
-      interest: [''],
-      topLocation: [''],
-      originalConditions: [''],
+      totalAssured: ['', Validators.pattern(/^\d+(\.\d{1,2})?$/)],
+      basisSumInsured: [''],
+      ageLimit: ['', Validators.pattern(/^\d+(\.\d{1,2})?$/)],
+      eligible: [''],
+      groupSize: [''],
+      freeCoverLimit: [''],
+      originalConditions: [''],benefits: [''],
       choiceOfLaw: [''],
+      
+      
+      
       riCondition: [''],
-      warranties: [''],
+
+      underwritingRequirements: [''],
+      
       subjectivities: [''],
-      deductibles: [''],
       exclusion: [''],
       file: []
     });
@@ -73,7 +85,7 @@ export class GeneralInformationComponent implements OnInit {
       this.lobTypes = resp.map((item) => ({
         value: item.id,
         label: item.type
-      }));  
+      }));
     });
   }
 
@@ -107,7 +119,7 @@ export class GeneralInformationComponent implements OnInit {
     this.form.get('file')?.setValue(uploadedFiles);
   }
 
-   touched(controlName: string) {
+  touched(controlName: string) {
     return this.form.get(controlName)?.touched;
   }
 }

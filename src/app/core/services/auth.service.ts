@@ -6,6 +6,7 @@ import { SessionService } from './session.service';
 import { LocalStorageCacheService } from './local-storage-cache.service';
 import { environment } from '../../../environments/environment';
 import { ApiService } from './api.service';
+import { Router } from '@angular/router';
 
 interface TokenResponse {
   accessToken: string;
@@ -21,7 +22,8 @@ export class AuthService {
   constructor(
     private session: SessionService,
     private apiService: ApiService,
-    private ls: LocalStorageCacheService
+    private ls: LocalStorageCacheService,
+    private router:Router
   ) {
     this.restoreTokensFromStorage();
   }
@@ -138,7 +140,9 @@ export class AuthService {
       tap((response: any) => this.handleTokenResponse(response)),
       catchError((e) => {
         console.error(e);
-        return this.logout();
+        this.logout();
+        return throwError(()=>'logout')
+
       })
     );
   }
@@ -172,7 +176,7 @@ export class AuthService {
   }
 
 
-  logout(): Observable<string> {
+  logout() {
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
       this.tokenExpirationTimer = null;
@@ -183,8 +187,7 @@ export class AuthService {
     this.session.setDecodedToken(null);
     this.ls.remove('accessToken', 'auth');
     this.ls.remove('refreshToken', 'auth');
-
-    return of('logout');
+    this.router.navigate(['/'])
   }
 
 

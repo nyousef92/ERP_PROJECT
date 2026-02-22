@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map, of } from 'rxjs';
-import { ApprovalFilter } from 'src/app/features/reinsurance/facultative/approval/approval.component';
+import { ApprovalFilter } from 'src/app/features/reinsurance/shared/approval/approval.component';
 
 @Injectable({
   providedIn: 'root',

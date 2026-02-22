@@ -1,0 +1,123 @@
+<app-modal />
+
+@if (progressSheet) {
+<div class="space-y-6">
+
+  <!-- Breadcrumb -->
+  <app-breadcrumb [items]="breadcrumbs" />
+
+  <!-- Header -->
+  <div class="flex items-start justify-between">
+    <div>
+      <h1 class="text-text mb-2">Life Reinsurance Progress Sheet</h1>
+      <p class="text-text-muted">Manage submission details and reinsurance entries for this life reinsurance case.</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <button (click)="goBack()"
+        class="px-4 py-2.5 border border-border rounded-lg text-text-secondary hover:bg-background transition-colors">Back</button>
+      <button (click)="editProgressSheet()"
+        class="px-4 py-2.5 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">Edit Progress Sheet</button>
+    </div>
+  </div>
+
+  <!-- Submission Details -->
+  <div class="bg-surface rounded-lg border border-border p-6">
+    <h2 class="text-text mb-4">Submission Details</h2>
+
+    <div class="grid grid-cols-4 gap-4 mb-4">
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Account</label>
+        <p class="text-sm text-text">{{ progressSheet.account }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Cedant</label>
+        <p class="text-sm text-text">{{ progressSheet.cedant }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-text-muted mb-2">LOB</label>
+        <p class="text-sm text-text">{{ progressSheet.lob }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Inception Date</label>
+        <p class="text-sm text-text">{{ progressSheet.inceptionDate }}</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-4 gap-4 mb-4">
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Sum Insured</label>
+        <p class="text-sm text-text">{{ progressSheet.siLol }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Rate</label>
+        <p class="text-sm text-text">{{ progressSheet.rate }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Commission</label>
+        <p class="text-sm text-text">{{ progressSheet.commission }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Receipt Date</label>
+        <p class="text-sm text-text">{{ progressSheet.receiptDate }}</p>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-xs text-text-muted mb-2">Notes</label>
+      <p class="text-sm text-text">{{ progressSheet.notes }}</p>
+    </div>
+  </div>
+
+  <!-- Reinsurance Details -->
+  <div class="bg-surface rounded-lg border border-border">
+    <div class="flex items-center justify-between mb-4 p-6">
+      <h2 class="text-text">Reinsurance Details</h2>
+      <button (click)="addReinsurer()"
+        class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors flex items-center gap-2">
+        <span class="material-icons text-[18px]">add</span>
+        Add Reinsurer
+      </button>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse bg-surface text-left text-sm text-secondary-dark">
+        <thead class="bg-background font-medium text-text">
+          <tr>
+            <th scope="col" class="px-4 py-3 text-xs">REINSURERS</th>
+            <th scope="col" class="px-4 py-3 text-xs">SHARE (%)</th>
+            <th scope="col" class="px-4 py-3 text-xs">RATE (%)</th>
+            <th scope="col" class="px-4 py-3 text-xs">COMMISSION (%)</th>
+            <th scope="col" class="px-4 py-3 text-xs">TAX (%)</th>
+            <th scope="col" class="px-4 py-3 text-xs">COMMENTS</th>
+            <th scope="col" class="px-4 py-3 text-xs">ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          @for (reinsurer of progressSheet.reinsurers; track $index) {
+          <tr class="hover:bg-background transition-colors">
+            <td class="px-4 py-3 text-sm text-text">{{ reinsurer.name.name }}</td>
+            <td class="px-4 py-3 text-sm text-text-secondary">{{ reinsurer.share }}</td>
+            <td class="px-4 py-3 text-sm text-text-secondary">{{ reinsurer.rate }}</td>
+            <td class="px-4 py-3 text-sm text-text-secondary">{{ reinsurer.commission }}</td>
+            <td class="px-4 py-3 text-sm text-text-secondary">{{ reinsurer.tax }}</td>
+            <td class="px-4 py-3 text-sm text-text-secondary">{{ reinsurer.comments }}</td>
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-2">
+                <button (click)="editReinsurer(reinsurer, $index)"
+                  class="p-1.5 hover:bg-background rounded transition-colors">
+                  <span class="material-icons text-[16px] text-text-secondary">edit</span>
+                </button>
+                <button (click)="deleteReinsurer($index)"
+                  class="p-1.5 hover:bg-danger-light rounded transition-colors">
+                  <span class="material-icons text-[16px] text-danger">delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+}

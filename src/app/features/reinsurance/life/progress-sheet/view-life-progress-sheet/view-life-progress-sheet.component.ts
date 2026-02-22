@@ -4,15 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbComponent, BreadcrumbItem } from '@shared/breadcrumb/breadcrumb.component';
 import { ModalComponent } from '@shared/modal/modal.component';
 import { EditReinsuranceComponent } from '../../../shared/edit-reinsurance/edit-reinsurance.component';
-import { EditProgressSheetComponent } from '../edit-progress-sheet/edit-progress-sheet.component';
+import { AddProgressSheetComponent } from '../add-progress-sheet/add-progress-sheet.component';
 import { DeleteItemComponent } from '@shared/delete-item/delete-item.component';
 
 @Component({
-  selector: 'app-view-facultative-progress-sheet',
+  selector: 'app-view-life-progress-sheet',
   imports: [BreadcrumbComponent, ModalComponent],
-  templateUrl: './view-facultative-progress-sheet.component.html'
+  templateUrl: './view-life-progress-sheet.component.html'
 })
-export class ViewFacultativeProgressSheetComponent implements OnInit {
+export class ViewLifeProgressSheetComponent implements OnInit {
 
   @ViewChild(ModalComponent) modal!: ModalComponent;
 
@@ -20,7 +20,7 @@ export class ViewFacultativeProgressSheetComponent implements OnInit {
   progressSheet: any;
   breadcrumbs: BreadcrumbItem[] = [
     { label: 'Dashboard', url: '/home' },
-    { label: 'Facultative', url: '/home/reinsurance/facultative' },
+    { label: 'Life', url: '/home/reinsurance/life' },
     { label: 'View Progress Sheet' }
   ];
 
@@ -33,25 +33,25 @@ export class ViewFacultativeProgressSheetComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.progressSheetService.getProgressSheetDetailsView(this.refNumber || '').subscribe((data) => {
+    this.progressSheetService.getProgressSheetDetailsView(this.refNumber || '', 'life').subscribe((data) => {
       this.progressSheet = data;
     });
   }
 
   goBack() {
     this.router.navigate(
-      ['home/reinsurance/facultative/progress-sheet/preview', this.refNumber]
+      ['home/reinsurance/life/progress-sheet/preview', this.refNumber, 'life']
     );
   }
 
   editProgressSheet() {
-      this.modal.open(EditProgressSheetComponent, {
-        progressSheet: this.progressSheet,
-        onSaved: (updated: any) => {
-          this.progressSheet = { ...this.progressSheet, ...updated };
-          this.progressSheetService.updateProgressSheet(this.progressSheet.id, this.progressSheet).subscribe();
-        }
-      }, 'xl')
+    this.modal.open(AddProgressSheetComponent, {
+      progressSheet: this.progressSheet,
+      onSaved: (updated: any) => {
+        this.progressSheet = { ...this.progressSheet, ...updated };
+        this.progressSheetService.updateProgressSheet(this.progressSheet.id, this.progressSheet).subscribe();
+      }
+    }, 'xl');
   }
 
   editReinsurer(reinsurer: any, index: number) {
@@ -68,10 +68,9 @@ export class ViewFacultativeProgressSheetComponent implements OnInit {
     });
   }
 
-
   deleteReinsurer(index: number) {
     this.modal.open(DeleteItemComponent, {
-      description:'Are you sure you want to delete this reinsurer?',
+      description: 'Are you sure you want to delete this reinsurer?',
       onDelete: () => {
         this.progressSheet.reinsurers.splice(index, 1);
       }
@@ -86,5 +85,4 @@ export class ViewFacultativeProgressSheetComponent implements OnInit {
       }
     });
   }
-
 }

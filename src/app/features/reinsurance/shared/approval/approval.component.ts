@@ -6,6 +6,7 @@ import { InputFieldComponent } from "@shared/input-field/input-field.component";
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '@core/pipes/filter.pipe';
 import { ReviewApprovalComponent } from "./review-approval/review-approval.component";
+import { ActivatedRoute } from '@angular/router';
 
 export enum ApprovalFilter {
   All = 'all',
@@ -20,9 +21,18 @@ export enum ApprovalFilter {
   templateUrl: './approval.component.html'
 })
 export class ApprovalComponent implements OnInit {
+  sheetType: 'life' | 'facultative' | null = null;
+  headerTitle: string;
+  subHeader: string;
+
   constructor(
-    private approvalservice: ApprovalService
-  ) { }
+    private approvalservice: ApprovalService,
+    private route: ActivatedRoute
+  ) {
+    this.sheetType = this.route.snapshot.data['sheetType'] ?? null;
+    this.headerTitle = this.sheetType === 'facultative' ? 'Placement Approval' : 'Life Placement Approval';
+    this.subHeader = this.sheetType === 'facultative' ? ' Review and approve placement transactions' : 'Review and approve life reinsurance placement transactions';
+  }
 
   activeFilter: ApprovalFilter = ApprovalFilter.All;
   searchValue = '';

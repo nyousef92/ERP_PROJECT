@@ -8,13 +8,19 @@ import { InputFieldTextareaComponent } from '@shared/input-field-text-area/input
 import { SelectDropdownComponent } from '@shared/select-dropdown/select-dropdown.component';
 import { ModalComponent } from '@shared/modal/modal.component';
 import { EditReinsuranceComponent } from '../../../shared/edit-reinsurance/edit-reinsurance.component';
+import { SharedService } from '@core/services/shared.service';
 
 @Component({
-  selector: 'app-edit-progress-sheet',
-  imports: [ReactiveFormsModule, InputFieldComponent, InputFieldTextareaComponent, SelectDropdownComponent, ModalComponent],
-  templateUrl: './edit-progress-sheet.component.html'
+  selector: 'app-add-progress-sheet',
+  imports: [
+    ReactiveFormsModule,
+    InputFieldComponent,
+    InputFieldTextareaComponent,
+    SelectDropdownComponent,
+    ModalComponent],
+  templateUrl: './add-progress-sheet.component.html'
 })
-export class EditProgressSheetComponent implements OnInit {
+export class AddProgressSheetComponent implements OnInit {
 
   @Input() progressSheet: any;
   close!: () => void;
@@ -25,43 +31,59 @@ export class EditProgressSheetComponent implements OnInit {
   form!: FormGroup;
   lobList: any[] = [];
   cedantList: any[] = [];
+  currencyList: any[] = [];
   reinsurers: any[] = [];
+  basicInfoSaved = false;
 
   constructor(
     private fb: FormBuilder,
     private helper: HelperService,
-    private progressSheetService: ProgressSheetService
+    private progressSheetService: ProgressSheetService,
+    private shared: SharedService
   ) { }
 
   ngOnInit(): void {
     forkJoin({
-      lobList: this.progressSheetService.getLOBList(),
-      cedantList: this.progressSheetService.getCedantList()
-    }).subscribe(({ lobList, cedantList }) => {
+      lobList: this.progressSheetService.getLifeLOBList(),
+      cedantList: this.progressSheetService.getLifeCedantList(),
+      currencyList: this.shared.getCurrencies()
+    }).subscribe(({ lobList, cedantList, currencyList }) => {
       this.lobList = lobList;
       this.cedantList = cedantList;
-      this.reinsurers = [...(this.progressSheet?.reinsurers ?? [])];
+      this.currencyList = currencyList;
+      console.log(this.progressSheet?.lob);
+
       this.form = this.fb.group({
         refNo: [this.progressSheet?.refNo ?? ''],
-        cedant: [this.progressSheet?.cedant ?? '', Validators.required],
         lob: [this.progressSheet?.lob ?? '', Validators.required],
-        rate: [this.progressSheet?.rate ?? ''],
-        commission: [this.progressSheet?.commission ?? ''],
+        cedant: [this.progressSheet?.cedant ?? '', Validators.required],
         siLol: [this.progressSheet?.siLol ?? ''],
+        notes: [this.progressSheet?.notes ?? ''],
         inceptionDate: [this.helper.toIsoDate(this.progressSheet?.inceptionDate)],
         receiptDate: [this.helper.toIsoDate(this.progressSheet?.receiptDate)],
-        notes: [this.progressSheet?.notes ?? ''],
+        currency: [this.progressSheet?.currency ?? '', Validators.required],
+        rate: [this.progressSheet?.rate ?? ''],
+        cedentRetention: [this.progressSheet?.cedentRetention ?? ''],
+        freeCoverLimit: [this.progressSheet?.freeCoverLimit ?? ''],
+        noOfInsured: [this.progressSheet?.noOfInsured ?? ''],
+        orderHereon: [this.progressSheet?.orderHereon ?? ''],
+        reinsuranceDetails: [this.progressSheet?.reinsuranceDetails ?? '']
       });
     });
   }
 
-  
-
-  onSave(): void {
+  saveBasicInfo(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
+    this.progressSheetService.addNewLifeProgressSheet(this.form.value).subscribe((result: any) => {
+      this.form.get('refNo')?.setValue(result.refNo);
+      this.basicInfoSaved = true;
+    });
+  }
+
+  onSave(): void {
     this.onSaved?.({ ...this.form.value, reinsurers: this.reinsurers });
     this.close();
   }
@@ -102,5 +124,4 @@ export class EditProgressSheetComponent implements OnInit {
   reinsurerName(r: any): string {
     return r?.name?.name || r?.name || '';
   }
-
 }

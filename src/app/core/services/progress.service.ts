@@ -6,13 +6,76 @@ import { of } from 'rxjs';
   providedIn: 'root'
 })
 export class ProgressSheetService {
-  
+
 
   deleteProgressSheet(refNo: string) {
     return of(true);
   }
 
-  getProgressSheetHistory(payload: { search: string; currentPage: number; pageSize: number; }) {
+  getFacutlatativeProgressSheetHistory(payload: { search: string; currentPage: number; pageSize: number; }) {
+    return of(
+      {
+        totalItems: 10,
+        data: [
+          {
+            "refNo": "QS-2024-001",
+            "share": "Global Corp",
+            "cedant": "Secure Insurers",
+            "lob": "Property",
+            "inception": "01-Jan-2024",
+            "siLol": "$10,000,000",
+            "status": "Bound"
+          },
+          {
+            "refNo": "PRX-2024-001",
+            "share": "Mega Holdings",
+            "cedant": "Alpha Assurance",
+            "lob": "Casualty",
+            "inception": "15-Feb-2024",
+            "siLol": "$25,000,000",
+            "status": "Quoted"
+          },
+          {
+            "refNo": "SF-2024-001",
+            "share": "Pioneer Logistics",
+            "cedant": "Guardian General",
+            "lob": "Marine",
+            "inception": "01-Mar-2024",
+            "siLol": "$5,000,000",
+            "status": "Submitted"
+          },
+          {
+            "refNo": "PPX-2024-001",
+            "share": "Innovate Tech",
+            "cedant": "Secure Insurers",
+            "lob": "Technology",
+            "inception": "10-Mar-2024",
+            "siLol": "$50,000,000",
+            "status": "Bound"
+          },
+          {
+            "refNo": "SAF-2024-001",
+            "share": "Coastal Properties",
+            "cedant": "National Coverage",
+            "lob": "Property",
+            "inception": "20-Jan-2024",
+            "siLol": "$15,000,000",
+            "status": "Quoted"
+          },
+          {
+            "refNo": "QS-2024-002",
+            "share": "Tech Dynamics",
+            "cedant": "Premier Insurance",
+            "lob": "Technology",
+            "inception": "05-Apr-2024",
+            "siLol": "$8,000,000",
+            "status": "Submitted"
+          }
+        ]
+      }
+    );
+  }
+  getFileProgressSheetHistory(payload: { search: string; currentPage: number; pageSize: number; }) {
     return of(
       {
         totalItems: 10,
@@ -77,7 +140,31 @@ export class ProgressSheetService {
   }
 
 
-  getProgressSheetDetailsView(refNumber: string) {
+  getProgressSheetDetailsView(refNumber: string, type = 'facultative') {
+    if (type === 'life') {
+      return of({
+        account: 'LIFE-ACC-001',
+        cedant: 'Premier Life Assurance',
+        lob: 'Term Life',
+        inceptionDate: '01/01/2024',
+        siLol: 'SR 10,000,000',
+        rate: '3.75%',
+        commission: '10.00%',
+        receiptDate: '01/15/2024',
+        notes: 'Standard life coverage. Terms and conditions as per original policy. Subject to final medical assessment.',
+        currency: 'SAR',
+        cedentRetention: '2,000,000',
+        freeCoverLimit: '500,000',
+        noOfInsured: '250',
+        orderHereon: '65.00',
+        reinsuranceDetails: 'Standard life reinsurance terms apply.',
+        reinsurers: [
+          { name: { id: 10, name: 'RGA Reinsurance' }, share: 30.00, rate: 3.75, commission: 8.50, tax: 5.00, comments: 'Standard life terms applied.' },
+          { name: { id: 2, name: 'Munich Re Life' }, share: 25.00, rate: 3.75, commission: 8.50, tax: 5.00, comments: 'Agreed, awaiting medical report.' },
+          { name: { id: 3, name: 'Saudi Re Life' }, share: 10.00, rate: 3.80, commission: 9.00, tax: 0, comments: 'Subject to underwriting review.' },
+        ]
+      });
+    }
     return of({
       account: 'Acc-001',
       cedant: 'Global Insurance Co.',
@@ -95,8 +182,41 @@ export class ProgressSheetService {
       ]
     });
   }
-  
-  getProgressSheetMetrics() {
+
+  getFacultativeProgressSheetMetrics() {
+    return of([
+      {
+        label: 'Total Sheets',
+        value: '1',
+        subtitle: null,
+        iconType: null,
+        ValueColorClass: 'text-text'
+      },
+      {
+        label: 'Bound',
+        value: '2',
+        subtitle: null,
+        iconType: null,
+        ValueColorClass: 'text-success'
+      }
+      , {
+        label: 'Quoted',
+        value: '1',
+        subtitle: null,
+        iconType: null,
+        ValueColorClass: 'text-primary'
+      }
+      , {
+        label: 'Pending',
+        value: '5',
+        subtitle: null,
+        iconType: null,
+        ValueColorClass: 'text-warning'
+      }
+    ])
+  }
+
+  getFileProgressSheetMetrics() {
     return of([
       {
         label: 'Total Sheets',
@@ -137,6 +257,29 @@ export class ProgressSheetService {
     return of(true);
   }
 
+  addNewLifeProgressSheet(progressSheet: any) {
+    return of({ refNo: 'LIFE-2026-' + Math.floor(Math.random() * 900 + 100) });
+  }
+
+  getLifeLOBList() {
+    return of([
+      { id: 1, value: 'Term Life', label: 'Term Life' },
+      { id: 2, value: 'Whole Life', label: 'Whole Life' },
+      { id: 3, value: 'Universal Life', label: 'Universal Life' },
+      { id: 4, value: 'Group Life', label: 'Group Life' },
+      { id: 5, value: 'Critical Illness', label: 'Critical Illness' },
+    ]);
+  }
+
+  getLifeCedantList() {
+    return of([
+      { id: 1, value: 'Premier Life Assurance', label: 'Premier Life Assurance' },
+      { id: 2, value: 'Guardian Life Insurance', label: 'Guardian Life Insurance' },
+      { id: 3, value: 'National Life Company', label: 'National Life Company' },
+      { id: 4, value: 'Secure Life Partners', label: 'Secure Life Partners' },
+      { id: 5, value: 'Heritage Life Insurance', label: 'Heritage Life Insurance' },
+    ]);
+  }
 
   getLOBList() {
     return of([

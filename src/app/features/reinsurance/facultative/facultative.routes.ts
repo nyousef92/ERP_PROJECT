@@ -3,10 +3,10 @@ import { SubmissionComponent } from './submission/submission.component';
 import { FacultativeComponent } from './facultative.component';
 import { FacultativeSubmissionComponent } from './submission/facultative-submission/facultative-submission.component';
 import { ProgressSheetComponent } from './progress-sheet/progress-sheet.component';
-import { PreviewFacultativeProgressSheetComponent } from './progress-sheet/preview-facultative-progress-sheet/preview-facultative-progress-sheet.component';
 import { ViewFacultativeProgressSheetComponent } from './progress-sheet/view-facultative-progress-sheet/view-facultative-progress-sheet.component';
 import { PlacementComponent } from './placement/placement.component';
-import { ApprovalComponent } from './approval/approval.component';
+import { PreviewProgressSheetComponent } from '../shared/preview-progress-sheet/preview-progress-sheet.component';
+import { ApprovalComponent } from '../shared/approval/approval.component';
 
 export const FACULTAIVE_ROUTES: Routes = [
     {
@@ -32,7 +32,7 @@ export const FACULTAIVE_ROUTES: Routes = [
                 path: 'progress-sheet',
                 children: [
                     { path: '', component: ProgressSheetComponent },
-                    { path: 'preview-facultative-progress-sheet/:refNumber', component: PreviewFacultativeProgressSheetComponent },
+                    { path: 'preview/:refNumber/:sheetType', component: PreviewProgressSheetComponent },
                     { path: 'view-facultative-progress-sheet/:refNumber', component: ViewFacultativeProgressSheetComponent },
                 ]
             },
@@ -45,8 +45,7 @@ export const FACULTAIVE_ROUTES: Routes = [
             {
                 path: 'approval',
                 children: [
-                    { path: '', component: ApprovalComponent },
-
+                    { path: '', component: ApprovalComponent, data: { sheetType: 'facultative' } },
                 ]
             }
         ]

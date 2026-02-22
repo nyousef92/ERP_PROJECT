@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable, of } from 'rxjs';
+import { HelperService } from './helper.service';
 
 const submissionClasses: Record<string, { trendIcon: string, trendColorClass: string, cardClass: string, labelClass: string, valueClass: string }> = {
   ['Total']: {
@@ -36,9 +37,10 @@ const submissionClasses: Record<string, { trendIcon: string, trendColorClass: st
 @Injectable({
   providedIn: 'root'
 })
-export class SubmissionService {
+export class LifeSubmissionService {
   constructor(
     private apiService: ApiService,
+    private helper: HelperService
   ) { }
 
 
@@ -58,58 +60,58 @@ export class SubmissionService {
     return of([
       {
         type: 'Property',
-        id:1,
-        
+        id: 1,
+
         subTypes: ['Fire', 'Flood', 'Earthquake', 'Earthquake', 'Business Interuption', 'All Risks']
       },
       {
         type: 'Casualty',
-        id:2,
+        id: 2,
         subTypes: ["General Liability", "Professional Liability", "Product Liability", "Employers Liability", "Public Liability"]
       },
       {
         type: 'Marine',
-        id:3, 
+        id: 3,
         subTypes: ["Cargo", "Hull", "Marine Liability", "Yacht", "Port Risk"]
       },
       {
         type: 'Aviation',
-        id:4,
+        id: 4,
         subTypes: ["Hull War", "Aviation Liability", "Passenger Liability", "Airport Liability"]
       },
       {
         type: 'Enineering',
-        id:5,
+        id: 5,
         subTypes: ["Construction", "Machinery Breakdown", "Erection All Risks", "Contractors All Risks", "Electronic Equipment"]
       }
       ,
       {
         type: 'energy',
-        id:6,
+        id: 6,
         subTypes: ["Offshore Energy", "Onshore Energy", "Renewable Energy", "Upstream", "Downstream"]
       }
       ,
       {
         type: 'Motor',
-        id:7,
+        id: 7,
         subTypes: ["Private Car", "Commercial Vehicle", "Third Party Liability", "Comprehensive", "Fleet"]
       }
       ,
       {
         type: 'Medical',
-        id:8, 
+        id: 8,
         subTypes: ["Health Insurance", "Medical Malpractice", "Hospital Liability", "Group Medical"]
       }
       ,
       {
         type: 'Life',
-        id:9,
+        id: 9,
         subTypes: ["Term Life", "Whole Life", "Endowment", "Group Life", "Credit Life"]
       }
       ,
       {
         type: 'Technology',
-        id:10,
+        id: 10,
         subTypes: ["Cyber Liability", "Technology E&O", "Data Breach", "Network Security", "Media Liability"]
       }
     ])
@@ -150,95 +152,99 @@ export class SubmissionService {
 
   getSubmissionMetrics() {
     //return this.apiService.get<any[]>('');
-    return of([
-      {
-        label: 'Total',
-        value: 6,
-        subtitle: '$1,495,000',
-      },
-      {
-        label: 'Bound',
-        value: 2,
-        subtitle: '$750,000',
-      },
-      {
-        label: 'Quoted',
-        value: 2,
-        subtitle: '$575,000',
-      },
-      {
-        label: 'Pending',
-        value: 2,
-        subtitle: '$170,000',
-      },
-    ].map(item => ({
-      ...item,
-      ...submissionClasses[item.label]
-    })));
+    return of(
+      [
+        {
+          label: 'Total',
+          value: 6,
+          subtitle: '$1,495,000',
+        },
+        {
+          label: 'Bound',
+          value: 2,
+          subtitle: '$750,000',
+        },
+        {
+          label: 'Quoted',
+          value: 2,
+          subtitle: '$575,000',
+        },
+        {
+          label: 'Pending',
+          value: 2,
+          subtitle: '$170,000',
+        },
+      ].map(item => {
+        const submissionClasses = this.helper.getSubmissionClasses(item.label);
+        return ({
+          ...item,
+          ...submissionClasses
+        })
+      }));
   }
 
   getSubmissionHistory(payLoad: any) {
     //return this.apiService.post('',payLoad);
-    return of({
-      totalItems: 10,
-      data: [
-        {
-          "refNo": "QS-2024-001",
-          "account": "Global Corp",
-          "cedant": "Secure Insurers",
-          "lob": "Property",
-          "inception": "01-Jan-2024",
-          "siLol": "$10,000,000",
-          "status": "Bound"
-        },
-        {
-          "refNo": "PRX-2024-001",
-          "account": "Mega Holdings",
-          "cedant": "Alpha Assurance",
-          "lob": "Casualty",
-          "inception": "15-Feb-2024",
-          "siLol": "$25,000,000",
-          "status": "Quoted"
-        },
-        {
-          "refNo": "SF-2024-001",
-          "account": "Pioneer Logistics",
-          "cedant": "Guardian General",
-          "lob": "Marine",
-          "inception": "01-Mar-2024",
-          "siLol": "$5,000,000",
-          "status": "Submitted"
-        },
-        {
-          "refNo": "PPX-2024-001",
-          "account": "Innovate Tech",
-          "cedant": "Secure Insurers",
-          "lob": "Technology",
-          "inception": "10-Mar-2024",
-          "siLol": "$50,000,000",
-          "status": "Bound"
-        },
-        {
-          "refNo": "SAF-2024-001",
-          "account": "Coastal Properties",
-          "cedant": "National Coverage",
-          "lob": "Property",
-          "inception": "20-Jan-2024",
-          "siLol": "$15,000,000",
-          "status": "Quoted"
-        },
-        {
-          "refNo": "QS-2024-002",
-          "account": "Tech Dynamics",
-          "cedant": "Premier Insurance",
-          "lob": "Technology",
-          "inception": "05-Apr-2024",
-          "siLol": "$8,000,000",
-          "status": "Submitted"
-        }
-      ]
-
-    }
+    return of(
+      {
+        totalItems: 10,
+        data: [
+          {
+            "refNo": "LIFE-2024-001",
+            "account": "Premium Life Group",
+            "cedant": "Secure Life Insurers",
+            "lob": "Term Life",
+            "inception": "01-Jan-2024",
+            "siLol": "$5,000,000",
+            "status": "Bound"
+          },
+          {
+            "refNo": "LIFE-2024-002",
+            "account": "Future Protect Ltd",
+            "cedant": "Alpha Life Assurance",
+            "lob": "Whole Life",
+            "inception": "15-Feb-2024",
+            "siLol": "$10,000,000",
+            "status": "Quoted"
+          },
+          {
+            "refNo": "LIFE-2024-003",
+            "account": "Guardian Life Trust",
+            "cedant": "National Life Coverage",
+            "lob": "Group Life",
+            "inception": "01-Mar-2024",
+            "siLol": "$25,000,000",
+            "status": "Submitted"
+          },
+          {
+            "refNo": "LIFE-2024-004",
+            "account": "Corporate Benefits Inc",
+            "cedant": "Premier Life Insurance",
+            "lob": "Group Life",
+            "inception": "10-Mar-2024",
+            "siLol": "$50,000,000",
+            "status": "Bound"
+          },
+          {
+            "refNo": "LIFE-2024-005",
+            "account": "Universal Coverage",
+            "cedant": "Global Life Reinsurance",
+            "lob": "Credit Life",
+            "inception": "20-Jan-2024",
+            "siLol": "$15,000,000",
+            "status": "Quoted"
+          },
+          {
+            "refNo": "LIFE-2024-006",
+            "account": "Endowment Partners",
+            "cedant": "Security Life Limited",
+            "lob": "Endowment",
+            "inception": "05-Apr-2024",
+            "siLol": "$8,000,000",
+            "status": "Submitted"
+          }
+        ]
+      }
     );
   }
 
