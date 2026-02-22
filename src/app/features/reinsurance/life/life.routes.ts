@@ -6,6 +6,7 @@ import { ProgressSheetComponent } from "./progress-sheet/progress-sheet.componen
 import { PreviewProgressSheetComponent } from "../shared/preview-progress-sheet/preview-progress-sheet.component";
 import { ViewLifeProgressSheetComponent } from "./progress-sheet/view-life-progress-sheet/view-life-progress-sheet.component";
 import { PlacementComponent } from "./placement/placement.component";
+import { ApprovalComponent } from "../shared/approval/approval.component";
 
 export const LIFE_ROUTES: Routes = [
     {
@@ -33,6 +34,13 @@ export const LIFE_ROUTES: Routes = [
                 path: 'placement',
                 children: [
                     { path: '', component: PlacementComponent },
+                ]
+            },
+            {
+                path: 'approval',
+                children: [
+                    { path: '', component: ApprovalComponent },
+
                 ]
             }
         ]

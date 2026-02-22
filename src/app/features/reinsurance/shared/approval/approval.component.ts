@@ -6,6 +6,7 @@ import { InputFieldComponent } from "@shared/input-field/input-field.component";
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '@core/pipes/filter.pipe';
 import { ReviewApprovalComponent } from "./review-approval/review-approval.component";
+import { ActivatedRoute, Router } from '@angular/router';
 
 export enum ApprovalFilter {
   All = 'all',
@@ -21,8 +22,13 @@ export enum ApprovalFilter {
 })
 export class ApprovalComponent implements OnInit {
   constructor(
-    private approvalservice: ApprovalService
-  ) { }
+    private approvalservice: ApprovalService,
+    private route: ActivatedRoute
+  ) {
+    console.log(
+      this.route.snapshot.paramMap.get('sheetType')
+    );
+  }
 
   activeFilter: ApprovalFilter = ApprovalFilter.All;
   searchValue = '';

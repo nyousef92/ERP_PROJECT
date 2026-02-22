@@ -5,8 +5,8 @@ import { FacultativeSubmissionComponent } from './submission/facultative-submiss
 import { ProgressSheetComponent } from './progress-sheet/progress-sheet.component';
 import { ViewFacultativeProgressSheetComponent } from './progress-sheet/view-facultative-progress-sheet/view-facultative-progress-sheet.component';
 import { PlacementComponent } from './placement/placement.component';
-import { ApprovalComponent } from './approval/approval.component';
 import { PreviewProgressSheetComponent } from '../shared/preview-progress-sheet/preview-progress-sheet.component';
+import { ApprovalComponent } from '../shared/approval/approval.component';
 
 export const FACULTAIVE_ROUTES: Routes = [
     {
