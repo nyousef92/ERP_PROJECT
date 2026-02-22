@@ -21,14 +21,20 @@ export class TwoFactorAuthComponent {
   router = inject(Router);
   loginForm!: FormGroup;
   loginClick: Subject<void> = new Subject();
+  navState: any;
 
   ngOnInit(): void {
-    if (this.router.getCurrentNavigation()?.extras.state) { }
-    this.loginForm = this.fb.group({
-      password: ['', Validators.required]
-    });
+    this.navState = history.state.body;
+    console.log(this.navState);
 
-    this.addEventListener();
+    if (this.navState) {
+      this.loginForm = this.fb.group({
+        password: ['', Validators.required]
+      })
+      this.addEventListener();
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 
 
@@ -54,8 +60,7 @@ export class TwoFactorAuthComponent {
       this.loginForm.markAllAsTouched();
       return of(false);
     }
-    const body = this.loginForm.value;
-    return this.auth.login(body);
+    return this.auth.login(this.navState);
   }
 
 }
