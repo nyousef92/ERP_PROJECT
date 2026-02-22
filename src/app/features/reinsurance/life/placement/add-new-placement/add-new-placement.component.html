@@ -4,8 +4,8 @@
   <div class="p-4 sm:p-6 border-b border-border flex-shrink-0">
     <div class="flex items-start justify-between gap-4">
       <div class="flex-1 min-w-0">
-        <h2 class="text-text">New Placement</h2>
-        <p class="text-sm text-text-muted mt-1">Fill in the details to create a new placement.</p>
+        <h2 class="text-text">New Life Placement</h2>
+        <p class="text-sm text-text-muted mt-1">Fill in the details to create a new life placement.</p>
       </div>
       <button (click)="onCancel()" class="text-text-muted hover:text-text-secondary transition-colors flex-shrink-0">
         <span class="material-icons text-[20px]">close</span>
@@ -15,50 +15,48 @@
 
   <form class="p-4 sm:p-6 space-y-6 overflow-y-auto flex-1" [formGroup]="form">
 
+    <!-- Row 1: Ref No / Cedant / Status -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <app-input-field formControlName="refNo" label="Ref No. (Manual)" placeholder="Enter Ref No." />
+      <app-input-field formControlName="refNo" label="Ref No." [disabled]="true" 
+        placeholder="Auto generated" 
+        [touched]="form.get('refNo')?.touched" />
       <app-select-dropdown formControlName="cedant" label="Cedant" [options]="cedantList" [required]="true"
-        placeholder="Select Cedant" [errorMessage]="getError('cedant', 'Cedant')"
+        placeholder="Select or search Cedant..." [errorMessage]="getError('cedant', 'Cedant')"
         [touched]="form.get('cedant')?.touched" />
-      <app-input-field formControlName="status" label="Status" [disabled]="true" />
-
+      <app-select-dropdown formControlName="status" label="Status" [options]="statusList" />
     </div>
 
-    <div class="grid grid-cols-1  gap-4">
+    <!-- Placement Name -->
+    <div>
       <app-input-field formControlName="placementName" label="Placement Name" placeholder="Enter placement name" />
     </div>
+
+    <!-- Original Policy Details -->
     <div>
       <h3 class="text-sm text-text mb-0.5">Original Policy Details</h3>
-      <p class="text-xs text-text-muted mb-4">Enter the details of the original insurance policy.</p>
+      <p class="text-xs text-text-muted mb-4">Enter the details of the original life insurance policy.</p>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-
-
-        <app-input-field formControlName="sumInsured" [label]="`vSum Insured(${form.get('currency')?.value || 'USD'})`"
-          placeholder="0.00" type="text" />
-
+        <app-input-field formControlName="sumInsured" label="Sum Insured" placeholder="0.00" type="text" />
         <app-input-field formControlName="rate" label="Rate (%)" placeholder="0.00" type="text" />
         <app-select-dropdown formControlName="currency" label="Currency" [options]="currencyList"
           placeholder="Select Currency" />
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-
-        <app-input-field formControlName="grossPremium" [label]="`Gross Premium(SR)`" placeholder="0.00" type="text" />
-        <app-input-field formControlName="cedingCommission" label="Ceding Commission (%)" placeholder="0.00"
-          type="text" />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input-field formControlName="grossPremium" label="Gross Premium (SR)" placeholder="0.00" type="text" />
         <app-input-field formControlName="uibShare" label="UIB Share (%)" placeholder="0.00" type="text" />
         <app-input-field formControlName="netPremium" label="Net Premium" placeholder="0.00" type="text" />
         <app-input-field formControlName="npos" label="NPOS" placeholder="0.00" type="text" />
-
       </div>
     </div>
 
+    <!-- Life Placement Securities -->
     <div>
       <div class="flex items-center justify-between mb-3">
         <div>
-          <h3 class="text-sm text-text">Placement Securities</h3>
-          <p class="text-xs text-text-muted mt-0.5">Manage reinsurance placement securities.</p>
+          <h3 class="text-sm text-text">Life Placement Securities</h3>
+          <p class="text-xs text-text-muted mt-0.5">Manage life reinsurance placement securities.</p>
         </div>
         <button type="button" (click)="addSecurity()"
           class="px-3 py-1.5 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors flex items-center gap-2 text-sm">

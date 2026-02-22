@@ -30,7 +30,9 @@ export class AddNewPlacementComponent implements OnInit {
   @Input() placement: any = null;
 
   form!: FormGroup;
+  refNoList: any[] = [];
   cedantList: any[] = [];
+  statusList: any[] = [];
   reinsurerList: any[] = [];
   currencyList: any[] = [];
   securities: Security[] = [];
@@ -39,28 +41,29 @@ export class AddNewPlacementComponent implements OnInit {
     private fb: FormBuilder,
     private helper: HelperService,
     private placementService: PlacementService,
-    private shared:SharedService
+    private shared: SharedService
   ) { }
 
   ngOnInit(): void {
     forkJoin({
-      cedants: this.placementService.getCedantList(),
-      reinsurers: this.placementService.getReinsurerList(),
+      cedants: this.placementService.getLifeCedantList(),
+      statuses: this.placementService.getLifeStatusList(),
+      reinsurers: this.placementService.getLifeReinsurerList(),
       currencies: this.shared.getCurrencies(),
-    }).subscribe(({ cedants, reinsurers, currencies }) => {
+    }).subscribe(({ cedants, statuses, reinsurers, currencies }) => {
       this.cedantList = cedants;
+      this.statusList = statuses;
       this.reinsurerList = reinsurers;
       this.currencyList = currencies;
       this.form = this.fb.group({
-        refNo: [this.placement?.refNo ?? '', Validators.required],
+        refNo: [this.placement?.refNo ?? ''],
         cedant: [this.placement?.cedant ?? '', Validators.required],
-        status: [{ value: this.placement?.status ?? 'In Progress', disabled: true }],
+        status: [this.placement?.status ?? 'In Progress'],
         placementName: [this.placement?.placementName ?? ''],
         sumInsured: [this.placement?.sumInsured ?? ''],
         rate: [this.placement?.rate ?? ''],
-        currency: [this.placement?.currency ?? 'USD'],
+        currency: [this.placement?.currency ?? 'SAR'],
         grossPremium: [this.placement?.grossPremium ?? ''],
-        cedingCommission: [this.placement?.cedingCommission ?? ''],
         uibShare: [this.placement?.uibShare ?? ''],
         netPremium: [this.placement?.netPremium ?? ''],
         npos: [this.placement?.npos ?? ''],

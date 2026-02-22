@@ -158,6 +158,39 @@ export class PlacementService {
     ]);
   }
 
+  getLifeReinsurerList() {
+    return of([
+      { id: 1, value: 'Gen Re Life/Health', label: 'Gen Re Life/Health' },
+      { id: 2, value: 'Hannover Re Life', label: 'Hannover Re Life' },
+      { id: 3, value: 'Munich Re Life', label: 'Munich Re Life' },
+      { id: 4, value: 'Partner Re Life and Health', label: 'Partner Re Life and Health' },
+      { id: 5, value: 'RGA Reinsurance', label: 'RGA Reinsurance' },
+      { id: 6, value: 'SCOR Global Life', label: 'SCOR Global Life' },
+      { id: 7, value: 'Saudi Re Life', label: 'Saudi Re Life' },
+      { id: 8, value: 'Swiss Re Life & Health', label: 'Swiss Re Life & Health' },
+    ]);
+  }
+
+  getLifeCedantList() {
+    return of([
+      { id: 1, value: 'Premier Life Assurance', label: 'Premier Life Assurance' },
+      { id: 2, value: 'Guardian Life Insurance', label: 'Guardian Life Insurance' },
+      { id: 3, value: 'National Life Company', label: 'National Life Company' },
+      { id: 4, value: 'Secure Life Partners', label: 'Secure Life Partners' },
+      { id: 5, value: 'Heritage Life Insurance', label: 'Heritage Life Insurance' },
+    ]);
+  }
+
+  getLifeStatusList() {
+    return of([
+      { id: 1, value: 'In Progress', label: 'In Progress' },
+      { id: 2, value: 'Open', label: 'Open' },
+      { id: 3, value: 'Placed', label: 'Placed' },
+      { id: 4, value: 'Posted', label: 'Posted' },
+      { id: 5, value: 'Closed', label: 'Closed' },
+    ]);
+  }
+
   getPlacementMetrics() {
     // Mock data for progress metrics
     return of([
