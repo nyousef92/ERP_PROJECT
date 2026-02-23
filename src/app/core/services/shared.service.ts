@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { of } from 'rxjs';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
 
 @Injectable({ providedIn: 'root' })
 export class SharedService {
@@ -162,6 +164,13 @@ export class SharedService {
       { id: 10, value: "AED", label: "AED - UAE Dirham" },
     ]
     )
+  }
+  exportAsExcelFile(json: any[], fileName: string): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const data: Blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+    FileSaver.saveAs(data, `${fileName}_${new Date().getTime()}.xlsx`);
   }
 
 }

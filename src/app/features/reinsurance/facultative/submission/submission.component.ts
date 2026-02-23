@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { PaginatorComponent } from "@shared/paginator/paginator.component";
 import { FacultativeSubmissionService } from '@core/services/facultative.submission.service';
 import { HelperService } from '@core/services/helper.service';
+import { SharedService } from '@core/services/shared.service';
 
 @Component({
   selector: 'app-submission',
@@ -23,7 +24,8 @@ export class SubmissionComponent implements OnInit {
   constructor(
     private submissionService: FacultativeSubmissionService,
     private router: Router,
-    private helper: HelperService
+    private helper: HelperService,
+    private shared: SharedService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class SubmissionComponent implements OnInit {
       this.metrics = data[0];
       this.history = data[1].data.map(item => (
         { ...item, statusClasses: this.helper.getStatusClass(item.status) }
-      ));;
+      ));
       this.totalItems = data[1].totalItems;
     });
   }
@@ -85,5 +87,8 @@ export class SubmissionComponent implements OnInit {
   goToProgressSheet(refNum: string) {
     this.router.navigate(
       ['home/reinsurance/facultative/progress-sheet/preview', refNum, 'facultative']);
+  }
+  exportData() {
+    this.shared.exportAsExcelFile(this.history, 'Facultative Submission')
   }
 }
