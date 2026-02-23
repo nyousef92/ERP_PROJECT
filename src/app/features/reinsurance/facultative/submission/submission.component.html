@@ -6,17 +6,12 @@
             <p class="text-sm text-text-muted">
                 Manage individual risk placements and submissions</p>
         </div>
-        <div  class="flex items-start justify-between gap-3">
-            <button type="button" (click)="addNew()"
+        <button type="button" (click)="addNew()"
                 class="inline-flex items-center gap-1 py-2 px-4 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize">
                 <span class="material-icons text-[14px]">add</span>
                 <span>Submit New</span>
             </button>
-            <button type="button" (click)="exportData()"
-                class="inline-flex items-center gap-1 py-2 px-4 bg-surface text-primary border border-primary text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize">
-                <span>Export</span>
-            </button>
-        </div>
+            
     </div>
     <div>
         <app-colored-cards-grid [dataList]="metrics"></app-colored-cards-grid>
