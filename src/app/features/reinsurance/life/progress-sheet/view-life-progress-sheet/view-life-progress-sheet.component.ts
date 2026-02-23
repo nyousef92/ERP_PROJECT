@@ -40,7 +40,7 @@ export class ViewLifeProgressSheetComponent implements OnInit {
 
   goBack() {
     this.router.navigate(
-      ['home/reinsurance/life/progress-sheet/preview', this.refNumber, 'life']
+      ['home/reinsurance/life/progress-sheet/preview', this.refNumber]
     );
   }
 

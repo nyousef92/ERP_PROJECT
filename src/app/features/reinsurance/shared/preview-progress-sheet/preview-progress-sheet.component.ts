@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CurrencyPipe, NgStyle } from '@angular/common';
 import { FacultativeSubmissionService } from '@core/services/facultative.submission.service';
 import { ProgressSheetDocumentsComponent } from "../progress-sheet-documents/progress-sheet-documents.component";
+import { SharedService } from '@core/services/shared.service';
 
 @Component({
   selector: 'app-preview-progress-sheet',
@@ -18,10 +19,11 @@ export class PreviewProgressSheetComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private submissionService: FacultativeSubmissionService
+    private submissionService: FacultativeSubmissionService,
+    private shared: SharedService
   ) {
     this.refNumber = this.route.snapshot.paramMap.get('refNumber');
-    this.sheetType = this.route.snapshot.paramMap.get('sheetType');
+    this.sheetType = this.route.snapshot.data['sheetType'];
   }
 
   ngOnInit(): void {
@@ -53,12 +55,14 @@ export class PreviewProgressSheetComponent implements OnInit {
   }
 
   editProgressSheet() {
-    debugger;
-    console.log(this.sheetType);
-    
     const route = this.sheetType === 'life'
       ? 'home/reinsurance/life/progress-sheet/view-life-progress-sheet'
       : 'home/reinsurance/facultative/progress-sheet/view-facultative-progress-sheet';
     this.router.navigate([route, this.refNumber]);
   }
+
+  generatePDF(): void {
+    this.shared.generatePDF('contentToExport', `${this.sheetType} progress Sheet ${this.refNumber}`)
+  }
+
 }

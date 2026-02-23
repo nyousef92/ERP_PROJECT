@@ -26,7 +26,7 @@ export const LIFE_ROUTES: Routes = [
                 path: 'progress-sheet',
                 children: [
                     { path: '', component: ProgressSheetComponent },
-                    { path: 'preview/:refNumber/:sheetType', component: PreviewProgressSheetComponent },
+                    { path: 'preview/:refNumber', component: PreviewProgressSheetComponent, data: { sheetType: 'life' } },
                     { path: 'view-life-progress-sheet/:refNumber', component: ViewLifeProgressSheetComponent },
                 ]
             },

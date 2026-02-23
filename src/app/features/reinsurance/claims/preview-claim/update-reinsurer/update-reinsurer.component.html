@@ -1,0 +1,39 @@
+@if (form) {
+<div class="bg-surface rounded-lg p-5 w-full">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-base text-text">Update Line Status - {{ reinsurer.name }}</h3>
+
+  </div>
+
+  <form [formGroup]="form" class="space-y-4">
+
+    <app-select-dropdown formControlName="status" label="Status" [options]="statusOptions"
+      [errorMessage]="getErrorMessage('status', 'Status')" [touched]="form.get('status')?.touched" />
+
+    <app-input-field formControlName="approvedAmount" label="Approved Amount" type="number"
+      placeholder="Enter approved amount" [errorMessage]="getErrorMessage('approvedAmount', 'Approved Amount')"
+      [touched]="form.get('approvedAmount')?.touched" />
+
+    <app-input-field-text-area formControlName="notes" label="Notes" placeholder="Add notes..."
+      [errorMessage]="getErrorMessage('notes', 'Notes')" [touched]="form.get('notes')?.touched" />
+
+    <app-file-upload formControlName="attachments" label="Attachments" />
+
+  </form>
+
+  <!-- Footer -->
+  <div class="flex justify-end gap-2 mt-6">
+    <button (click)="cancel()"
+      class="px-3 py-1.5 text-sm border border-border rounded-lg text-text-secondary hover:bg-background transition-colors">
+      Cancel
+    </button>
+    <button (click)="onSave()"
+      class="px-3 py-1.5 text-sm bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+      Update Status
+    </button>
+  </div>
+
+</div>
+}

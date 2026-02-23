@@ -119,7 +119,7 @@ export class ProgressSheetComponent {
 
   preViewProgressSheet(refNo: any) {
     this.router.navigate(
-      ['home/reinsurance/life/progress-sheet/preview', refNo, 'life']
+      ['home/reinsurance/life/progress-sheet/preview', refNo]
     );
   }
 }

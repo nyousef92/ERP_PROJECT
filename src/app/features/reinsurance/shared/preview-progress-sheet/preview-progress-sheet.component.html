@@ -9,125 +9,133 @@
         {{ progressSheet.submission.id }}
       </p>
     </div>
-    <div>
+    <div class="flex items-start justify-between gap-3">
       <button (click)="editSubmission()"
         class="px-4 py-2 text-sm bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
         Edit Submission
       </button>
+
+      <button type="button" (click)="generatePDF()"
+        class="inline-flex items-center gap-1 py-2 px-4 bg-surface text-primary border border-border text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize">
+        <span>Export</span>
+      </button>
     </div>
   </div>
 </div>
-<div class="bg-surface rounded-lg border border-border p-6 mb-4 mt-4">
-  <div class="flex items-center justify-between mb-3"><span class="text-sm text-gray-700">Progress: Bound</span><span
-      class="text-sm text-text-success">Completed</span></div>
-  <div class="relative">
-    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-      <div class="h-full bg-success rounded-full transition-all duration-300"
-        [ngStyle]="{ width: progressSheet.progress + '%' }"></div>
-    </div>
-    <div class="flex justify-between mt-2 text-xs text-secondary-dark"><span>Submitted</span><span>Quoted</span><span
-        class="font-semibold text-gray-900">Bound</span><span>Closed</span></div>
-  </div>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-  <div class="lg:col-span-2 space-y-6">
-
-    <!-- Submission Summary -->
-    <div class="bg-surface rounded-lg border border-border p-6">
-      <h2 class="text-text mb-4">Submission Summary</h2>
-      <div class="grid grid-cols-2 gap-6">
-        <div>
-          <label class="block text-xs text-text-muted mb-1">Insured Name</label>
-          <p class="text-sm text-text">{{ progressSheet.submission.insuredName }}</p>
-        </div>
-        <div>
-          <label class="block text-xs text-text-muted mb-1">Ceding Company</label>
-          <p class="text-sm text-text">{{ progressSheet.submission.cedingCompany }}</p>
-        </div>
-        <div>
-          <label class="block text-xs text-text-muted mb-1">Reinsurance Type</label>
-          <p class="text-sm text-text">{{ progressSheet.submission.reinsuranceType }}</p>
-        </div>
-        <div>
-          <label class="block text-xs text-text-muted mb-1">Underlying Policy</label>
-          <p class="text-sm text-text">{{ progressSheet.submission.underlyingPolicy }}</p>
-        </div>
-        <div>
-          <label class="block text-xs text-text-muted mb-1">Effective Date</label>
-          <p class="text-sm text-text">{{ progressSheet.submission.effectiveDate }}</p>
-        </div>
-        <div>
-          <label class="block text-xs text-text-muted mb-1">Expiry Date</label>
-          <p class="text-sm text-text">{{ progressSheet.submission.expiryDate }}</p>
-        </div>
+<div id="contentToExport">
+  <div class="bg-surface rounded-lg border border-border p-6 mb-4 mt-4">
+    <div class="flex items-center justify-between mb-3"><span class="text-sm text-gray-700">Progress: Bound</span><span
+        class="text-sm text-text-success">Completed</span></div>
+    <div class="relative">
+      <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div class="h-full bg-success rounded-full transition-all duration-300"
+          [ngStyle]="{ width: progressSheet.progress + '%' }"></div>
       </div>
-    </div>
-
-    <!-- Financials -->
-    <div class="bg-surface rounded-lg border border-border p-6">
-      <h2 class="text-text mb-4">Financials</h2>
-      <div class="grid grid-cols-2 gap-6">
-        <div>
-          <label class="block text-xs text-text-muted mb-1">Policy Limit</label>
-          <p class="text-text">{{ progressSheet.financials.policyLimit | currency:'USD':'symbol':'1.0-0' }}</p>
-        </div>
-        <div>
-          <label class="block text-xs text-text-muted mb-1">Attachment Point</label>
-          <p class="text-text">{{ progressSheet.financials.attachmentPoint | currency:'USD':'symbol':'1.0-0' }}</p>
-        </div>
-        <div>
-          <label class="block text-xs text-text-muted mb-1">Gross Written Premium</label>
-          <p class="text-text">{{ progressSheet.financials.grossWrittenPremium | currency:'USD':'symbol':'1.0-0' }}
-          </p>
-        </div>
-        <div>
-          <label class="block text-xs text-text-muted mb-1">Ceded Premium</label>
-          <p class="text-text">{{ progressSheet.financials.cededPremium | currency:'USD':'symbol':'1.0-0' }}</p>
-        </div>
-        <div>
-          <label class="block text-xs text-text-muted mb-1">Commission Rate</label>
-          <p class="text-text">{{ progressSheet.financials.commissionRate }}</p>
-        </div>
-        <div>
-          <label class="block text-xs text-text-muted mb-1">Participation Share</label>
-          <p class="text-text">{{ progressSheet.financials.participationShare }}</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Documents -->
-    <div class="bg-surface rounded-lg border border-border p-6">
-      <app-progress-sheet-documents [documents]="progressSheet.documents" (uploaded)="onDocumentsUploaded($event)">
-      </app-progress-sheet-documents>
+      <div class="flex justify-between mt-2 text-xs text-secondary-dark"><span>Submitted</span><span>Quoted</span><span
+          class="font-semibold text-gray-900">Bound</span><span>Closed</span></div>
     </div>
   </div>
-  <div class="space-y-6">
-    <div class="bg-surface rounded-lg border border-border p-6">
-      <h2 class="text-text mb-4">Securities</h2>
-      <div class="space-y-4">
-        <div class=" p-4">
-          <ul class="space-y-1">
-            @for (security of progressSheet.securities; track $index) {
-            <li class="flex items-center gap-1 text-sm text-text">
-              <span class="text-primary text-2xl leading-none">•</span>
-              {{ security }}
-            </li>
-            }
-          </ul>
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2 space-y-6">
+
+      <!-- Submission Summary -->
+      <div class="bg-surface rounded-lg border border-border p-6">
+        <h2 class="text-text mb-4">Submission Summary</h2>
+        <div class="grid grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs text-text-muted mb-1">Insured Name</label>
+            <p class="text-sm text-text">{{ progressSheet.submission.insuredName }}</p>
+          </div>
+          <div>
+            <label class="block text-xs text-text-muted mb-1">Ceding Company</label>
+            <p class="text-sm text-text">{{ progressSheet.submission.cedingCompany }}</p>
+          </div>
+          <div>
+            <label class="block text-xs text-text-muted mb-1">Reinsurance Type</label>
+            <p class="text-sm text-text">{{ progressSheet.submission.reinsuranceType }}</p>
+          </div>
+          <div>
+            <label class="block text-xs text-text-muted mb-1">Underlying Policy</label>
+            <p class="text-sm text-text">{{ progressSheet.submission.underlyingPolicy }}</p>
+          </div>
+          <div>
+            <label class="block text-xs text-text-muted mb-1">Effective Date</label>
+            <p class="text-sm text-text">{{ progressSheet.submission.effectiveDate }}</p>
+          </div>
+          <div>
+            <label class="block text-xs text-text-muted mb-1">Expiry Date</label>
+            <p class="text-sm text-text">{{ progressSheet.submission.expiryDate }}</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="bg-surface rounded-lg border border-border p-6">
-      <h2 class="text-text mb-4">Progress Sheet Summary</h2>
-      <p class="text-sm text-text-secondary mb-4">
-        All detailed information, including financials, documents, and notes, are available in the full progress sheet.
-        Click below to view or edit the complete details of this facultative placement.
-      </p>
-      <div>
-        <button (click)="editProgressSheet()"
-          class="px-4 py-2 text-sm bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
 
-          View/Edit Progress Sheet</button>
+      <!-- Financials -->
+      <div class="bg-surface rounded-lg border border-border p-6">
+        <h2 class="text-text mb-4">Financials</h2>
+        <div class="grid grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs text-text-muted mb-1">Policy Limit</label>
+            <p class="text-text">{{ progressSheet.financials.policyLimit | currency:'USD':'symbol':'1.0-0' }}</p>
+          </div>
+          <div>
+            <label class="block text-xs text-text-muted mb-1">Attachment Point</label>
+            <p class="text-text">{{ progressSheet.financials.attachmentPoint | currency:'USD':'symbol':'1.0-0' }}</p>
+          </div>
+          <div>
+            <label class="block text-xs text-text-muted mb-1">Gross Written Premium</label>
+            <p class="text-text">{{ progressSheet.financials.grossWrittenPremium | currency:'USD':'symbol':'1.0-0' }}
+            </p>
+          </div>
+          <div>
+            <label class="block text-xs text-text-muted mb-1">Ceded Premium</label>
+            <p class="text-text">{{ progressSheet.financials.cededPremium | currency:'USD':'symbol':'1.0-0' }}</p>
+          </div>
+          <div>
+            <label class="block text-xs text-text-muted mb-1">Commission Rate</label>
+            <p class="text-text">{{ progressSheet.financials.commissionRate }}</p>
+          </div>
+          <div>
+            <label class="block text-xs text-text-muted mb-1">Participation Share</label>
+            <p class="text-text">{{ progressSheet.financials.participationShare }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Documents -->
+      <div class="bg-surface rounded-lg border border-border p-6">
+        <app-progress-sheet-documents [documents]="progressSheet.documents" (uploaded)="onDocumentsUploaded($event)">
+        </app-progress-sheet-documents>
+      </div>
+    </div>
+    <div class="space-y-6">
+      <div class="bg-surface rounded-lg border border-border p-6">
+        <h2 class="text-text mb-4">Securities</h2>
+        <div class="space-y-4">
+          <div class=" p-4">
+            <ul class="space-y-1">
+              @for (security of progressSheet.securities; track $index) {
+              <li class="flex items-center gap-1 text-sm text-text">
+                <span class="text-primary text-2xl leading-none">•</span>
+                {{ security }}
+              </li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="bg-surface rounded-lg border border-border p-6">
+        <h2 class="text-text mb-4">Progress Sheet Summary</h2>
+        <p class="text-sm text-text-secondary mb-4">
+          All detailed information, including financials, documents, and notes, are available in the full progress
+          sheet.
+          Click below to view or edit the complete details of this facultative placement.
+        </p>
+        <div>
+          <button (click)="editProgressSheet()"
+            class="px-4 py-2 text-sm bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+
+            View/Edit Progress Sheet</button>
+        </div>
       </div>
     </div>
   </div>

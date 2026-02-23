@@ -1,6 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { of } from 'rxjs';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 @Injectable({ providedIn: 'root' })
 export class SharedService {
@@ -45,8 +50,8 @@ export class SharedService {
                 { label: 'Approval', route: '/home/reinsurance/life/approval' },
               ]
             },
-            { label: 'Contracts', route: '/reinsurance/contracts' },
-            { label: 'Claims', route: '/reinsurance/claims' },
+            { label: 'Contracts', route: '/home/reinsurance/contracts' },
+            { label: 'Claims', route: '/home/reinsurance/claims' },
             { label: 'Contacts', route: '/reinsurance/contacts' },
           ]
         },
@@ -162,6 +167,32 @@ export class SharedService {
       { id: 10, value: "AED", label: "AED - UAE Dirham" },
     ]
     )
+  }
+  exportAsExcelFile(json: any[], fileName: string): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const data: Blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+    FileSaver.saveAs(data, `${fileName}_${new Date().getTime()}.xlsx`);
+  }
+
+  generatePDF(docId:string,fileName:string): void {
+    const data = document.getElementById(docId); // The HTML element ID to export
+
+    if (data) {
+      html2canvas(data).then(canvas => {
+        const contentDataURL = canvas.toDataURL('image/png');
+        // 'p' for portrait, 'l' for landscape, 'cm' or 'mm' for units, 'a4' for paper size
+        let pdf = new jsPDF('p', 'cm', 'a4');
+        const width = pdf.internal.pageSize.getWidth();
+        const height = pdf.internal.pageSize.getHeight();
+
+        pdf.addImage(contentDataURL, 'PNG', 0, 0, width, height);
+        pdf.save(`${fileName}.pdf`); // Name of the downloaded PDF file
+      });
+    } else {
+      console.error(`Element with ID ${fileName} not found.`);
+    }
   }
 
 }

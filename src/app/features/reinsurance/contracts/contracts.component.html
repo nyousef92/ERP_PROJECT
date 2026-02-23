@@ -1,0 +1,87 @@
+<app-modal />
+<div class="space-y-4 mb-3">
+    <div class="flex items-start justify-between">
+        <div>
+            <h1 class="text-xl text-text mb-1">Contracts</h1>
+            <p class="text-sm text-text-muted">Manage and monitor your contract operations</p>
+        </div>
+        <button type="button" (click)="addNew()"
+            class="inline-flex items-center gap-1 py-2 px-4 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize">
+            <span class="material-icons text-[14px]">add</span>
+            <span>Add New</span>
+        </button>
+    </div>
+
+    <div>
+        <app-cards-grid [dataList]="metrics"></app-cards-grid>
+    </div>
+
+    <div class="bg-surface rounded-lg border border-border">
+        <div class="flex items-start justify-between m-3">
+            <div>
+                <h2 class="text-l text-text mb-1">Contracts</h2>
+            </div>
+            <div class="flex items-start justify-between m-3 gap-3">
+                <button type="button" (click)="export()"
+                    class="inline-flex items-center gap-1 py-2 px-4 bg-surface text-primary border border-border text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors capitalize">
+                    <span>Export</span>
+                </button>
+                <app-input-field placeholder="search" (valueChange)="updateSearchValue($event)"></app-input-field>
+            </div>
+        </div>
+
+        <div class="overflow-hidden shadow-sm">
+            <table class="w-full border-collapse bg-surface text-left text-sm text-secondary-dark">
+                <thead class="bg-background font-medium text-text">
+                    <tr>
+                        <th scope="col" class="px-6 py-4 text-xs"  >
+                            <input type="checkbox" class="rounded" (change)="selectAll()" [checked]="allChecked">
+                        </th>
+                        <th scope="col" class="px-6 py-4 text-xs">ID</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Name</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Status</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Date</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Value</th>
+                        <th scope="col" class="px-6 py-4 text-right text-xs">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                    @for (item of contracts; track item.id) {
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        
+                        <th scope="col" class="px-6 py-4 text-xs">
+                            <input type="checkbox" class="rounded" [checked]="item.checked" (change)="checkElement(item)">
+                        </th>
+                        <td class="px-6 py-4 font-medium text-text">{{ item.id }}</td>
+                        <td class="px-6 py-4">{{ item.name }}</td>
+                        <td class="px-6 py-4">
+                            <span [ngClass]="item.statusClasses"
+                                class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold border">
+                                {{ item.status }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">{{ item.date }}</td>
+                        <td class="px-6 py-4 font-semibold text-text">{{ item.value }}</td>
+                        <td class="px-6 py-4">
+                            <div class="flex justify-end gap-3">
+                                <button title="view" (click)="viewContract(item.id)">
+                                    <span class="material-icons text-[18px] text-primary">visibility</span>
+                                </button>
+                                <button title="edit" (click)="editContract(item.id)">
+                                    <span class="material-icons text-[18px] text-text-secondary">edit</span>
+                                </button>
+                                <button title="delete" (click)="delete(item.id)">
+                                    <span class="material-icons text-[18px] text-danger">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <app-paginator listName="Contracts" [totalItems]="totalItems"
+            (pageChange)="getContracts($event)"></app-paginator>
+    </div>
+</div>
