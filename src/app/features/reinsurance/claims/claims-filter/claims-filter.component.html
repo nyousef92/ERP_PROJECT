@@ -1,0 +1,83 @@
+<div class="bg-surface border border-border rounded-2xl shadow-sm p-5 w-full mt-3">
+
+    <div class="flex items-center gap-3">
+
+        <button (click)="toggleFilters()"
+            class="flex items-center gap-2 px-3 py-1.5 bg-background border border-border rounded-lg text-sm font-medium text-text select-none">
+            <span class="material-icons text-[18px] text-text-secondary">filter_list</span>
+            Filters
+            @if (activeCount > 0) {
+            <span class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5
+                         bg-primary text-white text-[11px] font-bold rounded-full">
+                {{ activeCount }}
+            </span>
+            }
+        </button>
+
+        @if (activeCount > 0) {
+        <button (click)="clearAll()" class="flex items-center gap-1.5 text-danger text-sm font-medium
+                       px-2.5 py-1 rounded-lg hover:bg-danger-light/20 transition-colors">
+            <svg class="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2 2l8 8M10 2l-8 8" stroke-linecap="round" />
+            </svg>
+            Clear All
+        </button>
+        }
+
+    </div>
+
+    @if (showFilters()) {
+    <div class="mt-4">
+        <hr class="border-border mb-4" />
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+
+            <div>
+                <app-select-dropdown label="Status" [(ngModel)]="status" [options]="statusOptions">
+                </app-select-dropdown>
+            </div>
+
+            <div>
+                <app-select-dropdown label="Cedant" [(ngModel)]="cedant" [options]="cedantOptions">
+                </app-select-dropdown>
+            </div>
+
+            <div>
+                <app-input-field label="Date From" type="date" [(ngModel)]="dateFrom">
+                </app-input-field>
+            </div>
+
+            <div>
+                <app-input-field label="Date To" type="date" [(ngModel)]="dateTo">
+                </app-input-field>
+            </div>
+
+        </div>
+
+        <div class="flex justify-end mt-4">
+            <button (click)="applyFilters()"
+                class="px-4 py-1.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors">
+                Apply Filters
+            </button>
+        </div>
+    </div>
+    }
+
+    @if (activeTags.length > 0) {
+    <div class="flex flex-wrap gap-2 mt-4">
+        <hr class="border-border mb-4" />
+        @for (tag of activeTags; track tag) {
+        <span class="flex items-center gap-1.5 pl-3 pr-2 py-1 bg-primary-light/20 border border-primary/30
+                 rounded-full text-xs font-medium text-primary-dark animate-[pop_0.15s_ease]">
+            {{ tag.label }} {{ tag.value }}
+            <button (click)="removeTag(tag.key)"
+                class="flex items-center text-primary/40 hover:text-primary-dark transition-colors ml-0.5">
+                <svg class="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 2l8 8M10 2l-8 8" stroke-linecap="round" />
+                </svg>
+            </button>
+        </span>
+        }
+    </div>
+    }
+
+</div>

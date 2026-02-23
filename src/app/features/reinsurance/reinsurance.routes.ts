@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ContractsComponent } from './contracts/contracts.component';
+import { ClaimsComponent } from './claims/claims.component';
 
 export const REINSURANCE_ROUTES: Routes = [
     { path: '', redirectTo: 'facultative', pathMatch: 'full' },
@@ -16,5 +17,9 @@ export const REINSURANCE_ROUTES: Routes = [
     {
         path: 'contracts',
         component: ContractsComponent
+    },
+    {
+        path: 'claims',
+        component: ClaimsComponent
     }
 ];

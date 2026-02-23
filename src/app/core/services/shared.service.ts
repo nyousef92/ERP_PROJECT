@@ -51,7 +51,7 @@ export class SharedService {
               ]
             },
             { label: 'Contracts', route: '/home/reinsurance/contracts' },
-            { label: 'Claims', route: '/reinsurance/claims' },
+            { label: 'Claims', route: '/home/reinsurance/claims' },
             { label: 'Contacts', route: '/reinsurance/contacts' },
           ]
         },
