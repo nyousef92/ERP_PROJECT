@@ -50,7 +50,7 @@ export class SharedService {
                 { label: 'Approval', route: '/home/reinsurance/life/approval' },
               ]
             },
-            { label: 'Contracts', route: '/reinsurance/contracts' },
+            { label: 'Contracts', route: '/home/reinsurance/contracts' },
             { label: 'Claims', route: '/reinsurance/claims' },
             { label: 'Contacts', route: '/reinsurance/contacts' },
           ]
