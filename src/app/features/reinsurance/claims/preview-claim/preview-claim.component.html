@@ -1,0 +1,108 @@
+@if (claim) {
+<div class="space-y-6">
+
+  <!-- Breadcrumb -->
+  <app-breadcrumb [items]="breadcrumbs" />
+
+  <!-- Header -->
+  <div class="flex items-start justify-between">
+    <div>
+      <h1 class="text-text mb-2">Claim {{ claim.claimNo }}</h1>
+      <p class="text-text-muted">View claim details and reinsurer recovery breakdown.</p>
+    </div>
+    <button (click)="goBack()"
+      class="px-4 py-2.5 border border-border rounded-lg text-text-secondary hover:bg-background transition-colors">
+      Back
+    </button>
+  </div>
+
+  <!-- Claim Details -->
+  <div class="bg-surface rounded-lg border border-border p-6">
+    <h2 class="text-text mb-4">Claim Details</h2>
+    <div class="grid grid-cols-4 gap-4 mb-4">
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Claim No.</label>
+        <p class="text-sm text-text font-medium">{{ claim.claimNo }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-text-muted mb-2">FAC Reference</label>
+        <p class="text-sm text-text">{{ claim.facRef }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Cedant</label>
+        <p class="text-sm text-text">{{ claim.cedant }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Status</label>
+        <span [ngClass]="claim.statusClasses"
+          class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold border">
+          {{ claim.status }}
+        </span>
+      </div>
+    </div>
+    <div class="grid grid-cols-4 gap-4 mb-4">
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Loss Type</label>
+        <p class="text-sm text-text">{{ claim.lossType }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Incident Date</label>
+        <p class="text-sm text-text">{{ claim.incidentDate }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Date Reported</label>
+        <p class="text-sm text-text">{{ claim.dateReported }}</p>
+      </div>
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Claim Amount</label>
+        <p class="text-sm text-text">{{ claim.claimAmount }}</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-4 gap-4 mb-4">
+      <div>
+        <label class="block text-xs text-text-muted mb-2">Approved Amount</label>
+        <p class="text-sm text-success font-medium">{{ claim.approvedAmount }}</p>
+      </div>
+    </div>
+    <div>
+      <label class="block text-xs text-text-muted mb-2">Description</label>
+      <p class="text-sm text-text">{{ claim.description }}</p>
+    </div>
+  </div>
+
+  <!-- Reinsurer Recovery -->
+  <div class="bg-surface rounded-lg border border-border">
+    <div class="flex items-center justify-between p-6">
+      <h2 class="text-text">Reinsurer Recovery</h2>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse bg-surface text-left text-sm text-secondary-dark">
+        <thead class="bg-background font-medium text-text">
+          <tr>
+            <th scope="col" class="px-6 py-4 text-xs">Reinsurer</th>
+            <th scope="col" class="px-6 py-4 text-xs">Share (%)</th>
+            <th scope="col" class="px-6 py-4 text-xs">Recovery Amount</th>
+            <th scope="col" class="px-6 py-4 text-xs">Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          @for (reinsurer of claim.reinsurers; track $index) {
+          <tr class="hover:bg-background transition-colors">
+            <td class="px-6 py-4 text-sm text-text">{{ reinsurer.name }}</td>
+            <td class="px-6 py-4 text-sm text-text-secondary">{{ reinsurer.share }}</td>
+            <td class="px-6 py-4 text-sm text-text">{{ reinsurer.amount }}</td>
+            <td class="px-6 py-4">
+              <span [ngClass]="helper.getStatusClass(reinsurer.status)"
+                class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold border">
+                {{ reinsurer.status }}
+              </span>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+}

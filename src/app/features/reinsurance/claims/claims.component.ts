@@ -7,6 +7,7 @@ import { HelperService } from '@core/services/helper.service';
 import { ClaimsService } from '@core/services/claims.service';
 import { ClaimsFilterComponent, ClaimsFilterState } from './claims-filter/claims-filter.component';
 import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-claims',
@@ -23,7 +24,8 @@ export class ClaimsComponent implements OnInit {
 
   constructor(
     private helper: HelperService,
-    private claimsService: ClaimsService
+    private claimsService: ClaimsService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -32,7 +34,9 @@ export class ClaimsComponent implements OnInit {
       this.claimsService.getClaimsHistory({ pageSize: 6, currentPage: 1, searchText: '' })
     ]).subscribe(([metrics, history]) => {
       this.metrics = metrics;
-      this.claims  = history.data.map(item => ({ ...item, statusClasses: this.helper.getStatusClass(item.status) }));
+      this.claims = history.data.map(item => {
+        return ({ ...item, statusClasses: this.helper.getStatusClass(item.status) })
+      });
       this.totalItems = history.totalItems;
     });
   }
@@ -54,14 +58,16 @@ export class ClaimsComponent implements OnInit {
       searchText: this.searchText,
       ...this.activeFilters
     }).subscribe(resp => {
-      this.claims     = resp.data.map(item => ({ ...item, statusClasses: this.helper.getStatusClass(item.status) }));
+      this.claims = resp.data.map(item => ({ ...item, statusClasses: this.helper.getStatusClass(item.status) }));
       this.totalItems = resp.totalItems;
     });
   }
 
   addNew() { }
 
-  viewClaim(claimNo: string) { }
+  viewClaim(claimNo: string) {
+    this.router.navigate(['/home/reinsurance/claims/preview', claimNo]);
+  }
 
   editClaim(claimNo: string) { }
 }
