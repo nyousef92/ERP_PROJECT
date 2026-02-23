@@ -1,106 +1,185 @@
-@if (claim) {
-<div class="space-y-6">
+<app-modal />
 
-  <!-- Breadcrumb -->
-  <app-breadcrumb [items]="breadcrumbs" />
+@if (claim) {
+<div class="space-y-4">
 
   <!-- Header -->
   <div class="flex items-start justify-between">
-    <div>
-      <h1 class="text-text mb-2">Claim {{ claim.claimNo }}</h1>
-      <p class="text-text-muted">View claim details and reinsurer recovery breakdown.</p>
+    <div class="flex items-center gap-3">
+      <button (click)="goBack()" class="p-2 hover:bg-background rounded-lg transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="text-text-secondary" aria-hidden="true">
+          <path d="m12 19-7-7 7-7"></path>
+          <path d="M19 12H5"></path>
+        </svg>
+      </button>
+      <div>
+        <h1 class="text-xl text-text">{{ claim.claimNo }}</h1>
+        <p class="text-sm text-text-muted">Claim Details and Reinsurer Lines</p>
+      </div>
     </div>
-    <button (click)="goBack()"
-      class="px-4 py-2.5 border border-border rounded-lg text-text-secondary hover:bg-background transition-colors">
-      Back
-    </button>
+    <div class="flex items-center gap-2">
+      <span class="px-3 py-1.5 rounded-lg text-sm" [class]="claim.classes">
+        {{ claim.status }}
+      </span>
+      <button (click)="reviewAndApprove()"
+        class="px-3 py-2 text-sm bg-success text-white rounded-lg hover:bg-success-dark transition-colors flex items-center gap-2">
+        <span class="material-icons text-[18px] text-white">done_all</span>
+        Review & Approve
+      </button>
+    </div>
   </div>
 
-  <!-- Claim Details -->
-  <div class="bg-surface rounded-lg border border-border p-6">
-    <h2 class="text-text mb-4">Claim Details</h2>
-    <div class="grid grid-cols-4 gap-4 mb-4">
+  <!-- Claim Information -->
+  <div class="bg-surface rounded-lg border border-border p-4">
+    <h2 class="text-base text-text mb-4">Claim Information</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div>
-        <label class="block text-xs text-text-muted mb-2">Claim No.</label>
-        <p class="text-sm text-text font-medium">{{ claim.claimNo }}</p>
-      </div>
-      <div>
-        <label class="block text-xs text-text-muted mb-2">FAC Reference</label>
+        <p class="text-xs text-text-muted mb-1">FAC Reference</p>
         <p class="text-sm text-text">{{ claim.facRef }}</p>
       </div>
       <div>
-        <label class="block text-xs text-text-muted mb-2">Cedant</label>
+        <p class="text-xs text-text-muted mb-1">Account</p>
+        <p class="text-sm text-text">{{ claim.account }}</p>
+      </div>
+      <div>
+        <p class="text-xs text-text-muted mb-1">Cedant</p>
         <p class="text-sm text-text">{{ claim.cedant }}</p>
       </div>
       <div>
-        <label class="block text-xs text-text-muted mb-2">Status</label>
-        <span [ngClass]="claim.statusClasses"
-          class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold border">
-          {{ claim.status }}
-        </span>
-      </div>
-    </div>
-    <div class="grid grid-cols-4 gap-4 mb-4">
-      <div>
-        <label class="block text-xs text-text-muted mb-2">Loss Type</label>
-        <p class="text-sm text-text">{{ claim.lossType }}</p>
+        <p class="text-xs text-text-muted mb-1">Line of Business</p>
+        <p class="text-sm text-text">{{ claim.lob }}</p>
       </div>
       <div>
-        <label class="block text-xs text-text-muted mb-2">Incident Date</label>
-        <p class="text-sm text-text">{{ claim.incidentDate }}</p>
+        <p class="text-xs text-text-muted mb-1">Claim Date</p>
+        <p class="text-sm text-text">{{ claim.claimDate }}</p>
       </div>
       <div>
-        <label class="block text-xs text-text-muted mb-2">Date Reported</label>
-        <p class="text-sm text-text">{{ claim.dateReported }}</p>
+        <p class="text-xs text-text-muted mb-1">Loss Date</p>
+        <p class="text-sm text-text">{{ claim.lossDate }}</p>
       </div>
       <div>
-        <label class="block text-xs text-text-muted mb-2">Claim Amount</label>
+        <p class="text-xs text-text-muted mb-1">Claim Type</p>
+        <p class="text-sm text-text">{{ claim.claimType }}</p>
+      </div>
+      <div>
+        <p class="text-xs text-text-muted mb-1">Claim Amount</p>
         <p class="text-sm text-text">{{ claim.claimAmount }}</p>
       </div>
     </div>
-    <div class="grid grid-cols-4 gap-4 mb-4">
-      <div>
-        <label class="block text-xs text-text-muted mb-2">Approved Amount</label>
-        <p class="text-sm text-success font-medium">{{ claim.approvedAmount }}</p>
-      </div>
-    </div>
-    <div>
-      <label class="block text-xs text-text-muted mb-2">Description</label>
+    <div class="mt-4">
+      <p class="text-xs text-text-muted mb-1">Description</p>
       <p class="text-sm text-text">{{ claim.description }}</p>
+    </div>
+    <div class="mt-4">
+      <p class="text-xs text-text-muted mb-2">Attachments</p>
+      <div class="flex flex-wrap gap-2">
+        @for (attachment of claim.attachments; track $index) {
+        <button
+          class="flex items-center gap-2 bg-background px-3 py-1.5 rounded-lg text-sm hover:bg-background transition-colors border border-border">
+          <span class="material-icons text-[18px] text-text-secondary">attachment</span>
+          <span class="text-text-secondary">{{ attachment }}</span>
+        </button>
+        }
+      </div>
     </div>
   </div>
 
-  <!-- Reinsurer Recovery -->
+  <!-- Internal Approval History -->
+  <div class="bg-surface rounded-lg border border-border p-4">
+    <h2 class="text-base text-text mb-4">Internal Approval History</h2>
+    <div class="space-y-3">
+      @for (item of claim.approvalHistory; track $index) {
+      <div class="flex items-start gap-3 pb-3 border-b border-border last:border-0">
+        <div [class]="'w-2 h-2 rounded-full mt-1.5 shrink-0 ' + claim.classes"></div>
+        <div class="flex-1">
+          <div class="flex items-start justify-between mb-1">
+            <p class="text-sm text-text">{{ item.action }}</p>
+            <span class="text-xs text-text-muted">{{ item.date }}</span>
+          </div>
+          <p class="text-xs text-text-muted mb-1">{{ item.role }}</p>
+          <p class="text-sm text-text-secondary mt-1">{{ item.notes }}</p>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- Reinsurer Lines -->
   <div class="bg-surface rounded-lg border border-border">
-    <div class="flex items-center justify-between p-6">
-      <h2 class="text-text">Reinsurer Recovery</h2>
+    <div class="p-3 border-b border-border">
+      <h2 class="text-base text-text">Reinsurer Lines</h2>
     </div>
     <div class="overflow-x-auto">
-      <table class="w-full border-collapse bg-surface text-left text-sm text-secondary-dark">
-        <thead class="bg-background font-medium text-text">
+      <table class="w-full">
+        <thead class="bg-background border-b border-border">
           <tr>
-            <th scope="col" class="px-6 py-4 text-xs">Reinsurer</th>
-            <th scope="col" class="px-6 py-4 text-xs">Share (%)</th>
-            <th scope="col" class="px-6 py-4 text-xs">Recovery Amount</th>
-            <th scope="col" class="px-6 py-4 text-xs">Status</th>
+            <th class="px-4 py-2 text-left text-xs text-text-muted">Reinsurer</th>
+            <th class="px-4 py-2 text-left text-xs text-text-muted">Share %</th>
+            <th class="px-4 py-2 text-left text-xs text-text-muted">Claim Amount</th>
+            <th class="px-4 py-2 text-left text-xs text-text-muted">Status</th>
+            <th class="px-4 py-2 text-left text-xs text-text-muted">Approved Amount</th>
+            <th class="px-4 py-2 text-left text-xs text-text-muted">Notes</th>
+            <th class="px-4 py-2 text-left text-xs text-text-muted">Actions</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-border">
-          @for (reinsurer of claim.reinsurers; track $index) {
+          @for (reinsurer of claim.reinsurerLines; track $index) {
           <tr class="hover:bg-background transition-colors">
-            <td class="px-6 py-4 text-sm text-text">{{ reinsurer.name }}</td>
-            <td class="px-6 py-4 text-sm text-text-secondary">{{ reinsurer.share }}</td>
-            <td class="px-6 py-4 text-sm text-text">{{ reinsurer.amount }}</td>
-            <td class="px-6 py-4">
-              <span [ngClass]="helper.getStatusClass(reinsurer.status)"
-                class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold border">
+            <td class="px-4 py-2 whitespace-nowrap">
+              <span class="text-sm text-text">{{ reinsurer.name }}</span>
+            </td>
+            <td class="px-4 py-2 whitespace-nowrap">
+              <span class="text-sm text-text-secondary">{{ reinsurer.share }}</span>
+            </td>
+            <td class="px-4 py-2 whitespace-nowrap">
+              <span class="text-sm text-text">{{ reinsurer.claimAmount }}</span>
+            </td>
+            <td class="px-4 py-2 whitespace-nowrap">
+              <span class="px-2 py-0.5 rounded-full text-xs flex items-center gap-1 w-fit" [class]="reinsurer.classes">
+                @if (reinsurer.status === 'Approved') {
+                <span class="material-icons text-[18px]" [class]="reinsurer.classes">task_alt</span>
+                } @else {
+                <span class="material-icons text-[18px]" [class]="reinsurer.classes">schedule</span>
+                }
                 {{ reinsurer.status }}
               </span>
+            </td>
+            <td class="px-4 py-2 whitespace-nowrap">
+              <span [class]="'text-sm ' + reinsurer.classes">{{ reinsurer.approvedAmount }}</span>
+            </td>
+            <td class="px-4 py-2">
+              <span class="text-sm text-text-secondary line-clamp-2">{{ reinsurer.notes }}</span>
+            </td>
+            <td class="px-4 py-2 whitespace-nowrap">
+              <div class="flex items-center gap-1">
+                <button (click)="viewReinsurerHistory(reinsurer)"
+                  class="p-1.5 hover:bg-background rounded transition-colors" title="View History">
+                  <span class="material-icons text-[18px] text-primary">visibility</span>
+                </button>
+                <button (click)="updateReinsurer(reinsurer)"
+                  class="px-2 py-1 text-xs rounded border transition-colors bg-primary text-white ">
+                  Update
+                </button>
+              </div>
             </td>
           </tr>
           }
         </tbody>
       </table>
+    </div>
+    <div class="p-4 border-t-2 border-border bg-background">
+      <div class="flex justify-end items-center gap-8">
+        <div class="text-right">
+          <p class="text-xs text-text-muted mb-1">Total Claimed</p>
+          <p class="text-lg text-text">{{ claim.totalClaimed }}</p>
+        </div>
+        <div class="text-right">
+          <p class="text-xs text-text-muted mb-1">Total Approved</p>
+          <p [class]="'text-2xl ' + claim.classes">{{ claim.totalApproved }}</p>
+        </div>
+      </div>
     </div>
   </div>
 

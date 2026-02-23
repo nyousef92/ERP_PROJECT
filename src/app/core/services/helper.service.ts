@@ -126,6 +126,7 @@ export class HelperService {
       case 'Bound': return 'bg-green-100 text-green-700 border-green-200';
       case 'Quoted': return 'bg-blue-100 text-blue-700 border-blue-200';
       case 'Submitted': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
+      case 'Pending Approval': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
       case 'Approved': return 'bg-green-100 text-green-700 border-green-200';
       case 'Partially Approved': return 'bg-blue-100 text-blue-700 border-blue-200';
       case 'Pending': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
