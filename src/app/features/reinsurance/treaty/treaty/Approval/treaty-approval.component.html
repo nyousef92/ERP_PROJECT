@@ -1,0 +1,110 @@
+<div class="space-y-4 mb-3">
+
+    <app-breadcrumb [items]="breadcumbs"></app-breadcrumb>
+
+    <div class="flex items-start justify-between">
+        <div>
+            <h1 class="text-xl text-text mb-1">Treaty Approval</h1>
+            <p class="text-sm text-text-muted">Review and process pending treaty reinsurance requests</p>
+        </div>
+    </div>
+
+    <div class="bg-surface rounded-lg border border-border">
+        <div class="flex items-center justify-between m-3">
+            <h2 class="text-l text-text mb-1">Treaties Pending Approval</h2>
+            <div class="relative">
+                <span
+                    class="material-icons absolute left-2 top-1/2 -translate-y-1/2 text-text-muted text-[18px]">search</span>
+                <input type="text" placeholder="Search treaties..."
+                    class="pl-8 pr-3 py-1.5 text-sm rounded-lg border border-border bg-background text-text outline-none focus:border-primary transition-colors"
+                    [value]="searchValue" (input)="updateSearchValue($any($event.target).value)" />
+            </div>
+        </div>
+
+        <div class="overflow-x-auto shadow-sm">
+            <table class="w-full border-collapse bg-surface text-left text-sm text-secondary-dark">
+                <thead class="bg-background font-medium text-text">
+                    <tr>
+                        <th scope="col" class="px-6 py-4 text-xs">Treaty Code</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Company</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Description</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Type / Sub-Type</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Class</th>
+                        <th scope="col" class="px-6 py-4 text-xs">From Date</th>
+                        <th scope="col" class="px-6 py-4 text-xs">To Date</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Currency</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Submitted By</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Submitted Date</th>
+                        <th scope="col" class="px-6 py-4 text-xs">Status</th>
+                        <th scope="col" class="px-6 py-4 text-right text-xs">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                    @for (item of filteredTreaties; track item.treatyCode) {
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 font-medium text-primary cursor-pointer hover:underline"
+                            (click)="onView(item.treatyCode)">
+                            {{ item.treatyCode }}
+                        </td>
+                        <td class="px-6 py-4 text-text">{{ item.company }}</td>
+                        <td class="px-6 py-4 text-text-secondary max-w-[200px] truncate" [title]="item.description">
+                            {{ item.description }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="text-text text-xs font-medium">{{ item.treatyType }}</div>
+                            <div class="text-text-muted text-xs">{{ item.subType }}</div>
+                        </td>
+                        <td class="px-6 py-4 text-text-secondary">{{ item.class }}</td>
+                        <td class="px-6 py-4 text-text-secondary text-xs">
+                            <div>{{ item.fromDate }}</div>
+                        </td>
+                        <td class="px-6 py-4 text-text-secondary text-xs">
+                            <div>{{ item.toDate }}</div>
+                        </td>
+                        <td class="px-6 py-4 text-text-secondary">{{ item.currency }}</td>
+                        <td class="px-6 py-4 text-text-secondary">{{ item.submittedBy }}</td>
+                        <td class="px-6 py-4 text-text-secondary">{{ item.submittedDate }}</td>
+                        <td class="px-6 py-4">
+                            <span [ngClass]="getStatusClasses(item.status)"
+                                class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold border whitespace-nowrap">
+                                {{ item.status }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex justify-end gap-2">
+                                @if (item.actions.includes('view')) {
+                                <button title="View" (click)="onView(item.treatyCode)">
+                                    <span class="material-icons text-[18px] text-primary">visibility</span>
+                                </button>
+                                }
+                                @if (item.actions.includes('approve')) {
+                                <button title="Approve" (click)="onApprove(item.treatyCode)">
+                                    <span class="material-icons text-[18px] text-success">check_circle</span>
+                                </button>
+                                }
+                                @if (item.actions.includes('reject')) {
+                                <button title="Reject" (click)="onReject(item.treatyCode)">
+                                    <span class="material-icons text-[18px] text-red-500">cancel</span>
+                                </button>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                    @empty {
+                    <tr>
+                        <td colspan="11" class="px-6 py-10 text-center text-text-muted text-sm">
+                            <span class="material-icons text-[40px] block mb-2 opacity-40">inbox</span>
+                            No treaties found.
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- View Treaty Approval Modal -->
+<app-modal #viewModal></app-modal>

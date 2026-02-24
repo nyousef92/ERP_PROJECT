@@ -1,16 +1,14 @@
 <div [class.hidden]="!isOpen" class="fixed inset-0 z-50 flex items-center justify-center">
 
   <!-- Backdrop -->
-  <div class="absolute inset-0 bg-black/50" (click)="close()"></div>
+  <div class="absolute inset-0 bg-black/50" (click)="disableBackdropClose ? null : close()"></div>
 
   <!-- Panel -->
-  <div class="relative z-10 bg-surface rounded-xl shadow-xl w-full max-h-[90vh] overflow-y-auto mx-4" [ngClass]="panelClass">
+  <div class="relative z-10 bg-surface rounded-xl shadow-xl w-full max-h-[90vh] overflow-y-auto mx-4"
+    [ngClass]="panelClass">
 
     <!-- Close button -->
-    <button
-      (click)="close()"
-      class="absolute top-3 right-3 p-1 hover:bg-background rounded-full transition-colors"
-    >
+    <button (click)="close()" class="absolute top-3 right-3 p-1 hover:bg-background rounded-full transition-colors">
       <span class="material-icons text-[20px] text-text-muted">close</span>
     </button>
 

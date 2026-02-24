@@ -1,0 +1,219 @@
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { TreatyService } from '../../../../core/services/treaty.service';
+import { NgClass } from '@angular/common';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { InputFieldComponent } from '@shared/input-field/input-field.component';
+import { ModalComponent } from '@shared/modal/modal.component';
+import { SubDetailsManagementComponent } from './sub-details-management/sub-details-management.component';
+
+@Component({
+  selector: 'app-add-new-treaty',
+  imports: [ReactiveFormsModule, InputFieldComponent, NgClass, ModalComponent],
+  templateUrl: './add-new-treaty.component.html'
+})
+export class AddNewTreatyComponent implements OnInit {
+  @ViewChild(ModalComponent) modal!: ModalComponent;
+  treatyService = inject(TreatyService);
+  fb = inject(FormBuilder);
+
+  treatyData!: any;
+  treatyForm!: FormGroup;
+
+  rInsurerenceCompanies: any[] = [];
+
+  close!: () => void;
+
+  ngOnInit(): void {
+    this.initForm();
+    this.getTreatyData();
+    this.setReInsurerenceCompanies();
+  }
+
+  setReInsurerenceCompanies(): void {
+    this.treatyService.getReInsurerenceCompanies().subscribe(resp => {
+      this.rInsurerenceCompanies = resp;
+    });
+  }
+
+  onCancel(): void {
+    this.close();
+  }
+
+  // Helper method to simulate selecting a company from a dropdown/modal
+  selectCompany(companyId: string): void {
+    const company = this.treatyData.companies.find((c: any) => c.id === companyId);
+    if (company) {
+      this.treatyForm.get('companyInfo')?.patchValue({
+        selectedCompany: company.id,   // must match the option [value] so the select renders correctly
+        companyId: company.id,
+        accountNo: company.account,
+        phoneNo: company.phone,
+        fax: company.fax,
+        email: company.email,
+        address: company.address
+      });
+    } else {
+      // User picked the blank "Select Company" option — clear the dependent fields
+      this.treatyForm.get('companyInfo')?.patchValue({
+        selectedCompany: '',
+        companyId: '', accountNo: '', phoneNo: '', fax: '', email: '', address: ''
+      });
+    }
+  }
+
+  // Getters for the template
+  get reinsurers(): FormArray {
+    return this.treatyForm.get('reinsurerParticipation') as FormArray;
+  }
+
+  getReinsurerGroup(index: number): FormGroup {
+    return this.reinsurers.at(index) as FormGroup;
+  }
+
+  addReinsurer(): void {
+    this.reinsurers.push(this.createReinsurerGroup());
+  }
+
+  removeReinsurer(index: number): void {
+    this.reinsurers.removeAt(index);
+  }
+
+  private createReinsurerGroup(): FormGroup {
+    return this.fb.group({
+      company: ['', Validators.required],
+      limit: [''],
+      deductible: [''],
+      premium: [''],
+      subDetails: this.fb.array([])
+    });
+  }
+
+  /** Returns the subDetails FormArray for a given reinsurer row index */
+  getSubDetails(reinsurerIndex: number): FormArray {
+    return this.getReinsurerGroup(reinsurerIndex).get('subDetails') as FormArray;
+  }
+
+  /** Badge count shown next to the Add Details link */
+  getSubDetailCount(reinsurerIndex: number): number {
+    return this.getSubDetails(reinsurerIndex).length;
+  }
+
+  get currentLob(): string {
+    return this.treatyForm.get('treatyDetails.lob')?.value;
+  }
+
+  get currentTreatyType(): string {
+    return this.treatyForm.get('treatyDetails.treatyType')?.value;
+  }
+
+  onSubmit(): void {
+    console.log(this.treatyForm);
+    if (this.treatyForm.valid) {
+      // getRawValue() gets values including disabled fields (like companyId)
+      console.log('Form Submitted:', this.treatyForm.getRawValue());
+    } else {
+      this.treatyForm.markAllAsTouched();
+    }
+  }
+
+  AddSubDetails(reinsurerIndex: number): void {
+    const fb = this.fb;
+    const subDetailsArray = this.getSubDetails(reinsurerIndex);
+    const existingSubDetails = subDetailsArray.getRawValue();
+
+    this.modal.open(
+      SubDetailsManagementComponent,
+      {
+        existingSubDetails,
+        onSave: (rows: any[]) => {
+          // Clear current entries and rebuild from saved rows (including excess nested data)
+          subDetailsArray.clear();
+          rows.forEach(row => {
+            // Rebuild inline excess FormArray
+            const excessArray = fb.array([] as FormGroup[]);
+            if (row.excess?.length) {
+              row.excess.forEach((e: any) => {
+                excessArray.push(fb.group({
+                  company: [e.company ?? ''],
+                  signedPct: [e.signedPct ?? ''],
+                  writtenPct: [e.writtenPct ?? ''],
+                  brokerPct: [e.brokerPct ?? ''],
+                  taxPct: [e.taxPct ?? ''],
+                  commPct: [e.commPct ?? ''],
+                  reason: [e.reason ?? ''],
+                  description: [e.description ?? '']
+                }));
+              });
+            }
+
+            subDetailsArray.push(fb.group({
+              company: [row.company ?? ''],
+              signedPct: [row.signedPct ?? ''],
+              writtenPct: [row.writtenPct ?? ''],
+              brokerPct: [row.brokerPct ?? ''],
+              taxPct: [row.taxPct ?? ''],
+              commPct: [row.commPct ?? ''],
+              reason: [row.reason ?? ''],
+              description: [row.description ?? ''],
+              excess: excessArray
+            }));
+          });
+        }
+      },
+      'lg',
+      {
+        disableBackdropClose: true,
+      }
+    );
+  }
+
+  private getTreatyData(): void {
+    this.treatyService.getCreateNewTreateData().subscribe(resp => {
+      this.treatyData = resp;
+    });
+  }
+
+  private initForm(): void {
+    this.treatyForm = this.fb.group({
+      companyInfo: this.fb.group({
+        selectedCompany: ['', Validators.required],
+        // Using { value, disabled } natively handles the readonly state in Angular
+        companyId: [{ value: '', disabled: true }],
+        accountNo: [{ value: '', disabled: true }],
+        phoneNo: [{ value: '', disabled: true }],
+        fax: [{ value: '', disabled: true }],
+        email: [{ value: '', disabled: true }],
+        address: [{ value: '', disabled: true }]
+      }),
+
+      treatyDetails: this.fb.group({
+        treatyCode: [{ value: 'Auto-generated', disabled: true }],
+        description: [''],
+        treatyType: ['', Validators.required],
+        treatySubType: ['', Validators.required],
+        currency: ['', Validators.required],
+        fromDate: ['', Validators.required],
+        toDate: ['', Validators.required],
+        comments: [''],
+        lob: ['', Validators.required],
+        subLob: [''],
+        isCatastropheCoverage: [false]
+      }),
+
+      reinsurerParticipation: this.fb.array([])
+    });
+  }
+
+  private setupDependents(): void {
+    // Automatically reset Sub LOB when LOB changes
+    this.treatyForm.get('treatyDetails.lob')?.valueChanges.subscribe(() => {
+      this.treatyForm.get('treatyDetails.subLob')?.setValue('');
+    });
+
+    // This clears the Sub Type selection whenever the Type changes
+    this.treatyForm.get('treatyDetails.treatyType')?.valueChanges.subscribe(() => {
+      this.treatyForm.get('treatyDetails.treatySubType')?.setValue('');
+    });
+  }
+}
+

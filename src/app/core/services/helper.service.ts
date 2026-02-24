@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IconConfig, IconType } from '../intefaces/icon-config';
+import { IconConfig, IconType, TrendConfig } from '../intefaces/icon-config';
 
 const iconConfig: Record<IconType, IconConfig> = {
   [IconType.NearExpiry]: {
@@ -55,9 +55,28 @@ const iconConfig: Record<IconType, IconConfig> = {
   },
 };
 
+const trendConfig: Record<IconType, TrendConfig> = {
+  [IconType.NearExpiry]: { trendIcon: 'trending_down', trendColorClass: 'text-warning' },
+  [IconType.PendingApproval]: { trendIcon: 'error_outline', trendColorClass: 'text-warning' },
+  [IconType.TravelRequest]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+  [IconType.LoanRequest]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+  [IconType.Processed]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+  [IconType.NewInvoice]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+  [IconType.Submission]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+  [IconType.Treaty]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+  [IconType.Claims]: { trendIcon: 'error_outline', trendColorClass: 'text-warning' },
+  [IconType.Employees]: { trendIcon: 'trending_up', trendColorClass: 'text-success' },
+};
 
 const submissionClasses: Record<string, { trendIcon: string, trendColorClass: string, cardClass: string, labelClass: string, valueClass: string }> = {
   ['Total']: {
+    trendIcon: 'trending_up',
+    trendColorClass: 'text-blue-600',
+    cardClass: 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200',
+    labelClass: 'text-blue-700',
+    valueClass: 'text-blue-900',
+  },
+  ['Total Treaties']: {
     trendIcon: 'trending_up',
     trendColorClass: 'text-blue-600',
     cardClass: 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200',
@@ -71,7 +90,15 @@ const submissionClasses: Record<string, { trendIcon: string, trendColorClass: st
     labelClass: 'text-green-700',
     valueClass: 'text-green-900',
   },
-  ['Quoted']: {
+  ['Active']: {
+    trendIcon: 'check_circle',
+    trendColorClass: 'text-green-600',
+    cardClass: 'bg-gradient-to-br from-green-50 to-green-100 border-green-200',
+    labelClass: 'text-green-700',
+    valueClass: 'text-green-900',
+  },
+  ['Quoted']:
+  {
     trendIcon: 'error_outline',
     trendColorClass: 'text-sky-600',
     cardClass: 'bg-gradient-to-br from-sky-50 to-sky-100 border-sky-200',
@@ -84,14 +111,29 @@ const submissionClasses: Record<string, { trendIcon: string, trendColorClass: st
     cardClass: 'bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200',
     labelClass: 'text-yellow-700',
     valueClass: 'text-yellow-900',
+  },
+  ['This Month']: {
+    trendIcon: 'lucide-calendar',
+    trendColorClass: 'text-yellow-600',
+    cardClass: 'bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200',
+    labelClass: 'text-yellow-700',
+    valueClass: 'text-yellow-900',
   }
-};
+}
 
 @Injectable({ providedIn: 'root' })
 export class HelperService {
 
   getIcon(type: IconType): IconConfig {
     return iconConfig[type];
+  }
+
+  getTrendConfig(type: IconType): TrendConfig {
+    return trendConfig[type];
+  }
+
+  getSubmissionIcon(submissionType: string) {
+    return submissionClasses[submissionType];
   }
 
   getSubmissionClasses(label: string) {
