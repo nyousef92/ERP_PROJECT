@@ -17,12 +17,8 @@
             <h3 class="text-sm text-text pb-2 border-b border-border">Company Information</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 <div>
-                    <app-select-dropdown
-                        formControlName="selectedCompany"
-                        label="Company"
-                        [required]="true"
-                        [options]="companyOptions"
-                        (selectionChange)="selectCompany($event)"
+                    <app-select-dropdown formControlName="selectedCompany" label="Company" [required]="true"
+                        [options]="companyOptions" (selectionChange)="selectCompany($event)"
                         [touched]="treatyForm.get('companyInfo.selectedCompany')?.touched"
                         [errorMessage]="treatyForm.get('companyInfo.selectedCompany')?.invalid ? 'Company is required.' : ''" />
                 </div>
@@ -60,50 +56,31 @@
                         placeholder="Enter Description" />
                 </div>
                 <div>
-                    <app-select-dropdown
-                        formControlName="treatyType"
-                        label="Treaty Type"
-                        [required]="true"
-                        [options]="treatyTypes"
-                        [touched]="treatyForm.get('treatyDetails.treatyType')?.touched"
+                    <app-select-dropdown formControlName="treatyType" label="Treaty Type" [required]="true"
+                        [options]="treatyTypes" [touched]="treatyForm.get('treatyDetails.treatyType')?.touched"
                         [errorMessage]="treatyForm.get('treatyDetails.treatyType')?.invalid ? 'Treaty Type is required.' : ''" />
                 </div>
                 <div>
-                    <app-select-dropdown
-                        formControlName="treatySubType"
-                        label="Treaty Sub Type"
-                        [required]="true"
+                    <app-select-dropdown formControlName="treatySubType" label="Treaty Sub Type" [required]="true"
                         [options]="subTypesMap[currentTreatyType]"
                         [touched]="treatyForm.get('treatyDetails.treatySubType')?.touched"
                         [errorMessage]="treatyForm.get('treatyDetails.treatySubType')?.invalid ? 'Treaty Sub Type is required.' : ''" />
                 </div>
                 <div>
-                    <app-select-dropdown
-                        formControlName="currency"
-                        label="Currency"
-                        [required]="true"
-                        [options]="currencies"
-                        [touched]="treatyForm.get('treatyDetails.currency')?.touched"
+                    <app-select-dropdown formControlName="currency" label="Currency" [required]="true"
+                        [options]="currencies" [touched]="treatyForm.get('treatyDetails.currency')?.touched"
                         [errorMessage]="treatyForm.get('treatyDetails.currency')?.invalid ? 'Currency is required.' : ''" />
                 </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 <div>
-                    <app-input-field
-                        formControlName="fromDate"
-                        label="From Date"
-                        [required]="true"
-                        type="date"
+                    <app-input-field formControlName="fromDate" label="From Date" [required]="true" type="date"
                         [touched]="treatyForm.get('treatyDetails.fromDate')?.touched"
                         [errorMessage]="treatyForm.get('treatyDetails.fromDate')?.invalid ? 'From Date is required.' : ''" />
                 </div>
                 <div>
-                    <app-input-field
-                        formControlName="toDate"
-                        label="To Date"
-                        [required]="true"
-                        type="date"
+                    <app-input-field formControlName="toDate" label="To Date" [required]="true" type="date"
                         [touched]="treatyForm.get('treatyDetails.toDate')?.touched"
                         [errorMessage]="treatyForm.get('treatyDetails.toDate')?.invalid ? 'To Date is required.' : ''" />
                 </div>
@@ -111,19 +88,12 @@
                     <app-input-field formControlName="comments" label="Comments" placeholder="Add comments" />
                 </div>
                 <div>
-                    <app-select-dropdown
-                        formControlName="lob"
-                        label="LOB"
-                        [required]="true"
-                        [options]="lobOptions"
+                    <app-select-dropdown formControlName="lob" label="LOB" [required]="true" [options]="lobOptions"
                         [touched]="treatyForm.get('treatyDetails.lob')?.touched"
                         [errorMessage]="treatyForm.get('treatyDetails.lob')?.invalid ? 'LOB is required.' : ''" />
                 </div>
                 <div>
-                    <app-select-dropdown
-                        formControlName="subLob"
-                        label="Sub LOB"
-                        [options]="subLobMap[currentLob]" />
+                    <app-select-dropdown formControlName="subLob" label="Sub LOB" [options]="subLobMap[currentLob]" />
                 </div>
             </div>
 
@@ -206,7 +176,8 @@
         </div>
     </div>
 
-    <div class="px-4 sm:p-6 py-4 border-t border-border flex items-center justify-end gap-3 flex-shrink-0 bg-background">
+    <div
+        class="px-4 sm:p-6 py-4 border-t border-border flex items-center justify-end gap-3 flex-shrink-0 bg-background">
         <button (click)="onCancel()" type="button"
             class="px-4 py-2 border border-border rounded-lg text-text hover:bg-surface transition-colors text-sm">Cancel</button>
         <button type="submit" [disabled]="treatyForm.invalid"

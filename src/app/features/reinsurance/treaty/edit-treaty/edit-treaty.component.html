@@ -79,7 +79,7 @@
                         formControlName="treatySubType"
                         label="Treaty Sub Type"
                         [required]="true"
-                        [options]="subTypesMap[currentTreatyType] ?? []"
+                        [options]="subTypesMap[currentTreatyType]"
                         [touched]="treatyForm.get('treatyDetails.treatySubType')?.touched"
                         [errorMessage]="treatyForm.get('treatyDetails.treatySubType')?.invalid ? 'Treaty Sub Type is required.' : ''" />
                 </div>
@@ -129,7 +129,7 @@
                     <app-select-dropdown
                         formControlName="subLob"
                         label="Sub LOB"
-                        [options]="subLobMap[currentLob] ?? []" />
+                        [options]="subLobMap[currentLob]" />
                 </div>
             </div>
 
@@ -183,7 +183,7 @@
                         <tr [formGroup]="getReinsurerGroup($index)"
                             class="border-b border-border last:border-0 bg-surface hover:bg-background transition-colors">
                             <td class="px-2 py-2">
-                                <app-select-dropdown formControlName="company" [options]="companyOptions" />
+                                <app-select-dropdown formControlName="company" [options]="rInsurerOptions" />
                             </td>
                             <td class="px-2 py-2">
                                 <app-input-field formControlName="capacity" placeholder="Capacity" />

@@ -11,6 +11,7 @@ import { ModalComponent } from '@shared/modal/modal.component';
 import { AddNewTreatyComponent } from '../add-new-treaty/add-new-treaty.component';
 import { EditTreatyComponent } from '../edit-treaty/edit-treaty.component';
 import { SendTreatyToApprovalComponent } from '../send-treaty-to-approval/send-treaty-to-approval.component';
+import { DeleteItemComponent } from '@shared/delete-item/delete-item.component';
 
 @Component({
   selector: 'app-treaty',
@@ -86,25 +87,28 @@ export class TreatyComponent implements OnInit {
     }, 'md')
   }
 
-  deleteTreaty(id: string): void {
-    const item = this.history.find(x => x.id === id);
+  deleteTreaty(id: string, treatyCode: string): void {
 
-    console.log(item);
+    this.modal.open(DeleteItemComponent, {
+      description: `Are you sure you want to delete treaty with code ${treatyCode}`,
+      onDelete: () => {
+        const item = this.history.find(x => x.id === id);
+        this.history = this.history.filter(x => x.id !== id);
+        this.totalItems--;
+        this.treatyService.deleteTreaty(id).subscribe((response) => {
+          if (response.success) {
+            console.log(response);
+            this.getTreatyHistory();
+            return;
+          }
 
-    this.history = this.history.filter(x => x.id !== id);
-    this.totalItems--;
+          this.history.push(item);
+          this.totalItems++;
 
-    this.treatyService.deleteTreaty(id).subscribe((response) => {
-      if (response.success) {
-        console.log(response);
-        this.getTreatyHistory();
-        return;
+        }).unsubscribe();
       }
+    })
 
-      this.history.push(item);
-      this.totalItems++;
-
-    }).unsubscribe();
   }
 
   submitToApproval(id: string): void {

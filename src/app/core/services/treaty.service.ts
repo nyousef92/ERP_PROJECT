@@ -168,15 +168,15 @@ export class TreatyService {
 
     getTreatySubTypesMap() {
         return of({
-            "1": [
-                { id: 1, value: 'Quota Share', label: 'Quota Share' },
-                { id: 2, value: 'Surplus', label: 'Surplus' }
+            'Proportional': [
+                { value: 'Quota Share', label: 'Quota Share' },
+                { value: 'Surplus', label: 'Surplus' }
             ],
-            '2': [
-                { id: 3, value: 'Risk Excess', label: 'Risk Excess' },
-                { id: 4, value: 'Catastrophe Excess', label: 'Catastrophe Excess' },
-                { id: 5, value: 'Aggregate XoL', label: 'Aggregate XoL' },
-                { id: 6, value: 'Clash Cover', label: 'Clash Cover' }
+            'Non-Proportional': [
+                { value: 'Risk Excess', label: 'Risk Excess' },
+                { value: 'Catastrophe Excess', label: 'Catastrophe Excess' },
+                { value: 'Aggregate XoL', label: 'Aggregate XoL' },
+                { value: 'Clash Cover', label: 'Clash Cover' }
             ]
         });
     }

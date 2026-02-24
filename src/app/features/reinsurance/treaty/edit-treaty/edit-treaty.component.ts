@@ -21,6 +21,7 @@ export class EditTreatyComponent implements OnInit {
     isLoading = true;
 
     companies: any[] = [];
+    rInsurerenceCompanies: any[] = [];
     treatyTypes: SelectOption[] = [];
     subTypesMap: Record<string, SelectOption[]> = {};
     currencies: SelectOption[] = [];
@@ -29,6 +30,10 @@ export class EditTreatyComponent implements OnInit {
 
     get companyOptions(): SelectOption[] {
         return this.companies.map(c => ({ value: String(c.id), label: c.name }));
+    }
+
+    get rInsurerOptions(): SelectOption[] {
+        return this.rInsurerenceCompanies.map((c: any) => ({ value: c.value, label: c.value }));
     }
 
     /** Injected by the modal host — the id of the treaty to edit */
@@ -46,8 +51,12 @@ export class EditTreatyComponent implements OnInit {
             this.companies = resp;
         });
 
+        this.treatyService.getReInsurerenceCompanies().subscribe(resp => {
+            this.rInsurerenceCompanies = resp;
+        });
+
         this.treatyService.getTreatryYypes().subscribe(resp => {
-            this.treatyTypes = resp.map((c: any) => ({ value: String(c.id), label: c.name }));
+            this.treatyTypes = resp.map((c: any) => ({ value: c.value, label: c.name }));
         });
 
         this.treatyService.getTreatySubTypesMap().subscribe(resp => {
@@ -59,9 +68,9 @@ export class EditTreatyComponent implements OnInit {
         });
 
         this.facultativeSubmissionService.getLineOfBusinessTypes().subscribe(resp => {
-            this.lobOptions = resp.map((item: any) => ({ value: String(item.id), label: item.type }));
+            this.lobOptions = resp.map((item: any) => ({ value: item.type, label: item.type }));
             this.subLobMap = resp.reduce((acc: Record<string, SelectOption[]>, item: any) => {
-                acc[String(item.id)] = (item.subTypes as string[]).map(s => ({ value: s, label: s }));
+                acc[item.type] = (item.subTypes as string[]).map(s => ({ value: s, label: s }));
                 return acc;
             }, {});
         });

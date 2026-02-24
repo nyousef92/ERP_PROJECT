@@ -40,6 +40,7 @@ export class AddNewTreatyComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.setupDependents();
     this.getTreatyData();
     this.setReInsurerenceCompanies();
     this.setLineOfBusinessOptions();
@@ -58,9 +59,9 @@ export class AddNewTreatyComponent implements OnInit {
 
   setLineOfBusinessOptions(): void {
     this.facultativeSubmissionService.getLineOfBusinessTypes().subscribe(resp => {
-      this.lobOptions = resp.map(item => ({ value: String(item.id), label: item.type }));
+      this.lobOptions = resp.map(item => ({ value: item.type, label: item.type }));
       this.subLobMap = resp.reduce((acc: Record<string, SelectOption[]>, item: any) => {
-        acc[String(item.id)] = (item.subTypes as string[]).map(s => ({ value: s, label: s }));
+        acc[item.type] = (item.subTypes as string[]).map(s => ({ value: s, label: s }));
         return acc;
       }, {});
     });
@@ -203,7 +204,7 @@ export class AddNewTreatyComponent implements OnInit {
     });
 
     this.treatyService.getTreatryYypes().subscribe((resp) => {
-      this.treatyTypes = resp?.map((c: any) => ({ ...c, value: String(c.id), label: c.name })) ?? []
+      this.treatyTypes = resp?.map((c: any) => ({ value: c.value, label: c.name })) ?? []
     });
 
     this.treatyService.getTreatySubTypesMap().subscribe(resp => {
