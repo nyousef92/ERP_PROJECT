@@ -36,9 +36,9 @@ export class SharedService {
             {
               label: 'Treaty',
               children: [
-                { label: 'Treaty', route: '/reinsurance/treaty/treaty' },
-                { label: 'Claim', route: '/reinsurance/treaty/claim' },
-                { label: 'Approval', route: '/reinsurance/treaty/approval' },
+                { label: 'Treaty', route: '/home/reinsurance/treaty/treaty' },
+                { label: 'Claim', route: '/home/reinsurance/treaty/claims' },
+                { label: 'Approval', route: '/home/reinsurance/treaty/approval' },
               ]
             },
             {
@@ -176,7 +176,7 @@ export class SharedService {
     FileSaver.saveAs(data, `${fileName}_${new Date().getTime()}.xlsx`);
   }
 
-  generatePDF(docId:string,fileName:string): void {
+  generatePDF(docId: string, fileName: string): void {
     const data = document.getElementById(docId); // The HTML element ID to export
 
     if (data) {

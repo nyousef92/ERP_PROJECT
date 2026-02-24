@@ -1,0 +1,157 @@
+<div class="bg-white rounded-xl w-full flex flex-col" style="min-width: 720px">
+
+    <!-- Header -->
+    <div class="px-6 py-4 border-b border-gray-200 flex-shrink-0">
+        <h2 class="text-base font-semibold text-gray-900">Excess Details Management</h2>
+        <p class="text-xs text-gray-500 mt-0.5">Manage excess details for this sub-detail</p>
+    </div>
+
+    <div class="px-6 py-4 flex-1 overflow-y-auto" [formGroup]="form">
+
+        <!-- Section header -->
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-sm font-medium text-gray-700">Nested Details List</span>
+            <button type="button" (click)="addRow()"
+                class="flex items-center gap-1 px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14" />
+                    <path d="M12 5v14" />
+                </svg>
+                Excess
+            </button>
+        </div>
+
+        <!-- Empty state -->
+        @if (rows.length === 0) {
+        <div
+            class="text-center py-10 text-gray-500 text-sm bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+            No nested details added yet. Click "+ Excess" to begin.
+        </div>
+        }
+
+        <!-- Table -->
+        @if (rows.length > 0) {
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+            <table class="w-full text-xs border-collapse">
+                <thead>
+                    <tr class="bg-gray-100 text-gray-700">
+                        <th class="px-2 py-2 text-left font-semibold w-[130px]">Company</th>
+                        <th class="px-2 py-2 text-left font-semibold">Signed %</th>
+                        <th class="px-2 py-2 text-left font-semibold">Written %</th>
+                        <th class="px-2 py-2 text-left font-semibold">Broker %</th>
+                        <th class="px-2 py-2 text-left font-semibold">Tax %</th>
+                        <th class="px-2 py-2 text-left font-semibold">Comm %</th>
+                        <th class="px-2 py-2 text-left font-semibold">Reason</th>
+                        <th class="px-2 py-2 text-left font-semibold">Description</th>
+                        <th class="px-2 py-2 text-center font-semibold w-[50px]">Action</th>
+                    </tr>
+                </thead>
+                <tbody formArrayName="rows">
+                    @for (row of rows.controls; track $index) {
+                    <tr [formGroupName]="$index"
+                        class="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
+
+                        <!-- Company -->
+                        <td class="px-2 py-1.5">
+                            <select formControlName="company"
+                                class="w-full h-[28px] px-1.5 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400 bg-white">
+                                <option value="">Select...</option>
+                                @for (c of companies; track c.id) {
+                                <option [value]="c.value">{{ c.value }}</option>
+                                }
+                            </select>
+                        </td>
+
+                        <!-- Signed % -->
+                        <td class="px-2 py-1.5">
+                            <div class="relative">
+                                <input type="number" formControlName="signedPct" placeholder="%"
+                                    class="w-full h-[28px] pl-2 pr-5 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400">
+                                <span class="absolute right-1.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs">%</span>
+                            </div>
+                        </td>
+
+                        <!-- Written % -->
+                        <td class="px-2 py-1.5">
+                            <div class="relative">
+                                <input type="number" formControlName="writtenPct" placeholder="%"
+                                    class="w-full h-[28px] pl-2 pr-5 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400">
+                                <span class="absolute right-1.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs">%</span>
+                            </div>
+                        </td>
+
+                        <!-- Broker % -->
+                        <td class="px-2 py-1.5">
+                            <div class="relative">
+                                <input type="number" formControlName="brokerPct" placeholder="%"
+                                    class="w-full h-[28px] pl-2 pr-5 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400">
+                                <span class="absolute right-1.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs">%</span>
+                            </div>
+                        </td>
+
+                        <!-- Tax % -->
+                        <td class="px-2 py-1.5">
+                            <div class="relative">
+                                <input type="number" formControlName="taxPct" placeholder="%"
+                                    class="w-full h-[28px] pl-2 pr-5 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400">
+                                <span class="absolute right-1.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs">%</span>
+                            </div>
+                        </td>
+
+                        <!-- Comm % -->
+                        <td class="px-2 py-1.5">
+                            <div class="relative">
+                                <input type="number" formControlName="commPct" placeholder="%"
+                                    class="w-full h-[28px] pl-2 pr-5 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400">
+                                <span class="absolute right-1.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs">%</span>
+                            </div>
+                        </td>
+
+                        <!-- Reason -->
+                        <td class="px-2 py-1.5">
+                            <input type="text" formControlName="reason" placeholder="Reason"
+                                class="w-full h-[28px] px-2 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400">
+                        </td>
+
+                        <!-- Description -->
+                        <td class="px-2 py-1.5">
+                            <input type="text" formControlName="description" placeholder="Description"
+                                class="w-full h-[28px] px-2 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400">
+                        </td>
+
+                        <!-- Delete -->
+                        <td class="px-2 py-1.5 text-center">
+                            <button type="button" (click)="removeRow($index)"
+                                class="text-red-500 hover:text-red-700 transition-colors" title="Remove">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M3 6h18" />
+                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        }
+
+    </div>
+
+    <!-- Footer -->
+    <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-end gap-3 flex-shrink-0 bg-gray-50">
+        <button type="button" (click)="onCancel()"
+            class="px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-100 transition-colors">
+            Cancel
+        </button>
+        <button type="button" (click)="saveExcess()"
+            class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors">
+            Save Details
+        </button>
+    </div>
+
+</div>
