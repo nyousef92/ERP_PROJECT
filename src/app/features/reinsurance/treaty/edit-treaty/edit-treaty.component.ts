@@ -1,5 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TreatyService } from '../../../../core/services/treaty.service';
+import { FacultativeSubmissionService } from '../../../../core/services/facultative.submission.service';
+import { SharedService } from '@core/services/shared.service';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { SelectDropdownComponent, SelectOption } from '@shared/select-dropdown/select-dropdown.component';
@@ -11,23 +13,58 @@ import { SelectDropdownComponent, SelectOption } from '@shared/select-dropdown/s
 })
 export class EditTreatyComponent implements OnInit {
     treatyService = inject(TreatyService);
+    facultativeSubmissionService = inject(FacultativeSubmissionService);
+    shared = inject(SharedService);
     fb = inject(FormBuilder);
 
-    treatyData!: any;
     treatyForm!: FormGroup;
     isLoading = true;
+
+    companies: any[] = [];
+    treatyTypes: SelectOption[] = [];
+    subTypesMap: Record<string, SelectOption[]> = {};
+    currencies: SelectOption[] = [];
+    lobOptions: SelectOption[] = [];
+    subLobMap: Record<string, SelectOption[]> = {};
+
+    get companyOptions(): SelectOption[] {
+        return this.companies.map(c => ({ value: String(c.id), label: c.name }));
+    }
 
     /** Injected by the modal host — the id of the treaty to edit */
     treatyId!: string;
     close!: () => void;
 
-    get companyOptions(): SelectOption[] {
-        return this.treatyData?.companies?.map((c: any) => ({ value: String(c.id), label: c.name })) ?? [];
-    }
-
     ngOnInit(): void {
         this.initForm();
+        this.loadLists();
         this.loadTreatyForEdit();
+    }
+
+    private loadLists(): void {
+        this.treatyService.getTreatyCompanies().subscribe(resp => {
+            this.companies = resp;
+        });
+
+        this.treatyService.getTreatryYypes().subscribe(resp => {
+            this.treatyTypes = resp.map((c: any) => ({ value: String(c.id), label: c.name }));
+        });
+
+        this.treatyService.getTreatySubTypesMap().subscribe(resp => {
+            this.subTypesMap = resp;
+        });
+
+        this.shared.getCurrencies().subscribe(resp => {
+            this.currencies = resp;
+        });
+
+        this.facultativeSubmissionService.getLineOfBusinessTypes().subscribe(resp => {
+            this.lobOptions = resp.map((item: any) => ({ value: String(item.id), label: item.type }));
+            this.subLobMap = resp.reduce((acc: Record<string, SelectOption[]>, item: any) => {
+                acc[String(item.id)] = (item.subTypes as string[]).map(s => ({ value: s, label: s }));
+                return acc;
+            }, {});
+        });
     }
 
     onCancel(): void {
@@ -35,7 +72,7 @@ export class EditTreatyComponent implements OnInit {
     }
 
     selectCompany(companyId: string): void {
-        const company = this.treatyData?.companies?.find((c: any) => String(c.id) === companyId);
+        const company = this.companies.find((c: any) => String(c.id) === companyId);
         if (company) {
             this.treatyForm.get('companyInfo')?.patchValue({
                 selectedCompany: String(company.id),
@@ -108,7 +145,6 @@ export class EditTreatyComponent implements OnInit {
 
     private loadTreatyForEdit(): void {
         this.treatyService.getTreatyForEdit(this.treatyId).subscribe(data => {
-            this.treatyData = data;
             this.treatyForm.get('companyInfo')?.patchValue(data.companyInfo);
             this.treatyForm.get('treatyDetails')?.patchValue(data.treatyDetails);
             this.isLoading = false;

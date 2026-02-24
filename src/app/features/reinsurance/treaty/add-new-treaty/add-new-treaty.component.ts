@@ -1,10 +1,12 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { TreatyService } from '../../../../core/services/treaty.service';
+import { FacultativeSubmissionService } from '../../../../core/services/facultative.submission.service';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { SelectDropdownComponent, SelectOption } from '@shared/select-dropdown/select-dropdown.component';
 import { ModalComponent } from '@shared/modal/modal.component';
 import { SubDetailsManagementComponent } from './sub-details-management/sub-details-management.component';
+import { SharedService } from '@core/services/shared.service';
 
 @Component({
   selector: 'app-add-new-treaty',
@@ -14,11 +16,16 @@ import { SubDetailsManagementComponent } from './sub-details-management/sub-deta
 export class AddNewTreatyComponent implements OnInit {
   @ViewChild(ModalComponent) modal!: ModalComponent;
   treatyService = inject(TreatyService);
+  shared = inject(SharedService);
+  facultativeSubmissionService = inject(FacultativeSubmissionService);
   fb = inject(FormBuilder);
 
-  treatyData!: any;
   companyOptions: any[] = [];
   treatyTypes: any[] = [];
+  lobOptions: SelectOption[] = [];
+  currencies: SelectOption[] = [];
+  subLobMap: Record<string, SelectOption[]> = {};
+  subTypesMap: Record<string, SelectOption[]> = {};
   treatyForm!: FormGroup;
 
   rInsurerenceCompanies: any[] = [];
@@ -35,11 +42,27 @@ export class AddNewTreatyComponent implements OnInit {
     this.initForm();
     this.getTreatyData();
     this.setReInsurerenceCompanies();
+    this.setLineOfBusinessOptions();
+    this.geCurrencies();
+  }
+
+  geCurrencies() {
+    this.shared.getCurrencies().subscribe(resp => this.currencies = resp)
   }
 
   setReInsurerenceCompanies(): void {
     this.treatyService.getReInsurerenceCompanies().subscribe(resp => {
       this.rInsurerenceCompanies = resp;
+    });
+  }
+
+  setLineOfBusinessOptions(): void {
+    this.facultativeSubmissionService.getLineOfBusinessTypes().subscribe(resp => {
+      this.lobOptions = resp.map(item => ({ value: String(item.id), label: item.type }));
+      this.subLobMap = resp.reduce((acc: Record<string, SelectOption[]>, item: any) => {
+        acc[String(item.id)] = (item.subTypes as string[]).map(s => ({ value: s, label: s }));
+        return acc;
+      }, {});
     });
   }
 
@@ -176,15 +199,15 @@ export class AddNewTreatyComponent implements OnInit {
 
   private getTreatyData(): void {
     this.treatyService.getTreatyCompanies().subscribe((resp) => {
-      this.companyOptions = resp?.map((c: any) => ({...c, value: String(c.id), label: c.name })) ?? []
-    });
-    
-    this.treatyService.getTreatryYypes().subscribe((resp) => {
-      this.treatyTypes = resp?.map((c: any) => ({...c, value: String(c.id), label: c.name })) ?? []
+      this.companyOptions = resp?.map((c: any) => ({ ...c, value: String(c.id), label: c.name })) ?? []
     });
 
-    this.treatyService.getCreateNewTreateData().subscribe(resp => {
-      this.treatyData = resp;
+    this.treatyService.getTreatryYypes().subscribe((resp) => {
+      this.treatyTypes = resp?.map((c: any) => ({ ...c, value: String(c.id), label: c.name })) ?? []
+    });
+
+    this.treatyService.getTreatySubTypesMap().subscribe(resp => {
+      this.subTypesMap = resp;
     });
   }
 

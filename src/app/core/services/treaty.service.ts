@@ -161,70 +161,26 @@ export class TreatyService {
 
     getTreatryYypes() {
         return of([
-            { value: "Proportional", name: "Proportional",id:1 },
-            { value: "Non-Proportional", name: "Non-Proportional",id:2 }
+            { value: "Proportional", name: "Proportional", id: 1 },
+            { value: "Non-Proportional", name: "Non-Proportional", id: 2 }
         ]);
     }
 
-    getCreateNewTreateData() {
-        const formOptions = {
-
-            reInsureParticipantionsCompanies: [
-                { id: "COMP-88291", name: "Tawuniya" },
-                { id: "COMP-77342", name: "Bupa Arabia" }
+    getTreatySubTypesMap() {
+        return of({
+            "1": [
+                { id: 1, value: 'Quota Share', label: 'Quota Share' },
+                { id: 2, value: 'Surplus', label: 'Surplus' }
             ],
-            treatySubTypesMap: {
-                Proportional: [
-                    { value: 'Quota Share', label: 'Quota Share' },
-                    { value: 'Surplus', label: 'Surplus' }
-                ],
-                'Non-Proportional': [
-                    { value: 'Risk Excess', label: 'Risk Excess' },
-                    { value: 'Catastrophe Excess', label: 'Catastrophe Excess' },
-                    { value: 'Aggregate XoL', label: 'Aggregate XoL' },
-                    { value: 'Clash Cover', label: 'Clash Cover' }
-                ]
-            },
-
-            currencies: [
-                { value: "SAR", label: "SAR - Saudi Riyal" },
-                { value: "USD", label: "USD - US Dollar" },
-                { value: "EUR", label: "EUR - Euro" },
-                { value: "GBP", label: "GBP - British Pound" },
-                { value: "AED", label: "AED - UAE Dirham" }
-            ],
-
-            lineOfBusiness: [
-                { value: "Property", label: "Property" },
-                { value: "Casualty", label: "Casualty" },
-                { value: "Marine", label: "Marine" },
-                { value: "Life", label: "Life" },
-                { value: "Health", label: "Health" },
-                { value: "Motor", label: "Motor" },
-                { value: "Engineering", label: "Engineering" }
-            ],
-            subLOBs: {
-                Property: [
-                    { value: "Fire", label: "Fire" },
-                    { value: "Burglary", label: "Burglary" },
-                    { value: "Homeowners", label: "Homeowners" }
-                ],
-                Motor: [
-                    { value: "Motor Third Party", label: "Motor Third Party" },
-                    { value: "Motor Comprehensive", label: "Motor Comprehensive" }
-                ],
-                Marine: [
-                    { value: "Marine Hull", label: "Marine Hull" },
-                    { value: "Marine Cargo", label: "Marine Cargo" }
-                ],
-                Life: [
-                    { value: "Group Life", label: "Group Life" },
-                    { value: "Individual Life", label: "Individual Life" }
-                ]
-            }
-        };
-        return of(formOptions);
+            '2': [
+                { id: 3, value: 'Risk Excess', label: 'Risk Excess' },
+                { id: 4, value: 'Catastrophe Excess', label: 'Catastrophe Excess' },
+                { id: 5, value: 'Aggregate XoL', label: 'Aggregate XoL' },
+                { id: 6, value: 'Clash Cover', label: 'Clash Cover' }
+            ]
+        });
     }
+
 
     getTreatyForEdit(id: string) {
         // Simulated treaty records — in production this would be an API call
@@ -288,72 +244,15 @@ export class TreatyService {
         };
 
         const record = treatyRecords[id] ?? treatyRecords['QS-2024-123'];
-        const company = [
+        const companies = [
             { id: 'COMP-88291', name: 'Tawuniya', account: 'ACC-00129388', fax: '+966 11 123 4567', phone: '+966 11 123 4567', email: 'reinsurance@tawuniya.com.sa', address: '' },
             { id: 'COMP-77342', name: 'Bupa Arabia', account: 'ACC-00994421', fax: '+966 12 667 0761', phone: '+966 12 667 0761', email: 're@bupa.com.sa', address: '' },
             { id: 'COMP-66510', name: 'Al Rajhi Takaful', account: 'ACC-00441100', fax: '+966 11 228 1111', phone: '+966 11 228 1111', email: 'info@alrajhitakaful.com', address: '' },
             { id: 'COMP-55123', name: 'Malath Insurance', account: 'ACC-00223388', fax: '+966 11 216 1212', phone: '+966 11 216 1212', email: 'treaty@malath.com.sa', address: '' }
-        ].find(c => c.id === record.selectedCompany)!;
+        ];
+        const company = companies.find(c => c.id === record.selectedCompany)!;
 
         return of({
-            companies: [
-                { id: 'COMP-88291', name: 'Tawuniya', account: 'ACC-00129388', fax: '+966 11 123 4567', phone: '+966 11 123 4567', email: 'reinsurance@tawuniya.com.sa', address: '' },
-                { id: 'COMP-77342', name: 'Bupa Arabia', account: 'ACC-00994421', fax: '+966 12 667 0761', phone: '+966 12 667 0761', email: 're@bupa.com.sa', address: '' },
-                { id: 'COMP-66510', name: 'Al Rajhi Takaful', account: 'ACC-00441100', fax: '+966 11 228 1111', phone: '+966 11 228 1111', email: 'info@alrajhitakaful.com', address: '' },
-                { id: 'COMP-55123', name: 'Malath Insurance', account: 'ACC-00223388', fax: '+966 11 216 1212', phone: '+966 11 216 1212', email: 'treaty@malath.com.sa', address: '' }
-            ],
-            treatyTypes: [
-                { value: 'Proportional', label: 'Proportional' },
-                { value: 'Non-Proportional', label: 'Non-Proportional' }
-            ],
-            treatySubTypesMap: {
-                Proportional: [
-                    { value: 'Quota Share', label: 'Quota Share' },
-                    { value: 'Surplus', label: 'Surplus' }
-                ],
-                'Non-Proportional': [
-                    { value: 'Risk Excess', label: 'Risk Excess' },
-                    { value: 'Catastrophe Excess', label: 'Catastrophe Excess' },
-                    { value: 'Aggregate XoL', label: 'Aggregate XoL' },
-                    { value: 'Clash Cover', label: 'Clash Cover' }
-                ]
-            },
-            currencies: [
-                { value: 'SAR', label: 'SAR - Saudi Riyal' },
-                { value: 'USD', label: 'USD - US Dollar' },
-                { value: 'EUR', label: 'EUR - Euro' },
-                { value: 'GBP', label: 'GBP - British Pound' },
-                { value: 'AED', label: 'AED - UAE Dirham' }
-            ],
-            lineOfBusiness: [
-                { value: 'Property', label: 'Property' },
-                { value: 'Casualty', label: 'Casualty' },
-                { value: 'Marine', label: 'Marine' },
-                { value: 'Life', label: 'Life' },
-                { value: 'Health', label: 'Health' },
-                { value: 'Motor', label: 'Motor' },
-                { value: 'Engineering', label: 'Engineering' }
-            ],
-            subLOBs: {
-                Property: [
-                    { value: 'Fire', label: 'Fire' },
-                    { value: 'Burglary', label: 'Burglary' },
-                    { value: 'Homeowners', label: 'Homeowners' }
-                ],
-                Motor: [
-                    { value: 'Motor Third Party', label: 'Motor Third Party' },
-                    { value: 'Motor Comprehensive', label: 'Motor Comprehensive' }
-                ],
-                Marine: [
-                    { value: 'Marine Hull', label: 'Marine Hull' },
-                    { value: 'Marine Cargo', label: 'Marine Cargo' }
-                ],
-                Life: [
-                    { value: 'Group Life', label: 'Group Life' },
-                    { value: 'Individual Life', label: 'Individual Life' }
-                ]
-            },
-            // pre-filled values
             companyInfo: {
                 selectedCompany: record.selectedCompany,
                 companyId: company?.id ?? '',
