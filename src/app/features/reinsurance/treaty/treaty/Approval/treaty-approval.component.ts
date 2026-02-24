@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 import { ModalComponent } from '@shared/modal/modal.component';
+import { InputFieldComponent } from '@shared/input-field/input-field.component';
 import { TreatyApprovalService } from '@core/services/traty-approval.service';
 import { ViewTreatyApprovalComponent } from './view-treaty-approval/view-treaty-approval.component';
 
@@ -23,7 +24,7 @@ interface TreatyApprovalItem {
 
 @Component({
   selector: 'app-treaty-approval',
-  imports: [CommonModule, BreadcrumbComponent, ModalComponent],
+  imports: [CommonModule, BreadcrumbComponent, ModalComponent, InputFieldComponent],
   templateUrl: './treaty-approval.component.html'
 })
 export class TreatyApprovalComponent implements OnInit {
