@@ -13,7 +13,7 @@
       [errorMessage]="getErrorMessage('status', 'Status')" [touched]="form.get('status')?.touched" />
 
     <app-input-field formControlName="approvedAmount" label="Approved Amount" type="number"
-      placeholder="Enter approved amount" [errorMessage]="getErrorMessage('approvedAmount', 'Approved Amount')"
+      placeholder="Enter amount in USD" [errorMessage]="getErrorMessage('approvedAmount', 'Approved Amount')"
       [touched]="form.get('approvedAmount')?.touched" />
 
     <app-input-field-text-area formControlName="notes" label="Notes" placeholder="Add notes..."

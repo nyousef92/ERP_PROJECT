@@ -1,0 +1,65 @@
+@if (form) {
+<div class="bg-surface rounded-lg p-5 w-full">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-5">
+    <h3 class="text-base text-text">{{ isEditMode ? 'Update Contact' : 'Add New Contact' }}</h3>
+  </div>
+
+  <form [formGroup]="form" class="space-y-4">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <app-input-field formControlName="contactName" label="Contact Name" placeholder="Enter contact name"
+        [required]="true" [errorMessage]="getErrorMessage('contactName', 'Contact Name')"
+        [touched]="form.get('contactName')?.touched" />
+
+      <app-input-field formControlName="phoneNo" label="Phone No" placeholder="+1 234 567 8900" [required]="true"
+        [errorMessage]="getErrorMessage('phoneNo', 'Phone No')" [touched]="form.get('phoneNo')?.touched" />
+
+      <app-select-dropdown formControlName="region" label="Region" [options]="regionOptions" [required]="true"
+        [errorMessage]="getErrorMessage('region', 'Region')" [touched]="form.get('region')?.touched" />
+
+      <app-input-field formControlName="email" label="Email" type="email" placeholder="email@example.com"
+        [required]="true" [errorMessage]="getErrorMessage('email', 'Email')" [touched]="form.get('email')?.touched" />
+
+      <div class="md:col-span-2">
+        <app-input-field formControlName="address" label="Address" placeholder="Enter full address" [required]="true"
+          [errorMessage]="getErrorMessage('address', 'Address')" [touched]="form.get('address')?.touched" />
+      </div>
+
+      <app-input-field formControlName="accountNo" label="Account No" placeholder="ACC-XXX-000" [required]="true"
+        [errorMessage]="getErrorMessage('accountNo', 'Account No')" [touched]="form.get('accountNo')?.touched" />
+
+      <app-select-dropdown formControlName="businessLine" label="Business Line" [options]="businessLineOptions"
+        [required]="true" [errorMessage]="getErrorMessage('businessLine', 'Business Line')"
+        [touched]="form.get('businessLine')?.touched" [multiple]="true" />
+
+      <app-select-dropdown formControlName="subLine" label="Sub Line of Business" [options]="subLineOptions"
+        [errorMessage]="getErrorMessage('subLine', 'Sub Line')" [touched]="form.get('subLine')?.touched"
+        [multiple]="true" />
+
+      <app-select-dropdown formControlName="type" label="Type" [options]="typeOptions" [required]="true"
+        [errorMessage]="getErrorMessage('type', 'Type')" [touched]="form.get('type')?.touched" />
+
+      <app-select-dropdown formControlName="status" label="Status" [options]="statusOptions" [required]="true"
+        [errorMessage]="getErrorMessage('status', 'Status')" [touched]="form.get('status')?.touched" />
+
+    </div>
+
+  </form>
+
+  <!-- Footer -->
+  <div class="flex justify-end gap-2 mt-6">
+    <button (click)="cancel()"
+      class="px-3 py-1.5 text-sm border border-border rounded-lg text-text-secondary hover:bg-background transition-colors">
+      Cancel
+    </button>
+    <button (click)="onSave()"
+      class="px-3 py-1.5 text-sm bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+      {{ isEditMode ? 'Update Contact' : 'Add Contact' }}
+    </button>
+  </div>
+
+</div>
+}

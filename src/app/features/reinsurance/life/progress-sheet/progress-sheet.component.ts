@@ -32,8 +32,8 @@ export class ProgressSheetComponent {
   currentPage: number = 1;
   totalItems: number = 0;
   searchValue: string = '';
-
-
+  searchBalueChanged: Subject<string> = new Subject();
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -46,7 +46,8 @@ export class ProgressSheetComponent {
         this.progressSheetService.addNewLifeProgressSheet(data).subscribe(() => {
           this.history = [{ ...data, statusClass: this.helper.getStatusClass('Submitted') }, ...this.history];
           this.totalItems += 1;
-        })
+        });
+        this.getPageData();
       }
     }, 'xl');
   }
@@ -56,13 +57,19 @@ export class ProgressSheetComponent {
       this.modal.open(AddProgressSheetComponent, {
         progressSheet: data,
         onSaved: (updated: any) => {
-          this.progressSheetService.updateProgressSheet(refNo, updated).subscribe()
+          this.progressSheetService.updateProgressSheet(refNo, updated).subscribe();
+          this.getPageData();
+
         }
       }, 'xl')
     });
 
   }
   ngOnInit(): void {
+    this.getPageData();
+  }
+
+  getPageData() {
     forkJoin([
       this.progressSheetService.getFileProgressSheetMetrics(),
       this.progressSheetService.getFileProgressSheetHistory({
@@ -79,9 +86,6 @@ export class ProgressSheetComponent {
       this.totalItems = data[1].totalItems;
     });
   }
-
-
-  searchBalueChanged: Subject<string> = new Subject();
 
   addEventListener() {
     this.searchBalueChanged.pipe(exhaustMap((seachVal) => this.updateSearchValue(seachVal, this.currentPage)))

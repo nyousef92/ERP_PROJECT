@@ -23,7 +23,7 @@ export class PreviewClaimComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private claimsService: ClaimsService,
-    protected helper: HelperService
+    public helper: HelperService
   ) {
     this.claimNo = this.route.snapshot.paramMap.get('claimNo');
   }
@@ -42,7 +42,7 @@ export class PreviewClaimComponent implements OnInit {
   }
 
   reviewAndApprove() {
-    this.modal.open(ReviewApproveClaimComponent, { claim: this.claim } ,'md');
+    this.modal.open(ReviewApproveClaimComponent, { claim: this.claim }, 'md');
   }
 
   viewReinsurerHistory(reinsurer: any) {
@@ -50,7 +50,15 @@ export class PreviewClaimComponent implements OnInit {
   }
 
   updateReinsurer(reinsurer: any) {
-    this.modal.open(UpdateReinsurerComponent, { reinsurer });
+    this.modal.open(UpdateReinsurerComponent, {
+      reinsurer,
+      onSaved: (formValue: any) => {
+        reinsurer.status = formValue.status??reinsurer.status;
+        reinsurer.approvedAmount = formValue.approvedAmount??reinsurer.approvedAmount;
+        this.claim.reinsurerLines = [...this.claim.reinsurerLines]
+          .map((item: any) => ({ ...item, classes: this.helper.getStatusClass(item.status) }));
+      }
+    });
   }
 
 }

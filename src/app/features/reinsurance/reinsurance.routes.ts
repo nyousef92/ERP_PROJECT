@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { ContractsComponent } from './contracts/contracts.component';
 import { ClaimsComponent } from './claims/claims.component';
 import { PreviewClaimComponent } from './claims/preview-claim/preview-claim.component';
+import { ContactsComponent } from './contacts/contacts.component';
 
 export const REINSURANCE_ROUTES: Routes = [
     { path: '', redirectTo: 'facultative', pathMatch: 'full' },
@@ -25,5 +26,9 @@ export const REINSURANCE_ROUTES: Routes = [
             { path: '', component: ClaimsComponent },
             { path: 'preview/:claimNo', component: PreviewClaimComponent }
         ]
+    }
+    ,{
+        path:'contacts',
+        component:ContactsComponent
     }
 ];

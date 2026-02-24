@@ -1,5 +1,4 @@
-import { Component, Input, Output, EventEmitter, forwardRef, OnInit } from '@angular/core';
-
+import { Component, Input, Output, EventEmitter, forwardRef, OnInit, HostListener, ElementRef } from '@angular/core';
 import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
@@ -8,9 +7,9 @@ export interface SelectOption {
   value?: number | string,
   label: string
 }
+
 @Component({
   selector: 'app-select-dropdown',
-
   imports: [FormsModule, ReactiveFormsModule, NgSelectModule],
   templateUrl: './select-dropdown.component.html',
   providers: [
@@ -26,18 +25,20 @@ export class SelectDropdownComponent implements ControlValueAccessor, OnInit {
   @Input() placeholder: string = 'Select';
   @Input() label?: string;
   @Input() required?: boolean;
+  @Input() multiple: boolean = false;
   @Input() errorMessage?: string;
   @Input() touched?: boolean;
-  @Output() selectionChange = new EventEmitter<string | number>();
+  @Output() selectionChange = new EventEmitter<any>();
 
   @Input() set selectedValue(value: string | number) {
     this.value = value;
-    this.formControl.setValue(value?.toString() || '', { emitEvent: false });
+    if (!this.multiple) {
+      this.formControl.setValue(value?.toString() || '', { emitEvent: false });
+    }
   }
   get selectedValue(): string | number {
-    return this.value;
+    return this.value as string | number;
   }
-
 
   private _disabled = false;
 
@@ -54,39 +55,44 @@ export class SelectDropdownComponent implements ControlValueAccessor, OnInit {
     return this._disabled;
   }
 
-  value: string | number = '';
+  // Single select state
+  value: any = '';
   formControl = new FormControl<string>('');
 
-  onChange = (value: string | number) => { };
+  // Multi select state
+  isOpen = false;
+  selectedValues: string[] = [];
+
+  onChange = (value: any) => { };
   onTouched = () => { };
 
-  constructor(
-  ) { }
+  constructor(private el: ElementRef) { }
 
-  get formControlErrors(): string | null {
-    if (this.formControl.errors) {
-      if (this.formControl.errors['required']) {
-        return 'This field is required.';
-      }
-      // Add other error types as needed
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    if (this.multiple && !this.el.nativeElement.contains(event.target)) {
+      this.isOpen = false;
     }
-    return null;
   }
 
-  writeValue(value: string | number): void {
-
-    this.value = value || '';
-    // Use a small delay to allow options to render before setting the value
-    setTimeout(() => {
-      this.formControl.setValue(this.value?.toString() || '', { emitEvent: false });
-    });
+  writeValue(value: any): void {
+    if (this.multiple) {
+      this.selectedValues = Array.isArray(value) ? value : (value ? [value] : []);
+    } else {
+      this.value = value || '';
+      setTimeout(() => {
+        this.formControl.setValue(this.value?.toString() || '', { emitEvent: false });
+      });
+    }
   }
 
-  registerOnChange(fn: (value: string | number) => void): void {
+  registerOnChange(fn: (value: any) => void): void {
     this.onChange = fn;
-    this.formControl.valueChanges.subscribe((value: string | null) => {
-      this.onChange(value || '');
-    });
+    if (!this.multiple) {
+      this.formControl.valueChanges.subscribe((value: string | null) => {
+        this.onChange(value || '');
+      });
+    }
   }
 
   registerOnTouched(fn: () => void): void {
@@ -97,16 +103,15 @@ export class SelectDropdownComponent implements ControlValueAccessor, OnInit {
     this.disabled = isDisabled;
   }
 
+  // Single select
   onSelectionChange(event: any) {
     const value = event?.value || event?.target?.value;
     this.value = value;
     this.onChange(value);
     this.onTouched();
     this.selectionChange.emit(value);
-
     this.formControl.markAsTouched();
   }
-
 
   onBlur() {
     this.onTouched();
@@ -117,17 +122,60 @@ export class SelectDropdownComponent implements ControlValueAccessor, OnInit {
     this.formControl.markAsTouched();
   }
 
-  ngOnInit() {
-    // Always initialize with empty value to show placeholder
-    this.placeholder = this.placeholder === 'Select' ? `Select ${this.label || ''}` : this.placeholder;
-    if (!this.selectedValue) {
-      this.writeValue('');
-    } else {
-      this.writeValue(this.selectedValue)
+  // Multi select
+  toggleDropdown(event: Event) {
+    event.stopPropagation();
+    if (!this._disabled) {
+      this.isOpen = !this.isOpen;
+      this.onTouched();
     }
   }
 
+  toggleOption(event: Event, optionValue: string) {
+    event.stopPropagation();
+    const idx = this.selectedValues.indexOf(optionValue);
+    if (idx === -1) {
+      this.selectedValues = [...this.selectedValues, optionValue];
+    } else {
+      this.selectedValues = this.selectedValues.filter(v => v !== optionValue);
+    }
+    this.onChange(this.selectedValues);
+    this.selectionChange.emit(this.selectedValues);
+  }
 
+  removeOption(event: Event, optionValue: string) {
+    event.stopPropagation();
+    this.selectedValues = this.selectedValues.filter(v => v !== optionValue);
+    this.onChange(this.selectedValues);
+    this.selectionChange.emit(this.selectedValues);
+  }
+
+  isSelected(optionValue: string): boolean {
+    return this.selectedValues.includes(optionValue);
+  }
+
+  getLabelForValue(val: string): string {
+    return this.options.find(o => o.value?.toString() === val)?.label ?? val;
+  }
+
+  getTriggerLabel(): string {
+    if (this.selectedValues.length === 0) return '';
+    if (this.selectedValues.length <= 2) {
+      return this.selectedValues.map(v => this.getLabelForValue(v)).join(', ');
+    }
+    return `${this.selectedValues.length} selected`;
+  }
+
+  ngOnInit() {
+    this.placeholder = this.placeholder === 'Select' ? `Select ${this.label || ''}` : this.placeholder;
+    if (!this.multiple) {
+      if (!this.selectedValue) {
+        this.writeValue('');
+      } else {
+        this.writeValue(this.selectedValue);
+      }
+    }
+  }
 
   showError(): boolean {
     return !!((this.touched || this.formControl.touched) && this.errorMessage);

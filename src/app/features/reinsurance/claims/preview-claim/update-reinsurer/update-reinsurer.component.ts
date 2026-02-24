@@ -16,6 +16,7 @@ export class UpdateReinsurerComponent implements OnInit {
 
   reinsurer: any;
   close!: () => void;
+  onSaved!: (params: any) => void;
 
   form!: FormGroup;
   statusOptions: SelectOption[] = [];
@@ -27,6 +28,7 @@ export class UpdateReinsurerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
     this.claimsService.getClaimsStatuses().subscribe(statuses => {
       this.statusOptions = statuses;
       this.form = this.fb.group({
@@ -44,6 +46,8 @@ export class UpdateReinsurerComponent implements OnInit {
       return;
     }
     this.claimsService.updateReinsurer(this.form.value).subscribe(() => this.close());
+
+    this.onSaved(this.form.value)
   }
 
   cancel(): void {

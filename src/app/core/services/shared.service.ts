@@ -52,7 +52,7 @@ export class SharedService {
             },
             { label: 'Contracts', route: '/home/reinsurance/contracts' },
             { label: 'Claims', route: '/home/reinsurance/claims' },
-            { label: 'Contacts', route: '/reinsurance/contacts' },
+            { label: 'Contacts', route: '/home/reinsurance/contacts' },
           ]
         },
         {
