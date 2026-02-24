@@ -77,63 +77,35 @@
 
                                 <!-- View / progress sheet -->
                                 <button title="View details" (click)="openDetails(item.id)"
-                                    class="p-1.5 rounded text-gray-400 hover:text-primary hover:bg-gray-100 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                        stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                                        <circle cx="12" cy="12" r="3" />
-                                    </svg>
+                                    class="p-1.5 rounded text-gray-400 hover transition-colors">
+                                    <span class="material-icons text-[18px] text-primary">visibility</span>
                                 </button>
 
                                 <!-- Edit -->
                                 <button title="Edit treaty" (click)="editTreaty(item.id)"
-                                    class="p-1.5 rounded text-gray-400 hover:text-blue-600 hover:bg-gray-100 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                        stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                                        <path
-                                            d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
-                                    </svg>
+                                    class="p-1.5 rounded text-gray-400 transition-colors">
+                                    <span class="material-icons text-[18px] text-text-secondary">edit</span>
                                 </button>
 
                                 <!-- Delete -->
                                 <button title="Delete treaty" (click)="deleteTreaty(item.id)"
-                                    class="p-1.5 rounded text-gray-400 hover:text-red-600 hover:bg-gray-100 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                        stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M3 6h18" />
-                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                                    </svg>
+                                    class="p-1.5 rounded text-gray-400  transition-colors">
+                                    <span class="material-icons text-[14px] text-danger">delete</span>
                                 </button>
 
                                 <!-- Submit to Approval (Draft only) -->
                                 @if(item.status === 'Draft') {
                                 <button title="Submit for approval" (click)="submitToApproval(item.id)"
-                                    class="p-1.5 rounded text-gray-400 hover:text-green-600 hover:bg-gray-100 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                        stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M22 2 11 13" />
-                                        <path d="M22 2 15 22 11 13 2 9l20-7z" />
-                                    </svg>
+                                    class="p-1.5 rounded text-gray-400 hover:bg-gray-100 transition-colors">
+                                    <span class="material-icons text-[14px] text-success">near_me</span>
                                 </button>
                                 }
 
                                 <!-- Post to Finance (Approved only) -->
                                 @if(item.status === 'Approved') {
                                 <button title="Post to finance" (click)="postToFinance(item.id)"
-                                    class="p-1.5 rounded text-gray-400 hover:text-blue-600 hover:bg-gray-100 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                        stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-                                        <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-                                        <path d="m9 15 2 2 4-4" />
-                                    </svg>
+                                    class="p-1.5 rounded text-gray-400 transition-colors">
+                                    <span class="material-icons text-[18px] text-primary">description</span>
                                 </button>
                                 }
 

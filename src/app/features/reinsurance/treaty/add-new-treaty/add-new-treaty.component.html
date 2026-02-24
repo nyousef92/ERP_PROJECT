@@ -58,7 +58,7 @@
             <h3 class="text-sm text-gray-900 pb-2 border-b border-gray-200">Treaty Details</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 <div>
-                    <app-input-field formControlName="treatyCode" label="Treaty Code" type="text" />
+                    <app-input-field formControlName="treatyCode" label="Treaty Code" type="text" [disabled]="true" />
                 </div>
                 <div>
                     <app-input-field formControlName="description" label="Description" type="text"
@@ -143,6 +143,7 @@
                 </div>
                 <div>
                     <label class="block text-xs text-gray-700 mb-1">LOB *</label>
+                    //TODO FIX THIS 
                     <select formControlName="lob"
                         [ngClass]="{'border-red-500 ring-1 ring-red-500': treatyForm.get('treatyDetails.lob')?.invalid && treatyForm.get('treatyDetails.lob')?.touched}"
                         class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
