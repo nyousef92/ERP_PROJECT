@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class ClaimsService {
+export class TreatyClaimsService {
   updateReinsurer(value: any) {
     return of(true);
   }
@@ -11,26 +11,26 @@ export class ClaimsService {
   getClaimsMetrics() {
     return of([
       { label: 'Total Claims', value: 4, subtitle: '$2,750,000' },
-      { label: 'Approved', value: 1, subtitle: '$1,450,000', ValueColorClass: 'text-success' },
-      { label: 'Pending', value: 1, ValueColorClass: 'text-warning' },
-      { label: 'Rejected', value: 1, ValueColorClass: 'text-danger' },
+      { label: 'Draft', value: 1, subtitle: '$1,450,000', ValueColorClass: 'text-success' },
+      { label: 'Pending Approval', value: 1, ValueColorClass: 'text-warning' },
+      { label: 'Approved', value: 1, ValueColorClass: 'text-danger' },
     ]);
   }
 
   getClaimsHistory(params: any) {
     let filtered = [
-      { claimNo: 'CLM-2024-001', facRef: 'FR-2024-001', cedant: 'Secure Insurers', claimAmount: '$500,000', approvedAmount: '$500,000', dateReported: '15-Mar-2024', status: 'Approved' },
-      { claimNo: 'CLM-2024-002', facRef: 'FR-2024-002', cedant: 'Alpha Assurance', claimAmount: '$1,200,000', approvedAmount: '$950,000', dateReported: '20-Mar-2024', status: 'Partially Approved' },
-      { claimNo: 'CLM-2024-003', facRef: 'FR-2024-003', cedant: 'Guardian General', claimAmount: '$300,000', approvedAmount: '$0', dateReported: '25-Mar-2024', status: 'Pending' },
-      { claimNo: 'CLM-2024-004', facRef: 'FR-2024-004', cedant: 'Secure Insurers', claimAmount: '$750,000', approvedAmount: '$0', dateReported: '01-Apr-2024', status: 'Rejected' },
+      { claimNo: 'CLM-2024-001', facRef: 'FR-2024-001', company: 'Secure Insurers', claimAmount: '$500,000', approvedAmount: '$500,000', dateReported: '15-Mar-2024', status: 'Approved' },
+      { claimNo: 'CLM-2024-002', facRef: 'FR-2024-002', company: 'Alpha Assurance', claimAmount: '$1,200,000', approvedAmount: '$950,000', dateReported: '20-Mar-2024', status: 'Partially Approved' },
+      { claimNo: 'CLM-2024-003', facRef: 'FR-2024-003', company: 'Guardian General', claimAmount: '$300,000', approvedAmount: '$0', dateReported: '25-Mar-2024', status: 'Pending' },
+      { claimNo: 'CLM-2024-004', facRef: 'FR-2024-004', company: 'Secure Insurers', claimAmount: '$750,000', approvedAmount: '$0', dateReported: '01-Apr-2024', status: 'Rejected' },
     ];
     if (params.searchText)
       filtered = filtered.filter(i =>
         i.claimNo.toLowerCase().includes(params.searchText.toLowerCase()) ||
-        i.cedant.toLowerCase().includes(params.searchText.toLowerCase())
+        i.company.toLowerCase().includes(params.searchText.toLowerCase())
       );
     if (params.status) filtered = filtered.filter(i => i.status === params.status);
-    if (params.cedant) filtered = filtered.filter(i => i.cedant === params.cedant);
+    if (params.company) filtered = filtered.filter(i => i.company === params.company);
     const start = (params.currentPage - 1) * params.pageSize;
     return of({ data: filtered.slice(start, start + params.pageSize), totalItems: filtered.length });
   }
@@ -44,7 +44,7 @@ export class ClaimsService {
     ]);
   }
 
-  getClaimsCedants() {
+  getClaimscompanys() {
     return of([
       { label: 'Secure Insurers', value: 'Secure Insurers' },
       { label: 'Alpha Assurance', value: 'Alpha Assurance' },
@@ -62,7 +62,7 @@ export class ClaimsService {
     const details: Record<string, any> = {
       'CLM-2024-001': {
         claimNo: 'CLM-2024-001', facRef: 'FR-2024-001', account: 'Global Corp',
-        cedant: 'Secure Insurers', lob: 'Property', claimType: 'Property Damage',
+        company: 'Secure Insurers', lob: 'Property', claimType: 'Property Damage',
         claimDate: '2024-04-15', lossDate: '2024-04-10', claimAmount: '$750,000',
         status: 'Pending Approval',
         description: 'Major fire damage to warehouse facility',
@@ -94,13 +94,13 @@ export class ClaimsService {
       },
       'CLM-2024-002': {
         claimNo: 'CLM-2024-002', facRef: 'FR-2024-002', account: 'Marine Holdings',
-        cedant: 'Alpha Assurance', lob: 'Marine', claimType: 'Cargo Loss',
+        company: 'Alpha Assurance', lob: 'Marine', claimType: 'Cargo Loss',
         claimDate: '2024-03-22', lossDate: '2024-03-18', claimAmount: '$1,200,000',
         status: 'Partially Approved',
         description: 'Cargo loss during maritime transit partially covered under facultative agreement.',
         attachments: ['cargo_manifest.pdf', 'survey_report.pdf'],
         approvalHistory: [
-          { action: 'Created', date: '2024-03-22 10:00', role: 'Claims Officer', notes: 'Cargo loss reported by cedant' },
+          { action: 'Created', date: '2024-03-22 10:00', role: 'Claims Officer', notes: 'Cargo loss reported by company' },
           { action: 'Under Review', date: '2024-03-23 11:30', role: 'Senior Adjuster', notes: 'Survey report requested' },
           { action: 'Partially Approved', date: '2024-03-28 14:00', role: 'Claims Manager', notes: 'Approved subject to policy sub-limit' },
         ],
@@ -127,13 +127,13 @@ export class ClaimsService {
       },
       'CLM-2024-003': {
         claimNo: 'CLM-2024-003', facRef: 'FR-2024-003', account: 'Guardian Holdings',
-        cedant: 'Guardian General', lob: 'Liability', claimType: 'Third-Party Liability',
+        company: 'Guardian General', lob: 'Liability', claimType: 'Third-Party Liability',
         claimDate: '2024-03-26', lossDate: '2024-03-20', claimAmount: '$300,000',
         status: 'Pending',
         description: 'Third-party liability claim under review pending loss assessment.',
         attachments: ['incident_report.pdf'],
         approvalHistory: [
-          { action: 'Created', date: '2024-03-26 09:00', role: 'Claims Officer', notes: 'Liability claim received from cedant' },
+          { action: 'Created', date: '2024-03-26 09:00', role: 'Claims Officer', notes: 'Liability claim received from company' },
           { action: 'Pending Assessment', date: '2024-03-27 11:00', role: 'Loss Adjuster', notes: 'Awaiting independent loss assessment' },
         ],
         reinsurerLines: [
@@ -152,7 +152,7 @@ export class ClaimsService {
       },
       'CLM-2024-004': {
         claimNo: 'CLM-2024-004', facRef: 'FR-2024-004', account: 'Secure Holdings',
-        cedant: 'Secure Insurers', lob: 'Property', claimType: 'Structural Damage',
+        company: 'Secure Insurers', lob: 'Property', claimType: 'Structural Damage',
         claimDate: '2024-04-02', lossDate: '2024-03-28', claimAmount: '$750,000',
         status: 'Rejected',
         description: 'Property damage claim rejected due to policy exclusions.',
