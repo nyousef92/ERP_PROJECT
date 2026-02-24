@@ -148,27 +148,31 @@ export class TreatyService {
             })
         );
     }
-
-    getCreateNewTreateData() {
-        const formOptions = {
-
-            companies: [
+    getTreatyCompanies() {
+        return of(
+            [
                 { id: "COMP-88291", name: "Tawuniya", account: "ACC-00129388", fax: "+966 11 123 4567", phone: "+966 11 123 4567", email: "reinsurance@tawuniya.com.sa" },
                 { id: "COMP-77342", name: "Bupa Arabia", account: "ACC-00994421", fax: "+966 12 667 0761", phone: "+966 12 667 0761", email: "re@bupa.com.sa" },
                 { id: "COMP-66510", name: "Al Rajhi Takaful", account: "ACC-00441100", fax: "+966 11 228 1111", phone: "+966 11 228 1111", email: "info@alrajhitakaful.com" },
                 { id: "COMP-55123", name: "Malath Insurance", account: "ACC-00223388", fax: "+966 11 216 1212", phone: "+966 11 216 1212", email: "treaty@malath.com.sa" }
-            ],
+            ]
+        )
+    }
+
+    getTreatryYypes() {
+        return of([
+            { value: "Proportional", name: "Proportional",id:1 },
+            { value: "Non-Proportional", name: "Non-Proportional",id:2 }
+        ]);
+    }
+
+    getCreateNewTreateData() {
+        const formOptions = {
 
             reInsureParticipantionsCompanies: [
                 { id: "COMP-88291", name: "Tawuniya" },
                 { id: "COMP-77342", name: "Bupa Arabia" }
             ],
-
-            treatyTypes: [
-                { value: "Proportional", label: "Proportional" },
-                { value: "Non-Proportional", label: "Non-Proportional" }
-            ],
-
             treatySubTypesMap: {
                 Proportional: [
                     { value: 'Quota Share', label: 'Quota Share' },
@@ -199,7 +203,6 @@ export class TreatyService {
                 { value: "Motor", label: "Motor" },
                 { value: "Engineering", label: "Engineering" }
             ],
-
             subLOBs: {
                 Property: [
                     { value: "Fire", label: "Fire" },

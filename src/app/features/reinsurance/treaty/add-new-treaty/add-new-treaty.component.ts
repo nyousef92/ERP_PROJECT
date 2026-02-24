@@ -1,14 +1,14 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { TreatyService } from '../../../../core/services/treaty.service';
-import { NgClass } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
+import { SelectDropdownComponent, SelectOption } from '@shared/select-dropdown/select-dropdown.component';
 import { ModalComponent } from '@shared/modal/modal.component';
 import { SubDetailsManagementComponent } from './sub-details-management/sub-details-management.component';
 
 @Component({
   selector: 'app-add-new-treaty',
-  imports: [ReactiveFormsModule, InputFieldComponent, NgClass, ModalComponent],
+  imports: [ReactiveFormsModule, InputFieldComponent, SelectDropdownComponent, ModalComponent],
   templateUrl: './add-new-treaty.component.html'
 })
 export class AddNewTreatyComponent implements OnInit {
@@ -17,11 +17,19 @@ export class AddNewTreatyComponent implements OnInit {
   fb = inject(FormBuilder);
 
   treatyData!: any;
+  companyOptions: any[] = [];
+  treatyTypes: any[] = [];
   treatyForm!: FormGroup;
 
   rInsurerenceCompanies: any[] = [];
 
   close!: () => void;
+
+  get rInsurerOptions(): SelectOption[] {
+    return this.rInsurerenceCompanies?.map((c: any) => ({ value: c.value, label: c.value })) ?? [];
+  }
+
+  constructor() { }
 
   ngOnInit(): void {
     this.initForm();
@@ -39,12 +47,11 @@ export class AddNewTreatyComponent implements OnInit {
     this.close();
   }
 
-  // Helper method to simulate selecting a company from a dropdown/modal
   selectCompany(companyId: string): void {
-    const company = this.treatyData.companies.find((c: any) => c.id === companyId);
+    const company = this.companyOptions.find((c: any) => String(c.id) === companyId);
     if (company) {
       this.treatyForm.get('companyInfo')?.patchValue({
-        selectedCompany: company.id,   // must match the option [value] so the select renders correctly
+        selectedCompany: String(company.id),
         companyId: company.id,
         accountNo: company.account,
         phoneNo: company.phone,
@@ -53,7 +60,6 @@ export class AddNewTreatyComponent implements OnInit {
         address: company.address
       });
     } else {
-      // User picked the blank "Select Company" option — clear the dependent fields
       this.treatyForm.get('companyInfo')?.patchValue({
         selectedCompany: '',
         companyId: '', accountNo: '', phoneNo: '', fax: '', email: '', address: ''
@@ -167,7 +173,16 @@ export class AddNewTreatyComponent implements OnInit {
     );
   }
 
+
   private getTreatyData(): void {
+    this.treatyService.getTreatyCompanies().subscribe((resp) => {
+      this.companyOptions = resp?.map((c: any) => ({...c, value: String(c.id), label: c.name })) ?? []
+    });
+    
+    this.treatyService.getTreatryYypes().subscribe((resp) => {
+      this.treatyTypes = resp?.map((c: any) => ({...c, value: String(c.id), label: c.name })) ?? []
+    });
+
     this.treatyService.getCreateNewTreateData().subscribe(resp => {
       this.treatyData = resp;
     });
@@ -216,4 +231,3 @@ export class AddNewTreatyComponent implements OnInit {
     });
   }
 }
-

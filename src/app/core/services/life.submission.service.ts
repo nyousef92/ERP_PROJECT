@@ -56,67 +56,6 @@ export class LifeSubmissionService {
     ]);
   }
 
-  getLineOfBusinessTypes(): Observable<any[]> {
-    return of([
-      {
-        type: 'Property',
-        id: 1,
-
-        subTypes: ['Fire', 'Flood', 'Earthquake', 'Earthquake', 'Business Interuption', 'All Risks']
-      },
-      {
-        type: 'Casualty',
-        id: 2,
-        subTypes: ["General Liability", "Professional Liability", "Product Liability", "Employers Liability", "Public Liability"]
-      },
-      {
-        type: 'Marine',
-        id: 3,
-        subTypes: ["Cargo", "Hull", "Marine Liability", "Yacht", "Port Risk"]
-      },
-      {
-        type: 'Aviation',
-        id: 4,
-        subTypes: ["Hull War", "Aviation Liability", "Passenger Liability", "Airport Liability"]
-      },
-      {
-        type: 'Enineering',
-        id: 5,
-        subTypes: ["Construction", "Machinery Breakdown", "Erection All Risks", "Contractors All Risks", "Electronic Equipment"]
-      }
-      ,
-      {
-        type: 'energy',
-        id: 6,
-        subTypes: ["Offshore Energy", "Onshore Energy", "Renewable Energy", "Upstream", "Downstream"]
-      }
-      ,
-      {
-        type: 'Motor',
-        id: 7,
-        subTypes: ["Private Car", "Commercial Vehicle", "Third Party Liability", "Comprehensive", "Fleet"]
-      }
-      ,
-      {
-        type: 'Medical',
-        id: 8,
-        subTypes: ["Health Insurance", "Medical Malpractice", "Hospital Liability", "Group Medical"]
-      }
-      ,
-      {
-        type: 'Life',
-        id: 9,
-        subTypes: ["Term Life", "Whole Life", "Endowment", "Group Life", "Credit Life"]
-      }
-      ,
-      {
-        type: 'Technology',
-        id: 10,
-        subTypes: ["Cyber Liability", "Technology E&O", "Data Breach", "Network Security", "Media Liability"]
-      }
-    ])
-  }
-
   getSubmissionTypes(): Observable<any[]> {
     //return this.apiService.get('')
     return of(

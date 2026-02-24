@@ -7,6 +7,7 @@ import { dependantOn } from '@core/validations/dependent.validation';
 import { InputFieldTextareaComponent } from "@shared/input-field-text-area/input-field-text-area.component";
 import { FileUploadComponent } from "@shared/file-upload/file-upload.component";
 import { LifeSubmissionService } from '@core/services/life.submission.service';
+import { FacultativeSubmissionService } from '@core/services/facultative.submission.service';
 
 @Component({
   selector: 'app-general-information',
@@ -34,6 +35,7 @@ export class GeneralInformationComponent implements OnInit {
     private fb: FormBuilder,
     private helper: HelperService,
     private submissionService: LifeSubmissionService,
+    private facultativeSubmissionService: FacultativeSubmissionService,
   ) {
     this.form = this.fb.group({
       status: ['drafrt'],
@@ -81,7 +83,7 @@ export class GeneralInformationComponent implements OnInit {
         label: item
       }));
     });
-    this.submissionService.getLineOfBusinessTypes().subscribe(resp => {
+    this.facultativeSubmissionService.getLineOfBusinessTypes().subscribe(resp => {
       this.lobTypes = resp.map((item) => ({
         value: item.id,
         label: item.type

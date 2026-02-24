@@ -8,7 +8,6 @@ import { PaginatorComponent } from "@shared/paginator/paginator.component";
 import { TreatyService } from '../../../../core/services/treaty.service';
 import { PreviewTreatyDetailsComponent } from '../preview-treaty-details/preview-treaty-details.component';
 import { ModalComponent } from '@shared/modal/modal.component';
-import { ModalOptions } from '@shared/modal/modal.component';
 import { AddNewTreatyComponent } from '../add-new-treaty/add-new-treaty.component';
 import { EditTreatyComponent } from '../edit-treaty/edit-treaty.component';
 import { SendTreatyToApprovalComponent } from '../send-treaty-to-approval/send-treaty-to-approval.component';

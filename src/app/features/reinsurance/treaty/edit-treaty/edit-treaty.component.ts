@@ -1,12 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TreatyService } from '../../../../core/services/treaty.service';
-import { NgClass } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputFieldComponent } from '@shared/input-field/input-field.component';
+import { SelectDropdownComponent, SelectOption } from '@shared/select-dropdown/select-dropdown.component';
 
 @Component({
     selector: 'app-edit-treaty',
-    imports: [ReactiveFormsModule, InputFieldComponent, NgClass],
+    imports: [ReactiveFormsModule, InputFieldComponent, SelectDropdownComponent],
     templateUrl: './edit-treaty.component.html'
 })
 export class EditTreatyComponent implements OnInit {
@@ -21,6 +21,10 @@ export class EditTreatyComponent implements OnInit {
     treatyId!: string;
     close!: () => void;
 
+    get companyOptions(): SelectOption[] {
+        return this.treatyData?.companies?.map((c: any) => ({ value: String(c.id), label: c.name })) ?? [];
+    }
+
     ngOnInit(): void {
         this.initForm();
         this.loadTreatyForEdit();
@@ -31,10 +35,10 @@ export class EditTreatyComponent implements OnInit {
     }
 
     selectCompany(companyId: string): void {
-        const company = this.treatyData?.companies?.find((c: any) => c.id === companyId);
+        const company = this.treatyData?.companies?.find((c: any) => String(c.id) === companyId);
         if (company) {
             this.treatyForm.get('companyInfo')?.patchValue({
-                selectedCompany: company.id,
+                selectedCompany: String(company.id),
                 companyId: company.id,
                 accountNo: company.account,
                 phoneNo: company.phone,
@@ -105,7 +109,6 @@ export class EditTreatyComponent implements OnInit {
     private loadTreatyForEdit(): void {
         this.treatyService.getTreatyForEdit(this.treatyId).subscribe(data => {
             this.treatyData = data;
-            // Patch company info (enabled fields are patched; disabled is handled by patchValue too)
             this.treatyForm.get('companyInfo')?.patchValue(data.companyInfo);
             this.treatyForm.get('treatyDetails')?.patchValue(data.treatyDetails);
             this.isLoading = false;

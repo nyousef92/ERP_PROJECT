@@ -1,12 +1,12 @@
 <app-modal />
 <form [formGroup]="treatyForm" (ngSubmit)="onSubmit()"
-    class="bg-white rounded-lg w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden flex flex-col relative">
+    class="bg-surface rounded-lg w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden flex flex-col relative">
 
-    <div class="p-4 sm:p-6 border-b border-gray-200 flex-shrink-0">
+    <div class="p-4 sm:p-6 border-b border-border flex-shrink-0">
         <div class="flex items-start justify-between">
             <div>
-                <h2 class="text-lg sm:text-xl text-gray-900">Add New Treaty</h2>
-                <p class="text-xs sm:text-sm text-gray-500 mt-1">Create a new treaty reinsurance contract</p>
+                <h2 class="text-lg sm:text-xl text-text">Add New Treaty</h2>
+                <p class="text-xs sm:text-sm text-text-muted mt-1">Create a new treaty reinsurance contract</p>
             </div>
         </div>
     </div>
@@ -14,22 +14,17 @@
     <div class="p-4 sm:p-6 space-y-6 overflow-y-auto flex-1">
 
         <div formGroupName="companyInfo" class="space-y-3">
-            <h3 class="text-sm text-gray-900 pb-2 border-b border-gray-200">Company Information</h3>
+            <h3 class="text-sm text-text pb-2 border-b border-border">Company Information</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 <div>
-                    <label class="block text-xs text-gray-700 mb-1">Company *</label>
-                    <select formControlName="selectedCompany" (change)="selectCompany($any($event.target).value)"
-                        [ngClass]="{'border-danger ring-1 ring-danger': treatyForm.get('companyInfo.selectedCompany')?.invalid && treatyForm.get('companyInfo.selectedCompany')?.touched}"
-                        class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white">
-                        <option value="">Select Company</option>
-                        @for (company of treatyData?.companies; track company.id) {
-                        <option [value]="company.id">{{ company.name }}</option>
-                        }
-                    </select>
-                    @if (treatyForm.get('companyInfo.selectedCompany')?.invalid &&
-                    treatyForm.get('companyInfo.selectedCompany')?.touched) {
-                    <p class="text-xs text-danger mt-1">Company is required.</p>
-                    }
+                    <app-select-dropdown
+                        formControlName="selectedCompany"
+                        label="Company"
+                        [required]="true"
+                        [options]="companyOptions"
+                        (selectionChange)="selectCompany($event)"
+                        [touched]="treatyForm.get('companyInfo.selectedCompany')?.touched"
+                        [errorMessage]="treatyForm.get('companyInfo.selectedCompany')?.invalid ? 'Company is required.' : ''" />
                 </div>
                 <div>
                     <app-input-field formControlName="companyId" label="Company ID" placeholder="-" type="text" />
@@ -55,7 +50,7 @@
         </div>
 
         <div formGroupName="treatyDetails" class="space-y-4">
-            <h3 class="text-sm text-gray-900 pb-2 border-b border-gray-200">Treaty Details</h3>
+            <h3 class="text-sm text-text pb-2 border-b border-border">Treaty Details</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 <div>
                     <app-input-field formControlName="treatyCode" label="Treaty Code" type="text" [disabled]="true" />
@@ -63,126 +58,88 @@
                 <div>
                     <app-input-field formControlName="description" label="Description" type="text"
                         placeholder="Enter Description" />
-
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-700 mb-1">Treaty Type *</label>
-                    <select formControlName="treatyType"
-                        [ngClass]="{'border-danger ring-1 ring-danger': treatyForm.get('treatyDetails.treatyType')?.invalid && treatyForm.get('treatyDetails.treatyType')?.touched}"
-                        class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white">
-                        <option value="">Select Type</option>
-                        @for (type of treatyData.treatyTypes; track type.value) {
-                        <option [value]="type.value">{{ type.label }}</option>
-                        }
-                    </select>
-                    @if (treatyForm.get('treatyDetails.treatyType')?.invalid &&
-                    treatyForm.get('treatyDetails.treatyType')?.touched) {
-                    <p class="text-xs text-danger mt-1">Treaty Type is required.</p>
-                    }
+                    <app-select-dropdown
+                        formControlName="treatyType"
+                        label="Treaty Type"
+                        [required]="true"
+                        [options]="treatyTypes"
+                        [touched]="treatyForm.get('treatyDetails.treatyType')?.touched"
+                        [errorMessage]="treatyForm.get('treatyDetails.treatyType')?.invalid ? 'Treaty Type is required.' : ''" />
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-700 mb-1">Treaty Sub Type *</label>
-                    <select formControlName="treatySubType"
-                        [ngClass]="{'border-danger ring-1 ring-danger': treatyForm.get('treatyDetails.treatySubType')?.invalid && treatyForm.get('treatyDetails.treatySubType')?.touched}"
-                        class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white">
-                        <option value="">Select Sub Type</option>
-                        @if (currentTreatyType && treatyData.treatySubTypesMap[currentTreatyType]) {
-                        @for (subType of treatyData.treatySubTypesMap[currentTreatyType]; track subType.value) {
-                        <option [value]="subType.value">{{ subType.label }}</option>
-                        }
-                        }
-                    </select>
-                    @if (treatyForm.get('treatyDetails.treatySubType')?.invalid &&
-                    treatyForm.get('treatyDetails.treatySubType')?.touched) {
-                    <p class="text-xs text-danger mt-1">Treaty Sub Type is required.</p>
-                    }
+                    <app-select-dropdown
+                        formControlName="treatySubType"
+                        label="Treaty Sub Type"
+                        [required]="true"
+                        [options]="treatyData?.treatySubTypesMap?.[currentTreatyType] ?? []"
+                        [touched]="treatyForm.get('treatyDetails.treatySubType')?.touched"
+                        [errorMessage]="treatyForm.get('treatyDetails.treatySubType')?.invalid ? 'Treaty Sub Type is required.' : ''" />
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-700 mb-1">Currency *</label>
-                    <select formControlName="currency"
-                        [ngClass]="{'border-danger ring-1 ring-danger': treatyForm.get('treatyDetails.currency')?.invalid && treatyForm.get('treatyDetails.currency')?.touched}"
-                        class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white">
-                        <option value="">Select Currency</option>
-                        @for (currency of treatyData.currencies; track currency.value) {
-                        <option [value]="currency.value">{{ currency.label }}</option>
-                        }
-                    </select>
-                    @if (treatyForm.get('treatyDetails.currency')?.invalid &&
-                    treatyForm.get('treatyDetails.currency')?.touched) {
-                    <p class="text-xs text-danger mt-1">Currency is required.</p>
-                    }
+                    <app-select-dropdown
+                        formControlName="currency"
+                        label="Currency"
+                        [required]="true"
+                        [options]="treatyData?.currencies ?? []"
+                        [touched]="treatyForm.get('treatyDetails.currency')?.touched"
+                        [errorMessage]="treatyForm.get('treatyDetails.currency')?.invalid ? 'Currency is required.' : ''" />
                 </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 <div>
-                    <label class="block text-xs text-gray-700 mb-1">From Date *</label>
-                    <input type="date" formControlName="fromDate"
-                        [ngClass]="{'border-danger ring-1 ring-danger': treatyForm.get('treatyDetails.fromDate')?.invalid && treatyForm.get('treatyDetails.fromDate')?.touched}"
-                        class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                    @if (treatyForm.get('treatyDetails.fromDate')?.invalid &&
-                    treatyForm.get('treatyDetails.fromDate')?.touched) {
-                    <p class="text-xs text-danger mt-1">From Date is required.</p>
-                    }
+                    <app-input-field
+                        formControlName="fromDate"
+                        label="From Date"
+                        [required]="true"
+                        type="date"
+                        [touched]="treatyForm.get('treatyDetails.fromDate')?.touched"
+                        [errorMessage]="treatyForm.get('treatyDetails.fromDate')?.invalid ? 'From Date is required.' : ''" />
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-700 mb-1">To Date *</label>
-                    <input type="date" formControlName="toDate"
-                        [ngClass]="{'border-danger ring-1 ring-danger': treatyForm.get('treatyDetails.toDate')?.invalid && treatyForm.get('treatyDetails.toDate')?.touched}"
-                        class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                    @if (treatyForm.get('treatyDetails.toDate')?.invalid &&
-                    treatyForm.get('treatyDetails.toDate')?.touched) {
-                    <p class="text-xs text-danger mt-1">To Date is required.</p>
-                    }
+                    <app-input-field
+                        formControlName="toDate"
+                        label="To Date"
+                        [required]="true"
+                        type="date"
+                        [touched]="treatyForm.get('treatyDetails.toDate')?.touched"
+                        [errorMessage]="treatyForm.get('treatyDetails.toDate')?.invalid ? 'To Date is required.' : ''" />
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-700 mb-1">Comments</label>
-                    <input type="text" formControlName="comments"
-                        class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                        placeholder="Add comments">
+                    <app-input-field formControlName="comments" label="Comments" placeholder="Add comments" />
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-700 mb-1">LOB *</label>
-                    //TODO FIX THIS 
-                    <select formControlName="lob"
-                        [ngClass]="{'border-danger ring-1 ring-danger': treatyForm.get('treatyDetails.lob')?.invalid && treatyForm.get('treatyDetails.lob')?.touched}"
-                        class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white">
-                        <option value="">Select LOB</option>
-                        @for (lob of treatyData.lineOfBusiness; track lob.value) {
-                        <option [value]="lob.value">{{ lob.label }}</option>
-                        }
-                    </select>
-                    @if (treatyForm.get('treatyDetails.lob')?.invalid && treatyForm.get('treatyDetails.lob')?.touched) {
-                    <p class="text-xs text-danger mt-1">LOB is required.</p>
-                    }
+                    <app-select-dropdown
+                        formControlName="lob"
+                        label="LOB"
+                        [required]="true"
+                        [options]="treatyData?.lineOfBusiness ?? []"
+                        [touched]="treatyForm.get('treatyDetails.lob')?.touched"
+                        [errorMessage]="treatyForm.get('treatyDetails.lob')?.invalid ? 'LOB is required.' : ''" />
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-700 mb-1">Sub LOB</label>
-                    <select formControlName="subLob"
-                        class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white">
-                        <option value="">Select Sub LOB</option>
-                        @if (currentLob && treatyData.subLOBs[currentLob]) {
-                        @for (subLob of treatyData.subLOBs[currentLob]; track subLob.value) {
-                        <option [value]="subLob.value">{{ subLob.label }}</option>
-                        }
-                        }
-                    </select>
+                    <app-select-dropdown
+                        formControlName="subLob"
+                        label="Sub LOB"
+                        [options]="treatyData?.subLOBs?.[currentLob] ?? []" />
                 </div>
             </div>
 
             <div class="flex flex-wrap items-center gap-3">
                 <div class="flex items-center gap-2 h-[34px]">
                     <input type="checkbox" id="catastropheCoverage" formControlName="isCatastropheCoverage"
-                        class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-2 focus:ring-primary">
-                    <label for="catastropheCoverage" class="text-sm text-gray-700 cursor-pointer">Catastrophe
+                        class="w-4 h-4 text-primary border-border rounded focus:ring-2 focus:ring-primary">
+                    <label for="catastropheCoverage" class="text-sm text-text cursor-pointer">Catastrophe
                         Coverage</label>
                 </div>
             </div>
         </div>
 
         <div class="space-y-4">
-            <div class="flex items-center justify-between pb-2 border-b border-gray-200">
-                <h3 class="text-sm text-gray-900">Reinsurer Participation</h3>
+            <div class="flex items-center justify-between pb-2 border-b border-border">
+                <h3 class="text-sm text-text">Reinsurer Participation</h3>
                 <button type="button" (click)="addReinsurer()"
                     class="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors text-xs">
                     <span class="material-icons text-[14px]">add</span>
@@ -192,11 +149,11 @@
 
             @if (reinsurers.length === 0) {
             <div
-                class="text-center py-8 text-gray-500 text-sm bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+                class="text-center py-8 text-text-muted text-sm bg-background rounded-lg border-2 border-dashed border-border">
                 No reinsurer lines added yet. Click "Add Line" to begin.
             </div>
             } @else {
-            <div class="overflow-x-auto rounded-lg border border-gray-200">
+            <div class="overflow-x-auto rounded-lg border border-border">
                 <table class="w-full text-sm border-collapse">
                     <thead>
                         <tr class="bg-background font-medium text-text">
@@ -211,27 +168,18 @@
                     <tbody>
                         @for (reinsurer of reinsurers.controls; track $index) {
                         <tr [formGroup]="getReinsurerGroup($index)"
-                            class="border-b border-gray-100 last:border-0 bg-white hover:bg-gray-50 transition-colors">
+                            class="border-b border-border last:border-0 bg-surface hover:bg-background transition-colors">
                             <td class="px-2 py-2">
-                                <select formControlName="company"
-                                    class="w-full h-[32px] px-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary bg-white">
-                                    <option value="">Select Company</option>
-                                    @for (company of rInsurerenceCompanies; track company.id) {
-                                    <option [value]="company.value">{{ company.value }}</option>
-                                    }
-                                </select>
+                                <app-select-dropdown formControlName="company" [options]="rInsurerOptions" />
                             </td>
                             <td class="px-2 py-2">
-                                <input type="text" formControlName="limit" placeholder="Limit"
-                                    class="w-full h-[32px] px-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary">
+                                <app-input-field formControlName="limit" placeholder="Limit" />
                             </td>
                             <td class="px-2 py-2">
-                                <input type="text" formControlName="deductible" placeholder="Deductible"
-                                    class="w-full h-[32px] px-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary">
+                                <app-input-field formControlName="deductible" placeholder="Deductible" />
                             </td>
                             <td class="px-2 py-2">
-                                <input type="text" formControlName="premium" placeholder="Premium"
-                                    class="w-full h-[32px] px-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary">
+                                <app-input-field formControlName="premium" placeholder="Premium" />
                             </td>
                             <td class="px-2 py-2 text-center">
                                 <button type="button" (click)="AddSubDetails($index)"
@@ -258,9 +206,9 @@
         </div>
     </div>
 
-    <div class="px-4 sm:p-6 py-4 border-t border-gray-200 flex items-center justify-end gap-3 flex-shrink-0 bg-gray-50">
+    <div class="px-4 sm:p-6 py-4 border-t border-border flex items-center justify-end gap-3 flex-shrink-0 bg-background">
         <button (click)="onCancel()" type="button"
-            class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-sm">Cancel</button>
+            class="px-4 py-2 border border-border rounded-lg text-text hover:bg-surface transition-colors text-sm">Cancel</button>
         <button type="submit" [disabled]="treatyForm.invalid"
             class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
             Save Treaty
