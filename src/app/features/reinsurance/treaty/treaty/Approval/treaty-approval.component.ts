@@ -78,16 +78,27 @@ export class TreatyApprovalComponent implements OnInit {
   onView(treatyCode: string): void {
     this.viewModal.open(
       ViewTreatyApprovalComponent,
-      { treatyCode },
+      {
+        treatyCode,
+        onApproved: () => {
+          this.filteredTreaties.map(item => {
+            if (item.treatyCode === treatyCode) {
+              item.actions = ['view'];
+            }
+          }
+          );
+        },
+        onRejecteded: () => {
+          this.filteredTreaties.map(item => {
+            if (item.treatyCode === treatyCode) {
+              item.actions = ['view'];
+            }
+          }
+          );
+        }
+      },
       'xl'
     );
   }
 
-  onApprove(treatyCode: string): void {
-    console.log('Approve treaty:', treatyCode);
-  }
-
-  onReject(treatyCode: string): void {
-    console.log('Reject treaty:', treatyCode);
-  }
 }

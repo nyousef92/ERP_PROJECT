@@ -73,12 +73,12 @@
                                 </button>
                                 }
                                 @if (item.actions.includes('approve')) {
-                                <button title="Approve" (click)="onApprove(item.treatyCode)">
+                                <button title="Approve" (click)="onView(item.treatyCode)">
                                     <span class="material-icons text-[18px] text-success">check_circle</span>
                                 </button>
                                 }
                                 @if (item.actions.includes('reject')) {
-                                <button title="Reject" (click)="onReject(item.treatyCode)">
+                                <button title="Reject" (click)="onView(item.treatyCode)">
                                     <span class="material-icons text-[18px] text-red-500">cancel</span>
                                 </button>
                                 }

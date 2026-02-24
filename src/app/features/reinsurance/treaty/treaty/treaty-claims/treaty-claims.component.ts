@@ -69,5 +69,4 @@ export class TreatyClaimsComponent implements OnInit {
         this.router.navigate(['/home/reinsurance/claims/preview', claimNo]);
     }
 
-    editClaim(claimNo: string) { }
 }

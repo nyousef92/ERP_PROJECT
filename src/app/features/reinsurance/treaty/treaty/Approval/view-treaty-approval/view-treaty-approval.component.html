@@ -1,4 +1,4 @@
-<div class="bg-surface rounded-lg w-full flex flex-col" *ngIf="treaty; else loading">
+<div class="bg-surface rounded-lg w-full flex flex-col" *ngIf="treaty; else loading" [formGroup]="form">
 
     <!-- Header -->
     <div class="sticky top-0 bg-surface border-b border-border px-4 py-3 flex items-center justify-between z-10">
@@ -10,124 +10,73 @@
         <div class="space-y-5">
 
             <!-- Company Information -->
-            <div class="space-y-2">
+            <div class="space-y-2" formGroupName="companyInfo">
                 <h3
                     class="text-[10px] font-semibold uppercase tracking-wide text-text-muted pb-1 border-b border-border">
                     Company Information
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Company</label>
-                        <input type="text" readonly
-                            class="w-full px-3 py-1.5 text-xs border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.companyInformation.company">
+                        <app-input-field label="Company" formControlName="company" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Company ID</label>
-                        <input type="text" readonly
-                            class="w-full px-3 py-1.5 text-xs border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.companyInformation.companyId">
+                        <app-input-field label="Company ID" formControlName="companyId" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Account No</label>
-                        <input type="text" readonly
-                            class="w-full px-3 py-1.5 text-xs border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.companyInformation.accountNo">
+                        <app-input-field label="Account No" formControlName="accountNo" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Phone No</label>
-                        <input type="text" readonly
-                            class="w-full px-3 py-1.5 text-xs border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.companyInformation.phoneNo">
+                        <app-input-field label="Phone No" formControlName="phoneNo" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Fax</label>
-                        <input type="text" readonly
-                            class="w-full px-3 py-1.5 text-xs border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.companyInformation.fax">
+                        <app-input-field label="Fax" formControlName="fax" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Email</label>
-                        <input type="text" readonly
-                            class="w-full px-3 py-1.5 text-xs border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.companyInformation.email">
+                        <app-input-field label="Email" formControlName="email" [disabled]="true" />
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs text-text-muted mb-1">Address</label>
-                    <input type="text" readonly
-                        class="w-full px-3 py-1.5 text-xs border border-border rounded-lg bg-background text-text"
-                        [value]="treaty.companyInformation.address">
+                    <app-input-field label="Address" formControlName="address" [disabled]="true" />
                 </div>
             </div>
 
             <!-- Treaty Details -->
-            <div class="space-y-2">
+            <div class="space-y-2" formGroupName="treatyDetails">
                 <h3
                     class="text-[10px] font-semibold uppercase tracking-wide text-text-muted pb-1 border-b border-border">
                     Treaty Details
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Treaty Code</label>
-                        <input type="text" readonly
-                            class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-border rounded-lg bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400"
-                            [value]="treaty.treatyDetails.treatyCode">
+                        <app-input-field label="Treaty Code" formControlName="treatyCode" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Description</label>
-                        <input type="text" readonly
-                            class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.treatyDetails.description">
+                        <app-input-field label="Description" formControlName="description" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Treaty Type</label>
-                        <input type="text" readonly
-                            class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.treatyDetails.treatyType">
+                        <app-input-field label="Treaty Type" formControlName="treatyType" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Treaty Sub Type</label>
-                        <input type="text" readonly
-                            class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.treatyDetails.treatySubType">
+                        <app-input-field label="Treaty Sub Type" formControlName="treatySubType" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Currency</label>
-                        <input type="text" readonly
-                            class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.treatyDetails.currency">
+                        <app-input-field label="Currency" formControlName="currency" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">From Date</label>
-                        <input type="text" readonly
-                            class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.treatyDetails.fromDate">
+                        <app-input-field label="From Date" formControlName="fromDate" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">To Date</label>
-                        <input type="text" readonly
-                            class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.treatyDetails.toDate">
+                        <app-input-field label="To Date" formControlName="toDate" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">LOB</label>
-                        <input type="text" readonly
-                            class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.treatyDetails.lob">
+                        <app-input-field label="LOB" formControlName="lob" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Sub LOB</label>
-                        <input type="text" readonly
-                            class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.treatyDetails.subLob">
+                        <app-input-field label="Sub LOB" formControlName="subLob" [disabled]="true" />
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs text-text-muted mb-1">Comments</label>
-                    <input type="text" readonly
-                        class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-border rounded-lg bg-background text-text"
-                        [value]="treaty.treatyDetails.comments">
+                    <app-input-field label="Comments" formControlName="comments" [disabled]="true" />
                 </div>
                 <div class="flex items-center gap-2 h-[34px]">
                     <input type="checkbox" id="catastropheCoverage" [checked]="treaty.treatyDetails.catastropheCoverage"
@@ -145,18 +94,18 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-xs border-collapse">
                         <thead>
-                            <tr class="bg-orange-500 text-white">
-                                <th class="px-2 py-2 text-left border border-gray-300 min-w-[140px]">Company</th>
-                                <th class="px-2 py-2 text-left border border-gray-300 min-w-[100px]">Capacity</th>
-                                <th class="px-2 py-2 text-left border border-gray-300 min-w-[70px]">QS%</th>
-                                <th class="px-2 py-2 text-left border border-gray-300 min-w-[90px]">Retention%</th>
-                                <th class="px-2 py-2 text-left border border-gray-300 min-w-[80px]">Signed%</th>
-                                <th class="px-2 py-2 text-left border border-gray-300 min-w-[80px]">Written%</th>
-                                <th class="px-2 py-2 text-left border border-gray-300 min-w-[70px]">Broker%</th>
-                                <th class="px-2 py-2 text-left border border-gray-300 min-w-[60px]">Tax%</th>
-                                <th class="px-2 py-2 text-left border border-gray-300 min-w-[60px]">Comm%</th>
-                                <th class="px-2 py-2 text-left border border-gray-300 min-w-[120px]">Reason</th>
-                                <th class="px-2 py-2 text-left border border-gray-300 min-w-[120px]">Description</th>
+                            <tr class="bg-background font-medium text-text">
+                                <th class="px-2 py-2 text-left border border-border min-w-[140px]">Company</th>
+                                <th class="px-2 py-2 text-left border border-border min-w-[100px]">Capacity</th>
+                                <th class="px-2 py-2 text-left border border-border min-w-[70px]">QS%</th>
+                                <th class="px-2 py-2 text-left border border-border min-w-[90px]">Retention%</th>
+                                <th class="px-2 py-2 text-left border border-border min-w-[80px]">Signed%</th>
+                                <th class="px-2 py-2 text-left border border-border min-w-[80px]">Written%</th>
+                                <th class="px-2 py-2 text-left border border-border min-w-[70px]">Broker%</th>
+                                <th class="px-2 py-2 text-left border border-border min-w-[60px]">Tax%</th>
+                                <th class="px-2 py-2 text-left border border-border min-w-[60px]">Comm%</th>
+                                <th class="px-2 py-2 text-left border border-border min-w-[120px]">Reason</th>
+                                <th class="px-2 py-2 text-left border border-border min-w-[120px]">Description</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -187,23 +136,17 @@
             </div>
 
             <!-- Submission Information -->
-            <div class="space-y-2">
+            <div class="space-y-2" formGroupName="submissionInfo">
                 <h3
                     class="text-[10px] font-semibold uppercase tracking-wide text-text-muted pb-1 border-b border-border">
                     Submission Information
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Submitted By</label>
-                        <input type="text" readonly
-                            class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.submissionInformation.submittedBy">
+                        <app-input-field label="Submitted By" formControlName="submittedBy" [disabled]="true" />
                     </div>
                     <div>
-                        <label class="block text-xs text-text-muted mb-1">Submitted Date</label>
-                        <input type="text" readonly
-                            class="w-full h-[34px] px-2.5 py-1.5 text-sm border border-border rounded-lg bg-background text-text"
-                            [value]="treaty.submissionInformation.submittedDate">
+                        <app-input-field label="Submitted Date" formControlName="submittedDate" [disabled]="true" />
                     </div>
                 </div>
             </div>
@@ -216,7 +159,7 @@
                 </h3>
                 <div>
                     <label class="block text-xs text-text-muted mb-1">Remarks *</label>
-                    <textarea rows="4" [(ngModel)]="remarks"
+                    <textarea rows="4" formControlName="remarks"
                         class="w-full px-3 py-2 text-sm border border-border rounded-lg bg-background text-text focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
                         placeholder="Enter your remarks for approval or rejection..."></textarea>
                 </div>
@@ -233,11 +176,11 @@
             Close
         </button>
         <button (click)="onReject()"
-            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm">
+            class="px-4 py-2 bg-danger text-white rounded-lg hover:bg-danger-dark transition-colors text-sm">
             Reject
         </button>
         <button (click)="onApprove()"
-            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm">
+            class="px-4 py-2 bg-success text-white rounded-lg hover:bg-success-dark transition-colors text-sm">
             Approve
         </button>
     </div>
